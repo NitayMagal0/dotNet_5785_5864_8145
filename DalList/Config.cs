@@ -2,9 +2,23 @@
 
 internal static class Config
 {
-    internal const int startCourseId = 1000;
-    private static int nextCourseId = startCourseId;
-    internal static int NextCourseId { get => nextCourseId++; }
+    internal const int startCallId = 1000;
+    private static int nextCallId = startCallId;
+    internal static int NextCallId { get => nextCallId++; }
+
+    internal const int startAssignmentId = 1000;
+    private static int nextAssignmentId = startAssignmentId;
+    internal static int NextAssignmentId { get => nextAssignmentId++; }
 
     internal static DateTime Clock { get; set; } = DateTime.Now;
+
+    internal static TimeSpan RiskRange { get; set; } = TimeSpan.Zero;
+
+    internal static void Reset()
+    {
+        nextCallId = startCallId;
+        //...
+        Clock = DateTime.Now;
+        //...
+    }
 }
