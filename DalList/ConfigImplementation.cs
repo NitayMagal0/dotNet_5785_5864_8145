@@ -2,7 +2,7 @@
 
 namespace Dal;
 
-public class ConfigImplementation:IConfig
+public class ConfigImplementation : IConfig
 {
 
     public int NextCallId
