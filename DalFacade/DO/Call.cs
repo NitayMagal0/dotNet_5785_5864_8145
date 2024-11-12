@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace DO;
+﻿namespace DO;
 /// <summary>
 /// The call entity contains details for a "call", including a unique runner ID number.
 /// </summary>
@@ -14,7 +12,7 @@ namespace DO;
 /// <param name="MaxCompletionTime">Maximum time to finish call</param>
 public record Call
 (
-    int Id = DalList.Config.NextCallId,
+    int Id,
     CallType CallType = CallType.Undefined,
     string? Description = null,
     string FullAddress = "",
@@ -27,5 +25,5 @@ public record Call
     /// <summary>
     /// A default constructor initializes with default values.
     /// </summary>
-    public Call() : this(DalList.Config.NextCallId) { }
+    public Call() : this(0) { }
 }
