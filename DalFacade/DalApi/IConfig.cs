@@ -1,20 +1,15 @@
-﻿namespace DalApi;
-
-public interface IConfig  
+﻿namespace Dal
 {
-    internal const int startCallId = 1000;
-    private static int nextCallId = startCallId;
-    internal static int NextCallId { get => nextCallId++; }
+    public interface IConfig
+    {
+        int NextCallId { get; } //Gets the next CallId.
 
-    internal const int startAssignmentId = 1000;
-    private static int nextAssignmentId = startAssignmentId;
-    internal static int NextAssignmentId { get => nextAssignmentId++; }
+        int NextAssignmentId { get; } //Gets the next AssignmentId.
 
-    internal static DateTime Clock { get; set; } = DateTime.Now;
+        DateTime Clock { get; set; } //Gets or sets the current system time.
 
-    internal static TimeSpan RiskRange { get; set; } = TimeSpan.Zero;
+        TimeSpan RiskRange { get; set; } //Gets or sets the risk range for the current assignment.
 
-    //DateTime Clock { get; set; }
-    //...
-    void Reset();
+        void Reset(); //Resets the configuration to its default state.
+    }
 }
