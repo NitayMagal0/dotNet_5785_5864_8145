@@ -7,12 +7,12 @@ public class ConfigImplementation : IConfig
 
     public int NextCallId
     { 
-        get => NextCallId;
+        get => Config.NextCallId;
     }
 
     public int NextAssignmentId 
     { 
-        get { return NextAssignmentId; }
+        get { return Config.NextAssignmentId; }
     }
 
     public TimeSpan RiskRange
@@ -26,7 +26,6 @@ public class ConfigImplementation : IConfig
         get => Config.Clock;
         set => Config.Clock = value;
     }
-    //...
     public void Reset()
     {
         Config.Reset();

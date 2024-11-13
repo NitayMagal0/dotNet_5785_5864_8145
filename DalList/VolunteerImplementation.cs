@@ -16,8 +16,8 @@ public class VolunteerImplementation : IVolunteer
     {
         if (Read(item.Id) is not null)
             throw new Exception($"Volunteer with ID={item.Id} already exists");
-
-        DataSource.Volunteers.Add(item);
+        else
+            DataSource.Volunteers.Add(item);
     }
 
 
@@ -28,10 +28,15 @@ public class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">Thrown if no volunteer with the specified ID is found.</exception>
     public void Delete(int id)
     {
-        Volunteer temp = Read(id);
-        if (temp is not null)
-            throw new Exception($"Volunteer with ID={id} doesn't exist");
-        DataSource.Volunteers.Remove(temp);
+        Volunteer? volunteer = Read(id);
+        if (volunteer is not null)   // Makes sure the item to delete exists
+        {
+            DataSource.Volunteers.Remove(volunteer);
+        }
+        else
+        {
+            throw new InvalidOperationException($"Object of type Volunteer with ID {id} does not exist.");
+        }
     }
 
     /// <summary>
@@ -39,25 +44,20 @@ public class VolunteerImplementation : IVolunteer
     /// </summary>
     public void DeleteAll()
     {
-        DataSource.Volunteers.Clear();
+        foreach (Volunteer item in DataSource.Volunteers)
+        {
+            Delete(item.Id);
+        }
     }
 
     /// <summary>
     /// Retrieves a volunteer by their ID.
     /// </summary>
     /// <param name="id">The ID of the volunteer to retrieve.</param>
-    /// <returns>The volunteer with the specified ID.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown if no volunteer with the specified ID is found.</exception>
+    /// <returns>The volunteer with the specified ID or null if the volunteer doesn't exist</returns>
     public Volunteer? Read(int id)
     {
-        var volunteer = DataSource.Volunteers.FirstOrDefault(v => v.Id == id);
-
-        if (volunteer == null)
-        {
-            throw new KeyNotFoundException($"Volunteer with ID {id} not found.");
-        }
-
-        return volunteer;
+        return DataSource.Volunteers.Find(x => x.Id == id);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class VolunteerImplementation : IVolunteer
     /// <returns>A list of all <see cref="Volunteer"/> objects.</returns>
     public List<Volunteer> ReadAll()
     {
-        return DataSource.Volunteers;
+        return new List<Volunteer>(DataSource.Volunteers);
     }
 
 
@@ -76,7 +76,15 @@ public class VolunteerImplementation : IVolunteer
     /// <param name="item">object containing the updated details of the volunteer</param>
     public void Update(Volunteer item)
     {
-        Delete(item.Id);
-        Create(item);
+        Volunteer? unupdatedVolunteer = Read(item.Id);
+        if (unupdatedVolunteer is not null)
+        {
+            Delete(unupdatedVolunteer!.Id);
+            Create(item);
+        }
+        else                                                  // if unupdatedVolunteer is null it means the item doe's not exists
+        {
+            throw new InvalidOperationException($"Object of type Volunteer with ID {item.Id} does not exist.");
+        }
     }
 }
