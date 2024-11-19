@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Dal;
 using DalApi;
 using DO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public static class Initialization
 {
@@ -13,13 +14,44 @@ public static class Initialization
     private static IAssignment? s_dalAssignment; //stage 1
     private static ICall? s_dalCall; //stage 1
     private static readonly Random s_rand = new();
-    private static void createAssignment() {
-        for (int i = 0; i < 50; i++)
+
+    static List<int> VolunteerId = null;
+
+    private static void createAssignment()
+    {
+        TreatmentEndType status;
+        if (VolunteerId != null)
         {
-            s_dalAssignment.Create( new Assignment(
-                DataSource.Volunteers[i]))
+            foreach(var id in VolunteerId)
+            {
+                switch (number)
+                {
+                    case int n when n % 4 == 0:
+                        Console.WriteLine($"{number} is divisible by 4");
+                        break;
+                    case int n when n % 3 == 0:
+                        Console.WriteLine($"{number} is divisible by 3");
+                        break;
+                    case int n when n % 2 == 0:
+                        Console.WriteLine($"{number} is divisible by 2");
+                        break;
+                    case int n when n % 1 == 0:
+                        Console.WriteLine($"{number} is divisible by 1");
+                        break;
+                }      
+                s_dalAssignment!.Create(new Assignment(
+                0,
+                1000,
+                id,
+                DateTime.Now,
+                DateTime.Now,
+                ));
+            }
         }
     }
+
+
+
     private static void createCall()
     {
         string[] Addresses =
@@ -164,10 +196,13 @@ public static class Initialization
                 ));
         }
     }
+
+
+
     private static void createVolunteers()
     {
         string[] VolunteerNames =
-            { "Amit Levi", "Noa Cohen", "Yossi Ben-David", "Tamar Shapiro", "Eitan Goldstein", "Lior Katz",
+        { "Amit Levi", "Noa Cohen", "Yossi Ben-David", "Tamar Shapiro", "Eitan Goldstein", "Lior Katz",
             "Rivka Avraham", "Shira Mizrahi", "Dan Alon", "Yael Rosenberg", "Ariel Bar-Zvi", "Maya Feldman",
             "David Peretz", "Orly Harel", "Yonatan Stein", "Alma Sela", "Gal Barak", "Michal Shaked",
             "Itai Blum", "Hila Golan", "Ronen Neuman", "Oren Eliav", "Nadav Segal", "Tali Ohayon", "Elior Friedman" };
@@ -238,7 +273,7 @@ public static class Initialization
             do
                 id = s_rand.Next(MIN_ID, MAX_ID);
             while (s_dalVolunteer!.Read(id) is not null);
-
+            VolunteerId.Add(id);
             string phoneNumber = GeneratePhoneNumber();
             string password = GenerateRandomPassword();
             DateTime start = new DateTime(1995, 1, 1);
@@ -280,6 +315,7 @@ public static class Initialization
         // Combine all parts to form the phone number
         return $"{prefix}{nextDigit}{lastSevenDigits}";
     }
+
     static string GenerateRandomPassword()
     {
         Random random = new Random();
@@ -321,3 +357,4 @@ public static class Initialization
         return new string(passwordArray);
     }
 }
+
