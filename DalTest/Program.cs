@@ -1,4 +1,5 @@
-﻿using Dal;
+﻿using System;
+using Dal;
 using DalApi;
 using DO;
 
@@ -102,21 +103,28 @@ namespace DalTest
                     {
                         case (int)SubMenuOptions.AddObject:
                             {
-                                Volunteer temp = new Volunteer();
-                                
-                                s_dalVolunteer.Create(temp);
+                                addVolunteer();
                                 break;
                             }
                         case (int)SubMenuOptions.ShowObject:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                Volunteer temp = s_dalVolunteer.Read(id);
+                                printVolunteer(temp);
                                 break;
                             }
                         case (int)SubMenuOptions.ShowList:
                             {
+                                List<Volunteer> temp = s_dalVolunteer.ReadAll();
+                                foreach (var vol in temp)
+                                {
+                                    printVolunteer(vol);
+                                }
                                 break;
                             }
                         case (int)SubMenuOptions.Update:
                             {
+
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteObject:
@@ -148,38 +156,71 @@ namespace DalTest
             return;
         }
 
-        private Volunteer newVolunteer()
+        private static void addVolunteer()
         {
-            /* Volunteer volunteer = new Volunteer();
+            int id;
+            string fullName,phoneNumber, email, password, fullAddress;
+            double latitude, longitude;
+            bool isActive;
 
-        // Receive the volunteer's details
-        Console.WriteLine("Enter the Volunteer ID:");
-        volunteer.Id = int.Parse(Console.ReadLine());
+            // Receive the volunteer's details into variables
+            Console.WriteLine("Enter the Volunteer ID:");
+            id = int.Parse(Console.ReadLine());
 
-        Console.WriteLine("Enter the Volunteer Full Name:");
-        volunteer.FullName = Console.ReadLine();
+            Console.WriteLine("Enter the Volunteer Full Name:");
+            fullName = Console.ReadLine();
 
-        Console.WriteLine("Enter the Volunteer Email:");
-        volunteer.Email = Console.ReadLine();
+            Console.WriteLine("Enter the Volunteer Phone number:");
+            phoneNumber = Console.ReadLine();
 
-        Console.WriteLine("Enter the Volunteer Password:");
-        volunteer.Password = Console.ReadLine();
+            Console.WriteLine("Enter the Volunteer Email:");
+            email = Console.ReadLine();
 
-        Console.WriteLine("Enter the Volunteer Full Address:");
-        volunteer.FullAddress = Console.ReadLine();
+            Console.WriteLine("Enter the Volunteer Password:");
+            password = Console.ReadLine();
 
-        Console.WriteLine("Enter the Volunteer Latitude:");
-        volunteer.Latitude = double.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the Volunteer Full Address:");
+            fullAddress = Console.ReadLine();
 
-        Console.WriteLine("Enter the Volunteer Longitude:");
-        volunteer.Longitude = double.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the Volunteer Latitude:");
+            latitude = double.Parse(Console.ReadLine());
 
-        Console.WriteLine("Is the volunteer active? (true/false):");
-        volunteer.IsActive = bool.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the Volunteer Longitude:");
+            longitude = double.Parse(Console.ReadLine());
 
-        return volunteer; // Return the new volunteer object*/
+            Console.WriteLine("Is the volunteer active? (true/false):");
+            isActive = bool.Parse(Console.ReadLine());
 
-            return temp;
+
+            Volunteer temp = new Volunteer(id, fullName, phoneNumber, email, password, fullAddress, latitude, longitude, Role.Volunteer, isActive);   
+            try
+            {
+                s_dalVolunteer.Create(temp);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex.Message}");
+                
+            }
+        }
+        private static void printVolunteer(Volunteer vol)
+        {
+            Console.WriteLine($"ID: {vol.Id}");
+            Console.WriteLine($"Full Name: {vol.FullName}");
+            Console.WriteLine($"Phone Number: {vol.MobilePhone}");
+            Console.WriteLine($"Email: {vol.Email}");
+            Console.WriteLine($"Password: {vol.Password}");
+            Console.WriteLine($"Address: {vol.FullAddress}");
+            Console.WriteLine($"Latitude: {vol.Latitude}");
+            Console.WriteLine($"Longitude: {vol.Longitude}");
+            Console.WriteLine($"Role: {vol.Role}");
+            if (vol.IsActive)
+                Console.WriteLine("Is Active");
+            else
+                Console.WriteLine("Is Not Active");
+
+
         }
         private static void assignmentMenu()
         {
