@@ -308,18 +308,20 @@ public static class Initialization
          34.9897136f, 34.9979308f, 34.99322f, 35.0150586f };
 
 
-
+        
         for (int i = 0; i < VolunteerNames.Length; i++)
         {
             int MIN_ID = 200000000, MAX_ID = 400000000, id;
             do
                 id = s_rand.Next(MIN_ID, MAX_ID);
             while (s_dalVolunteer!.Read(id) is not null);
-            VolunteerId.Add(id);
+            VolunteerId.Add(id);                            // i think the problem is here
             string phoneNumber = GeneratePhoneNumber();
             string password = GenerateRandomPassword();
             DateTime start = new DateTime(1995, 1, 1);
             DateTime bdt = start.AddDays(s_rand.Next((s_dalConfig.Clock - start).Days));
+
+           
 
             s_dalVolunteer!.Create(new Volunteer(
                id,
@@ -407,6 +409,27 @@ public static class Initialization
         }
 
         return new string(passwordArray);
+    }
+    public static void Do(IVolunteer? dalVolunteer,ICall? dalCall ,IAssignment? dalAssignment, IConfig? dalConfig)
+    {
+        s_dalVolunteer = dalVolunteer ?? throw new NullReferenceException("DAL object can not be null");
+        s_dalAssignment = dalAssignment ?? throw new NullReferenceException("DAL object can not be null");
+        s_dalCall = dalCall ?? throw new NullReferenceException("DAL object can not be null");
+        s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL object can not be null");
+
+
+        Console.WriteLine("Reset Configuration values and List values:");
+        s_dalVolunteer.DeleteAll();
+        s_dalCall.DeleteAll();
+        s_dalAssignment.DeleteAll();
+        s_dalConfig.Reset();
+
+        Console.WriteLine("Initializing Volunteers list:");
+        createVolunteers();
+        Console.WriteLine("Initializing Calls list:");
+        createCall();
+        Console.WriteLine("Initializing Assignments list:");
+        createAssignment();
     }
 }
 

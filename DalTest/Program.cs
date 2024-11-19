@@ -48,6 +48,12 @@ namespace DalTest
 
         }
 
+        enum ConfigOptions
+        {
+            Clock = 1,
+            RiskRange = 2
+        }
+
         static void Main(string[] args)
         {
         int conditon;
@@ -87,7 +93,7 @@ namespace DalTest
                             }
                         case (int)MenuOptions.Initialize:
                             {
-                                Initialization.Do(s_dalVolunteer, s_dalConfig, s_dalAssignment, s_dalCall);
+                                Initialization.Do(s_dalVolunteer, s_dalCall, s_dalAssignment, s_dalConfig);
                                 
                                 break;
                             }
@@ -800,6 +806,77 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}"); ;
             }
         }
+
+        public static void SetConfigurationVariable()
+        {
+            Console.WriteLine("Choose the configuration variable to update:");
+            Console.WriteLine("1. Clock");
+            Console.WriteLine("2. RiskRange");
+            Console.Write("Please choose an option: ");
+            ConfigOptions configInput;
+            ConfigOptions.TryParse(Console.ReadLine(), out configInput);
+            switch (configInput)
+            {
+                case ConfigOptions.Clock:
+                    Console.Write("Enter the new value for Clock (yyyy-MM-dd HH:mm:ss): ");
+                    DateTime newClock;
+                    if (DateTime.TryParse(Console.ReadLine(), out newClock))
+                    {
+                        s_dalConfig.Clock = newClock;
+                        Console.WriteLine("Clock updated.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date format.");
+                    }
+                    break;
+
+                case ConfigOptions.RiskRange:
+                    Console.Write("Enter the new value for RiskRange (hh:mm:ss): ");
+                    TimeSpan newRiskRange;
+                    if (TimeSpan.TryParse(Console.ReadLine(), out newRiskRange))
+                    {
+                        s_dalConfig.RiskRange = newRiskRange;
+                        Console.WriteLine("RiskRange updated.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid time format.");
+                    }
+                    break;
+
+                default:
+                    {
+                        Console.WriteLine("Invalid choice, try again.");
+                        break;
+                    }
+            }
+        }
+
+
+            public static void GetConfigurationVariable()
+        {
+            Console.WriteLine("Choose a configuration variable to view:");
+            Console.WriteLine("1. Clock");
+            Console.WriteLine("2. RiskRange");
+            Console.Write("Enter your choice: ");
+            ConfigOptions choice;
+            ConfigOptions.TryParse(Console.ReadLine(), out choice);
+
+            switch (choice)
+            {
+                case ConfigOptions.Clock:
+                    Console.WriteLine($"Clock: {s_dalConfig?.Clock}");
+                    break;
+                case ConfigOptions.RiskRange:
+                    Console.WriteLine($"RiskRange: {s_dalConfig?.RiskRange}");
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                    break;
+            }
+        }
+       
 
     }
 }
