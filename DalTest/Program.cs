@@ -35,17 +35,34 @@ namespace DalTest
             DeleteAll = 6
         }
 
+        enum ConfigSumMenuOptions
+        {
+            Exit = 0,
+            AddMinuteToClock = 1,
+            AddHourToClock = 2,
+            AddDayToClock = 3,
+            ShowCurrentClockValue = 4,
+            SetCurrentValue = 5,
+            ShowCurrentValue = 6,
+            Reset = 7
+
+        }
+
         static void Main(string[] args)
         {
         int conditon;
             do
             {
                 Console.WriteLine();
-                Console.WriteLine("Enter a number: \n" +
-                "0 - exit the menu \n" +
+                Console.WriteLine("0 - exit the menu \n" +
                 "1 - enter volunteer sub menu \n" +
                 "2 - enter call sub menu \n" +
-                "3 - enter assignment sub menu");
+                "3 - enter assignment sub menu \n" +
+                "5 - initialize values \n" +
+                "6 - show all the data \n" +
+                "7 - enter config sub menu \n" +
+                "8 - reset");
+                Console.WriteLine("Enter a number:");
                 string input = Console.ReadLine();
 
                 // Validate the input
@@ -69,8 +86,9 @@ namespace DalTest
                                 break;
                             }
                         case (int)MenuOptions.Initialize:
-                            { 
-
+                            {
+                                Initialization.Do(s_dalVolunteer, s_dalConfig, s_dalAssignment, s_dalCall);
+                                
                                 break;
                             }
                         case (int)MenuOptions.ShowAll:
@@ -84,9 +102,20 @@ namespace DalTest
                                 break;
                             }
                         case (int)MenuOptions.ConfigSubMenu:
-                            { break; }
+                            {
+                                configMenu();
+                                break; 
+                            }
                         case (int)MenuOptions.Reset:
-                            { break; }
+                            {
+                                s_dalVolunteer.DeleteAll();
+                                s_dalCall.DeleteAll();
+                                s_dalAssignment.DeleteAll();
+                                s_dalConfig.Reset();
+                               
+
+                                break;
+                            }
                         case (int)MenuOptions.Exit:
                             //just break and the condition below will exit the loop
                             break;
@@ -104,6 +133,92 @@ namespace DalTest
             while (conditon != 0);
 
         }
+        private static void configMenu()
+        {
+            int conditon;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Config Sub-menu: \n" +
+            "0 - Back to main menu \n" +
+            "1 - Add Minutes to the Clock \n" +
+            "2 - Add Hours to the Clock \n" +
+            "3 - Add Days to the Clock\n" +
+            "4 - Show current Clock value \n" +
+            "5 - Set current value \n" +
+            "6 - Show current value\n" +
+            "7 - Reset   ");
+                Console.WriteLine("Enter a number:");
+                string input = Console.ReadLine();
+
+                // Validate the input
+                if (int.TryParse(input, out conditon))
+                {
+                    switch (conditon)
+                    {
+                        case (int)ConfigSumMenuOptions.AddMinuteToClock:
+                            {
+                                Console.WriteLine("Enter the amount of minutes to add to the clock");
+                                int min = int.Parse(Console.ReadLine());
+                                s_dalConfig.Clock = s_dalConfig.Clock.AddMinutes(min);
+                                Console.WriteLine(s_dalConfig.Clock);
+                                break;
+                            }
+                        case (int)ConfigSumMenuOptions.AddHourToClock:
+                            {
+                                Console.WriteLine("Enter the amount of hours to add to the clock");
+                                int hour = int.Parse(Console.ReadLine());
+                                s_dalConfig.Clock = s_dalConfig.Clock.AddHours(hour);
+                                Console.WriteLine(s_dalConfig.Clock);
+                                break;
+                            }
+                        case (int)ConfigSumMenuOptions.AddDayToClock:
+                            {
+                                Console.WriteLine("Enter the amount of days to add to the clock");
+                                int day = int.Parse(Console.ReadLine());
+                                s_dalConfig.Clock = s_dalConfig.Clock.AddDays(day);
+                                Console.WriteLine(s_dalConfig.Clock);
+                                break;
+                            }
+                        case (int)ConfigSumMenuOptions.ShowCurrentClockValue:
+                            {
+                                Console.WriteLine(s_dalConfig.Clock);
+                                break;
+                            }
+                        case (int)ConfigSumMenuOptions.SetCurrentValue:
+                            {
+
+                                break;
+                            }
+                        case (int)ConfigSumMenuOptions.ShowCurrentValue:
+                            {
+                                break;
+                            }
+                        case (int)ConfigSumMenuOptions.Reset:
+                            {
+                                s_dalConfig.Reset();
+                                break;
+                            }
+                        case (int)ConfigSumMenuOptions.Exit:
+                            //just break and the condition below will exit the loop
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
+            while (conditon != 0);
+
+            return;
+        }
+      
+
         private static void volunteerMenu()
         {
             
