@@ -40,6 +40,7 @@ namespace DalTest
         int conditon;
             do
             {
+                Console.WriteLine();
                 Console.WriteLine("Enter a number: \n" +
                 "0 - exit the menu \n" +
                 "1 - enter volunteer sub menu \n" +
@@ -94,7 +95,12 @@ namespace DalTest
         }
         private static void volunteerMenu()
         {
-            Console.WriteLine("Volunteer Sub-menu: \n" +
+            
+            int conditon;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Volunteer Sub-menu: \n" +
             "0 - Back to main menu \n" +
             "1 - Add Volunteer \n" +
             "2 - Show Volunteer \n" +
@@ -102,9 +108,6 @@ namespace DalTest
             "4 - Update Volunteer \n" +
             "5 - Delete Volunteer \n" +
             "6 - Delete All Volunteers");
-            int conditon;
-            do
-            {
                 Console.WriteLine("Enter a number:");
                 string input = Console.ReadLine();
 
@@ -120,6 +123,7 @@ namespace DalTest
                             }
                         case (int)SubMenuOptions.ShowObject:
                             {
+                                Console.WriteLine("Enter the Volunteer ID: ");
                                 int id = int.Parse(Console.ReadLine());
                                 printVolunteer(id);
                                 break;
@@ -131,12 +135,14 @@ namespace DalTest
                             }
                         case (int)SubMenuOptions.Update:
                             {
+                                Console.WriteLine("Enter the Volunteer ID: ");
                                 int id = int.Parse(Console.ReadLine());
                                 updateVolunteer(id);
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteObject:
                             {
+                                Console.WriteLine("Enter the Volunteer ID: ");
                                 int id = int.Parse(Console.ReadLine());
                                 deleteVolunteer(id);
                                 break;
@@ -223,7 +229,6 @@ namespace DalTest
         {
             int id;
             string fullName,phoneNumber, email, password, fullAddress;
-            double latitude, longitude;
             bool isActive;
 
             // Receive the volunteer's details into variables
@@ -245,35 +250,47 @@ namespace DalTest
             Console.WriteLine("Enter the Volunteer Full Address:");
             fullAddress = Console.ReadLine();
 
-            Console.WriteLine("Enter the Volunteer Latitude:");
-            latitude = double.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the Volunteer Longitude:");
-            longitude = double.Parse(Console.ReadLine());
-
             Console.WriteLine("Is the volunteer active? (true/false):");
             isActive = bool.Parse(Console.ReadLine());
 
-            return new Volunteer(id, fullName, phoneNumber, email, password, fullAddress, latitude, longitude, Role.Volunteer, isActive);
+            return new Volunteer
+            {
+                Id = id,
+                FullName = fullName,
+                MobilePhone = phoneNumber,
+                Email = email,
+                Password = password,
+                FullAddress = fullAddress,
+                Role = Role.Volunteer,
+                IsActive = isActive
+            };
         }
         private static void printVolunteer(int id)
         {
-            Volunteer vol = s_dalVolunteer.Read(id);
-            Console.WriteLine($"ID: {vol.Id}");
-            Console.WriteLine($"Full Name: {vol.FullName}");
-            Console.WriteLine($"Phone Number: {vol.MobilePhone}");
-            Console.WriteLine($"Email: {vol.Email}");
-            Console.WriteLine($"Password: {vol.Password}");
-            Console.WriteLine($"Address: {vol.FullAddress}");
-            Console.WriteLine($"Latitude: {vol.Latitude}");
-            Console.WriteLine($"Longitude: {vol.Longitude}");
-            Console.WriteLine($"Role: {vol.Role}");
-            if (vol.IsActive)
-                Console.WriteLine("Is Active");
-            else
-                Console.WriteLine("Is Not Active");
+            try
+            {
+                Console.WriteLine(" ");
+                Volunteer vol = s_dalVolunteer.Read(id);
+                Console.WriteLine($"ID: {vol.Id}");
+                Console.WriteLine($"Full Name: {vol.FullName}");
+                Console.WriteLine($"Phone Number: {vol.MobilePhone}");
+                Console.WriteLine($"Email: {vol.Email}");
+                Console.WriteLine($"Password: {vol.Password}");
+                Console.WriteLine($"Address: {vol.FullAddress}");
+                Console.WriteLine($"Latitude: {vol.Latitude}");
+                Console.WriteLine($"Longitude: {vol.Longitude}");
+                Console.WriteLine($"Role: {vol.Role}");
+                if (vol.IsActive)
+                    Console.WriteLine("Is Active");
+                else
+                    Console.WriteLine("Is Not Active");
 
-
+                Console.WriteLine(" ");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
         private static void printAllVolunteers()
         {
@@ -285,17 +302,19 @@ namespace DalTest
         }
         private static void assignmentMenu()
         {
-            Console.WriteLine("Assignment Sub-menu: \n" +
-                "0 - Back to main menu \n" +
-                "1 - Add Assignment \n" +
-                "2 - Show Assignment \n" +
-                "3 - Show All Assignments \n" +
-                "4 - Update Assignment \n" +
-                "5 - Delete Assignment \n" +
-                "6 - Delete All Assignments");
+         
             int conditon;
             do
             {
+                Console.WriteLine();
+                Console.WriteLine("Assignment Sub-menu: \n" +
+                    "0 - Back to main menu \n" +
+                    "1 - Add Assignment \n" +
+                    "2 - Show Assignment \n" +
+                    "3 - Show All Assignments \n" +
+                    "4 - Update Assignment \n" +
+                    "5 - Delete Assignment \n" +
+                    "6 - Delete All Assignments");
                 Console.WriteLine("Enter a number:");
                 string input = Console.ReadLine();
 
@@ -311,6 +330,7 @@ namespace DalTest
                             }
                         case (int)SubMenuOptions.ShowObject:
                             {
+                                Console.WriteLine("Enter the Assignment ID: ");
                                 int id = int.Parse(Console.ReadLine());
                                 printAssignment(id);
                                 break;
@@ -374,15 +394,24 @@ namespace DalTest
         }
         private static void printAssignment(int id)
         {
-            Assignment assignment = s_dalAssignment.Read(id);
-            Console.WriteLine("Assignment Details:");
-            Console.WriteLine($"ID: {assignment.Id}");
-            Console.WriteLine($"Call ID: {assignment.CallId}");
-            Console.WriteLine($"Volunteer ID: {assignment.VolunteerId}");
-            Console.WriteLine($"Admission Time: {assignment.AdmissionTime}");
-            Console.WriteLine($"Actual End Time: {(assignment.ActualEndTime.HasValue ? assignment.ActualEndTime.ToString() : "Not ended")}");
-            Console.WriteLine($"Treatment End Type: {(assignment.TreatmentEndType.HasValue ? assignment.TreatmentEndType.ToString() : "None")}");
-            Console.WriteLine(); // For better readability
+            try
+            {
+                Console.WriteLine();
+                Assignment assignment = s_dalAssignment.Read(id);
+                Console.WriteLine("Assignment Details:");
+                Console.WriteLine($"ID: {assignment.Id}");
+                Console.WriteLine($"Call ID: {assignment.CallId}");
+                Console.WriteLine($"Volunteer ID: {assignment.VolunteerId}");
+                Console.WriteLine($"Admission Time: {assignment.AdmissionTime}");
+                Console.WriteLine($"Actual End Time: {(assignment.ActualEndTime.HasValue ? assignment.ActualEndTime.ToString() : "Not ended")}");
+                Console.WriteLine($"Treatment End Type: {(assignment.TreatmentEndType.HasValue ? assignment.TreatmentEndType.ToString() : "None")}");
+                Console.WriteLine(); // For better readability
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            
         }
 
         private static void addAssignment()
@@ -454,18 +483,19 @@ namespace DalTest
         }
         private static void callMenu()
         {
-
-            Console.WriteLine("Call Sub-menu: \n" +
-              "0 - Back to main menu \n" +
-              "1 - Add Call \n" +
-              "2 - Show Call \n" +
-                "3 - Show All Calls \n" +
-             "4 - Update Call \n" +
-             "5 - Delete Call \n" +
-             "6 - Delete All Calls");
+            
             int conditon;
             do
             {
+                Console.WriteLine();
+                Console.WriteLine("Call Sub-menu: \n" +
+                  "0 - Back to main menu \n" +
+                  "1 - Add Call \n" +
+                  "2 - Show Call \n" +
+                    "3 - Show All Calls \n" +
+                 "4 - Update Call \n" +
+                 "5 - Delete Call \n" +
+                 "6 - Delete All Calls");
                 Console.WriteLine("Enter a number:");
                 string input = Console.ReadLine();
 
@@ -546,12 +576,6 @@ namespace DalTest
             Console.WriteLine("Enter the Call Full Address:");
             string fullAddress = Console.ReadLine();
 
-            Console.WriteLine("Enter the Call Latitude:");
-            double latitude = double.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the Call Longitude:");
-            double longitude = double.Parse(Console.ReadLine());
-
             Console.WriteLine("Enter the Opening Time (or press Enter for current date and time):");
             string openingTimeInput = Console.ReadLine();
             DateTime openingTime = string.IsNullOrWhiteSpace(openingTimeInput)
@@ -565,16 +589,15 @@ namespace DalTest
                 : DateTime.Parse(maxCompletionTimeInput);
 
             // Create and return the Call object
-            return new Call(
-                id,
-                callType,
-                description,
-                fullAddress,
-                latitude,
-                longitude,
-                openingTime,
-                maxCompletionTime
-            );
+            return new Call
+            {
+                Id = id,
+                CallType = callType,
+                Description = description,
+                FullAddress = fullAddress,
+                OpeningTime = openingTime,
+                MaxCompletionTime = maxCompletionTime
+            };
         }
         private static void updateCall(int id)
         {
@@ -592,17 +615,26 @@ namespace DalTest
         }
         static void printCall(int id)
         {
-            Call call = s_dalCall.Read(id);
-            Console.WriteLine("Call Details:");
-            Console.WriteLine($"ID: {call.Id}");
-            Console.WriteLine($"Call Type: {call.CallType}");
-            Console.WriteLine($"Description: {call.Description ?? "No description provided"}");
-            Console.WriteLine($"Full Address: {call.FullAddress}");
-            Console.WriteLine($"Latitude: {call.Latitude}");
-            Console.WriteLine($"Longitude: {call.Longitude}");
-            Console.WriteLine($"Opening Time: {call.OpeningTime}");
-            Console.WriteLine($"Maximum Completion Time: {(call.MaxCompletionTime.HasValue ? call.MaxCompletionTime.ToString() : "No maximum time set")}");
-            Console.WriteLine(); // Add an empty line for better readability
+            try
+            {
+                Console.WriteLine();
+                Call call = s_dalCall.Read(id);
+                Console.WriteLine("Call Details:");
+                Console.WriteLine($"ID: {call.Id}");
+                Console.WriteLine($"Call Type: {call.CallType}");
+                Console.WriteLine($"Description: {call.Description ?? "No description provided"}");
+                Console.WriteLine($"Full Address: {call.FullAddress}");
+                Console.WriteLine($"Latitude: {call.Latitude}");
+                Console.WriteLine($"Longitude: {call.Longitude}");
+                Console.WriteLine($"Opening Time: {call.OpeningTime}");
+                Console.WriteLine($"Maximum Completion Time: {(call.MaxCompletionTime.HasValue ? call.MaxCompletionTime.ToString() : "No maximum time set")}");
+                Console.WriteLine(); // Add an empty line for better readability
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex.Message}");
+            }    
         }
 
 
