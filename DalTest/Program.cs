@@ -21,7 +21,7 @@ namespace DalTest
             AssignmentSubMenu = 3,
             Initialize = 5,
             ShowAll = 6,
-            SubMenuFor = 7,
+            ConfigSubMenu = 7,
             Reset = 8
         }
         enum SubMenuOptions
@@ -69,10 +69,21 @@ namespace DalTest
                                 break;
                             }
                         case (int)MenuOptions.Initialize:
-                            { break; }
+                            { 
+
+                                break;
+                            }
                         case (int)MenuOptions.ShowAll:
-                            { break; }
-                        case (int)MenuOptions.SubMenuFor:
+                            {
+                                Console.WriteLine("All the Volunteers:");
+                                printAllVolunteers();
+                                Console.WriteLine("All the Calls:");
+                                printAllCalls();
+                                Console.WriteLine("All the Assignments:");
+                                printAllAssignments();
+                                break;
+                            }
+                        case (int)MenuOptions.ConfigSubMenu:
                             { break; }
                         case (int)MenuOptions.Reset:
                             { break; }
@@ -429,9 +440,6 @@ namespace DalTest
         private static Assignment createAssignment()
         {
             // Receive input for each parameter
-            Console.WriteLine("Enter the Assignment ID:");
-            int id = int.Parse(Console.ReadLine());
-
             Console.WriteLine("Enter the Call ID:");
             int callId = int.Parse(Console.ReadLine());
 
@@ -457,7 +465,15 @@ namespace DalTest
                 : Enum.Parse<TreatmentEndType>(treatmentEndTypeInput, true); // Assuming TreatmentEndType is an enum
 
             // Create and return the Assignment object
-            return new Assignment(id, callId, volunteerId, admissionTime, actualEndTime, treatmentEndType);
+            return new Assignment
+            {
+                CallId = callId,
+                VolunteerId = volunteerId,
+                AdmissionTime = admissionTime,
+                ActualEndTime = actualEndTime,
+                TreatmentEndType = treatmentEndType
+            };
+
         }
         private static void deleteAllAssignments()
         {
@@ -560,9 +576,6 @@ namespace DalTest
         private static Call createCall()
         {
             // Receive input for each parameter
-            Console.WriteLine("Enter the Call ID:");
-            int id = int.Parse(Console.ReadLine());
-
             Console.WriteLine("Enter the Call Type (FoodPackaging, VolunteeringWithChildren, etc. or press Enter for Undefined):");
             string callTypeInput = Console.ReadLine();
             CallType callType = string.IsNullOrWhiteSpace(callTypeInput)
@@ -591,7 +604,6 @@ namespace DalTest
             // Create and return the Call object
             return new Call
             {
-                Id = id,
                 CallType = callType,
                 Description = description,
                 FullAddress = fullAddress,
