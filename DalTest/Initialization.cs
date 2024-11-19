@@ -19,24 +19,24 @@ public static class Initialization
 
     private static void createAssignment()
     {
-        TreatmentEndType status;
+        TreatmentEndType? status = null;
         if (VolunteerId != null)
         {
             foreach(var id in VolunteerId)
             {
-                switch (number)
+                switch (id)
                 {
                     case int n when n % 4 == 0:
-                        Console.WriteLine($"{number} is divisible by 4");
+                        status = TreatmentEndType.CancelledByAdmin;
                         break;
                     case int n when n % 3 == 0:
-                        Console.WriteLine($"{number} is divisible by 3");
+                        status = TreatmentEndType.CancelledByUser;
                         break;
                     case int n when n % 2 == 0:
-                        Console.WriteLine($"{number} is divisible by 2");
+                        status = TreatmentEndType.Completed;
                         break;
                     case int n when n % 1 == 0:
-                        Console.WriteLine($"{number} is divisible by 1");
+                        status = TreatmentEndType.Expired;
                         break;
                 }      
                 s_dalAssignment!.Create(new Assignment(
@@ -45,6 +45,7 @@ public static class Initialization
                 id,
                 DateTime.Now,
                 DateTime.Now,
+                status
                 ));
             }
         }
