@@ -2,6 +2,7 @@
 
 using System.Text;
 using System.Xml.Linq;
+using Dal;
 using DalApi;
 using DO;
 
@@ -12,9 +13,157 @@ public static class Initialization
     private static IAssignment? s_dalAssignment; //stage 1
     private static ICall? s_dalCall; //stage 1
     private static readonly Random s_rand = new();
-    private static void createConfig() { }
-    private static void createAssignment() { }
-    private static void createCall() { }
+    private static void createAssignment() {
+        for (int i = 0; i < 50; i++)
+        {
+            s_dalAssignment.Create( new Assignment(
+                DataSource.Volunteers[i]))
+        }
+    }
+    private static void createCall()
+    {
+        string[] Addresses =
+        {
+            // Rishon LeTsiyon
+            "Rothschild St 22, Rishon LeTsiyon",
+            "HaPalmach St 10, Rishon LeTsiyon",
+            "Herzl St 56, Rishon LeTsiyon",
+            "Sderot Jerusalem St 19, Rishon LeTsiyon",
+            "Marmorek St 7, Rishon LeTsiyon",
+            "Yavne St 9, Rishon LeTsiyon",
+            "Masada St 11, Rishon LeTsiyon",
+            "Bialik St 14, Rishon LeTsiyon",
+            "Weizmann St 17, Rishon LeTsiyon",
+            "HaShikma St 24, Rishon LeTsiyon",
+
+            // Petah Tikva
+            "Herzl St 31, Petah Tikva",
+            "Bar Ilan St 6, Petah Tikva",
+            "Jabotinsky St 88, Petah Tikva",
+            "HaHistadrut St 40, Petah Tikva",
+            "Kaplan St 3, Petah Tikva",
+            "Sderot Jerusalem St 28, Petah Tikva",
+            "Hadar St 7, Petah Tikva",
+            "HaRav Kook St 5, Petah Tikva",
+            "Weizmann St 12, Petah Tikva",
+            "Em HaMoshavot St 10, Petah Tikva",
+
+            // Be'er Sheva
+            "Rager Blvd 55, Be'er Sheva",
+            "HaNasi St 2, Be'er Sheva",
+            "Rothschild St 6, Be'er Sheva",
+            "Eli Cohen St 12, Be'er Sheva",
+            "Ben Gurion Blvd 3, Be'er Sheva",
+            "Shazar St 20, Be'er Sheva",
+            "Avraham Avinu St 14, Be'er Sheva",
+            "Yitzhak Rager St 75, Be'er Sheva",
+            "HaAtzmaut St 18, Be'er Sheva",
+            "HaPalmach St 5, Be'er Sheva",
+
+            // Holon
+            "Sokolov St 22, Holon",
+            "Herzl St 15, Holon",
+            "HaRav Kook St 10, Holon",
+            "Henkin St 9, Holon",
+            "Dov Hoz St 7, Holon",
+            "Weizmann St 16, Holon",
+            "Bialik St 3, Holon",
+            "Pinsker St 6, Holon",
+            "Shenkar St 19, Holon",
+            "HaMeri St 11, Holon",
+
+            // Netanya
+            "Herzl St 47, Netanya",
+            "Sderot Ben Gurion St 20, Netanya",
+            "HaYarden St 5, Netanya",
+            "Bialik St 18, Netanya",
+            "David Hamelech St 10, Netanya",
+            "Nordau Blvd 12, Netanya",
+            "Sokolov St 4, Netanya",
+            "Ussishkin St 15, Netanya",
+            "HaSharon Blvd 7, Netanya",
+            "Eli Cohen St 8, Netanya"
+        };
+
+        float[] latitudeArray =
+        { 31.9643154f, 31.955518f, 31.9676173f, 31.9622751f, 32.0715704f, 32.0181548f, 31.9589889f,
+         31.9653336f, 31.9713531f, 31.9630978f, 32.0853361f, 32.0929381f, 32.0921131f, 32.0860497f,
+         32.0905002f, 32.0917919f, 32.1595358f, 32.0824978f, 32.0805623f, 32.102801f, 31.2521018f,
+         31.2521018f, 31.24182549999999f, 31.2472712f, 31.2617444f, 31.2521018f, 31.2641094f,
+         31.269819f, 31.2521018f, 31.2370494f, 32.0228929f, 32.0620845f, 32.0210558f,
+         32.015833f, 32.0206689f, 32.0215594f, 32.0205318f, 32.0130381f, 32.0260154f,
+         32.0751249f, 32.3276846f, 32.3155879f, 32.321458f, 32.3315165f, 32.3319194f,
+         32.284403f, 32.341958f, 32.3280852f, 32.321458f, 32.32686f  };
+
+        float[] longitudeArray =
+        {34.8044968f, 34.8115675f, 34.8034651f, 34.810258f, 34.7806364f, 34.7759021f,
+         34.8995623f, 34.802021f, 34.8043477f, 34.7991253f, 34.8862855f, 34.9014356f,
+         34.860923f, 34.8867304f, 34.869086f, 34.9023234f, 34.9727815f, 34.882186f,
+         34.8731057f, 34.8648183f, 34.7867691f, 34.7867691f, 34.8022122f, 34.80614449999999f,
+         34.8007625f, 34.7867691f, 34.7938402f, 34.798157f, 34.7867691f, 34.7914045f, 34.7722195f,
+         34.77030269999999f, 34.7795762f, 34.787384f, 34.7538539f, 34.7724563f, 34.7777558f, 34.7873238f,
+         34.7768943f, 34.8156124f, 34.8602827f, 34.8482565f, 34.853196f, 34.8536459f, 34.8515711f, 34.8573248f,
+         34.857991f, 34.8516656f, 34.853196f, 34.8643746f };
+        DateTime start = new DateTime(2024, 1, 1);          // Start date
+        DateTime today = DateTime.Today;                    // Today's date
+        int range = (today - start).Days;                   // Total days between start and today
+        for (int i = 0; i < 10; i++)
+        {
+            DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
+            s_dalCall!.Create(new Call(
+                0,
+                CallType.HelpForFamiliesInNeed,
+                "Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.",
+                Addresses[i],
+                latitudeArray[i],
+                longitudeArray[i],
+                OpeningTime,
+                DateTime.Today.AddDays(2)           //End time
+                ));
+        }
+        for (int i = 10; i < 20; i++)
+        {
+            DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
+            s_dalCall!.Create(new Call(
+                0,
+                CallType.FoodPackagingForNeedyFamilies,
+                "Preparing and packaging food items for distribution to families in need.",
+                Addresses[i],
+                latitudeArray[i],
+                longitudeArray[i],
+                OpeningTime,
+                DateTime.Today.AddDays(s_rand.Next(15, 60))         //End time
+                ));
+        }
+        for (int i = 20; i < 30; i++)
+        {
+            DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
+            s_dalCall!.Create(new Call(
+                0,
+                CallType.CleaningShelters,
+                "Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.",
+                Addresses[i],
+                latitudeArray[i],
+                longitudeArray[i],
+                OpeningTime,
+                DateTime.Today.AddDays(s_rand.Next(15, 60))     //End time
+                ));
+        }
+        for (int i = 30; i < 50; i++)
+        {
+            DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
+            s_dalCall!.Create(new Call(
+                0,
+                CallType.HospitalVisitsForMoraleBoost,
+                "Visiting hospitals to support and uplift the spirits of patients and healthcare workers.",
+                Addresses[i],
+                latitudeArray[i],
+                longitudeArray[i],
+                OpeningTime,
+                DateTime.Today.AddDays(s_rand.Next(15, 60))     //End time
+                ));
+        }
+    }
     private static void createVolunteers()
     {
         string[] VolunteerNames =
@@ -83,24 +232,8 @@ public static class Initialization
          35.2217262f, 35.2189366f, 35.220514f, 35.2184101f, 34.9858606f,
          34.9897136f, 34.9979308f, 34.99322f, 35.0150586f };
 
-        foreach (var name in VolunteerNames)
+        for (int i = 0; i < VolunteerNames.Length; i++)
         {
-            int MIN_ID = 200000000, MAX_ID = 400000000, id;
-            do
-                id = s_rand.Next(MIN_ID, MAX_ID);
-            while (s_dalVolunteer!.Read(id) is not null);
-
-            string phoneNumber = GeneratePhoneNumber();
-            string password = GenerateRandomPassword();
-            bool even = (id % 2) == 0 ? true : false;
-            string? alias = even ? name + "ALIAS" : null;
-            DateTime start = new DateTime(1995, 1, 1);
-            DateTime bdt = start.AddDays(s_rand.Next((s_dalConfig.Clock - start).Days));
-
-            s_dalVolunteer!.Create(new Volunteer(id, name, phoneNumber, ));
-        }
-
-        for (int i = 0; i < VolunteerNames.Length; i++) {
             int MIN_ID = 200000000, MAX_ID = 400000000, id;
             do
                 id = s_rand.Next(MIN_ID, MAX_ID);
@@ -124,7 +257,8 @@ public static class Initialization
                true
             ));
         }
-        }
+    }
+
     static string GeneratePhoneNumber()
     {
         Random random = new Random();

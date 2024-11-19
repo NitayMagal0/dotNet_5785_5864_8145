@@ -26,8 +26,11 @@ public enum DistanceType
 /// </summary>
 public enum CallType
 {
-    Undefined
-    //According to the type of specific system (food preparation, food transportation, etc.) 
+    Undefined,
+    CleaningShelters,
+    HelpForFamiliesInNeed,
+    FoodPackagingForNeedyFamilies,
+    HospitalVisitsForMoraleBoost
 }
 
 
