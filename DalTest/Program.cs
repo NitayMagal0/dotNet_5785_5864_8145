@@ -5,7 +5,7 @@ using DO;
 
 namespace DalTest
 
-    //NEED TO ADD EXEPTIONS
+    
 {
     internal class Program
     {
@@ -59,6 +59,11 @@ namespace DalTest
                            }
                         case (int)MenuOptions.CallSubMenu:
                             {
+                                callMenu();
+                                break;
+                            }
+                       case (int)MenuOptions.AssignmentSubMenu:
+                            {
                                 assignmentMenu();
                                 break;
                             }
@@ -87,9 +92,16 @@ namespace DalTest
             while (conditon != 0);
 
         }
-
         private static void volunteerMenu()
         {
+            Console.WriteLine("Volunteer Sub-menu: \n" +
+            "0 - Back to main menu \n" +
+            "1 - Add Volunteer \n" +
+            "2 - Show Volunteer \n" +
+            "3 - Show All Volunteers \n" +
+            "4 - Update Volunteer \n" +
+            "5 - Delete Volunteer \n" +
+            "6 - Delete All Volunteers");
             int conditon;
             do
             {
@@ -109,34 +121,31 @@ namespace DalTest
                         case (int)SubMenuOptions.ShowObject:
                             {
                                 int id = int.Parse(Console.ReadLine());
-                                Volunteer temp = s_dalVolunteer.Read(id);
-                                printVolunteer(temp);
+                                printVolunteer(id);
                                 break;
                             }
                         case (int)SubMenuOptions.ShowList:
                             {
-                                List<Volunteer> temp = s_dalVolunteer.ReadAll();
-                                foreach (var vol in temp)
-                                {
-                                    printVolunteer(vol);
-                                }
+                                printAllVolunteers();
                                 break;
                             }
                         case (int)SubMenuOptions.Update:
                             {
-
+                                int id = int.Parse(Console.ReadLine());
+                                updateVolunteer(id);
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteObject:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                deleteVolunteer(id);
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteAll:
                             {
+                                deleteAllVolunteers();
                                 break;
                             }
-
-
 
                         case (int)SubMenuOptions.Exit:
                             //just break and the condition below will exit the loop
@@ -155,8 +164,62 @@ namespace DalTest
 
             return;
         }
+        private static void deleteAllVolunteers()
+        {
+            try
+            {
+                s_dalVolunteer.DeleteAll();
+            }
+            catch (Exception ex)
+            {
 
+                Console.WriteLine($"Error: {ex.Message}"); ;
+            }
+            
+        }
+
+        private static void deleteVolunteer(int id)
+        {
+            try
+            {
+                s_dalVolunteer.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}"); ;
+            }
+            
+        }
+        private static void updateVolunteer(int id)
+        {
+            printVolunteer(id);
+            //s_dalVolunteer.Update(temp); if we dont need to revice new values, then this line is enough
+            //delete the volunteer
+            deleteVolunteer(id);
+            //recive new values and add them
+            addVolunteer();
+        }
         private static void addVolunteer()
+        {
+            //create new volunteer with the func and try to add it to the list
+            Volunteer temp = createVolunteer();
+            try
+            {
+                s_dalVolunteer.Create(temp);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex.Message}");
+
+            }
+        }
+
+        /// <summary>
+        /// Creates new volunteer
+        /// </summary>
+        /// <returns>volunteer</returns>
+        private static Volunteer createVolunteer()
         {
             int id;
             string fullName,phoneNumber, email, password, fullAddress;
@@ -191,21 +254,11 @@ namespace DalTest
             Console.WriteLine("Is the volunteer active? (true/false):");
             isActive = bool.Parse(Console.ReadLine());
 
-
-            Volunteer temp = new Volunteer(id, fullName, phoneNumber, email, password, fullAddress, latitude, longitude, Role.Volunteer, isActive);   
-            try
-            {
-                s_dalVolunteer.Create(temp);
-            }
-            catch (Exception ex)
-            {
-
-                Console.WriteLine($"Error: {ex.Message}");
-                
-            }
+            return new Volunteer(id, fullName, phoneNumber, email, password, fullAddress, latitude, longitude, Role.Volunteer, isActive);
         }
-        private static void printVolunteer(Volunteer vol)
+        private static void printVolunteer(int id)
         {
+            Volunteer vol = s_dalVolunteer.Read(id);
             Console.WriteLine($"ID: {vol.Id}");
             Console.WriteLine($"Full Name: {vol.FullName}");
             Console.WriteLine($"Phone Number: {vol.MobilePhone}");
@@ -222,9 +275,24 @@ namespace DalTest
 
 
         }
+        private static void printAllVolunteers()
+        {
+            List<Volunteer> temp = s_dalVolunteer.ReadAll();
+            foreach (var vol in temp)
+            {
+                printVolunteer(vol.Id);
+            }
+        }
         private static void assignmentMenu()
         {
-
+            Console.WriteLine("Assignment Sub-menu: \n" +
+                "0 - Back to main menu \n" +
+                "1 - Add Assignment \n" +
+                "2 - Show Assignment \n" +
+                "3 - Show All Assignments \n" +
+                "4 - Update Assignment \n" +
+                "5 - Delete Assignment \n" +
+                "6 - Delete All Assignments");
             int conditon;
             do
             {
@@ -238,27 +306,35 @@ namespace DalTest
                     {
                         case (int)SubMenuOptions.AddObject:
                             {
-
+                                addAssignment();
                                 break;
                             }
                         case (int)SubMenuOptions.ShowObject:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                printAssignment(id);
                                 break;
                             }
                         case (int)SubMenuOptions.ShowList:
                             {
+                                printAllAssignments();
                                 break;
                             }
                         case (int)SubMenuOptions.Update:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                updateAssignment(id);
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteObject:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                deleteAssignment(id);
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteAll:
                             {
+                                deleteAllAssignments();
                                 break;
                             }
 
@@ -280,10 +356,113 @@ namespace DalTest
             while (conditon != 0);
 
             return;
+        }
+
+        private static void updateAssignment(int id)
+        {
+            printAssignment(id);
+            deleteAssignment(id);
+            addAssignment();
+        }
+        private static void printAllAssignments()
+        {
+            List<Assignment> temp = s_dalAssignment.ReadAll();
+            foreach (var ass in temp)
+            {
+                printAssignment(ass.Id);
+            }
+        }
+        private static void printAssignment(int id)
+        {
+            Assignment assignment = s_dalAssignment.Read(id);
+            Console.WriteLine("Assignment Details:");
+            Console.WriteLine($"ID: {assignment.Id}");
+            Console.WriteLine($"Call ID: {assignment.CallId}");
+            Console.WriteLine($"Volunteer ID: {assignment.VolunteerId}");
+            Console.WriteLine($"Admission Time: {assignment.AdmissionTime}");
+            Console.WriteLine($"Actual End Time: {(assignment.ActualEndTime.HasValue ? assignment.ActualEndTime.ToString() : "Not ended")}");
+            Console.WriteLine($"Treatment End Type: {(assignment.TreatmentEndType.HasValue ? assignment.TreatmentEndType.ToString() : "None")}");
+            Console.WriteLine(); // For better readability
+        }
+
+        private static void addAssignment()
+        {
+            Assignment temp = createAssignment();
+            try
+            {
+                s_dalAssignment.Create(temp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        private static Assignment createAssignment()
+        {
+            // Receive input for each parameter
+            Console.WriteLine("Enter the Assignment ID:");
+            int id = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the Call ID:");
+            int callId = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the Volunteer ID:");
+            int volunteerId = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the Admission Time (or press Enter for current date and time):");
+            string admissionTimeInput = Console.ReadLine();
+            DateTime admissionTime = string.IsNullOrWhiteSpace(admissionTimeInput)
+                ? DateTime.Now
+                : DateTime.Parse(admissionTimeInput);
+
+            Console.WriteLine("Enter the Actual End Time (or press Enter if not ended):");
+            string actualEndTimeInput = Console.ReadLine();
+            DateTime? actualEndTime = string.IsNullOrWhiteSpace(actualEndTimeInput)
+                ? null
+                : DateTime.Parse(actualEndTimeInput);
+
+            Console.WriteLine("Enter the Treatment End Type (or press Enter for none):");
+            string treatmentEndTypeInput = Console.ReadLine();
+            TreatmentEndType? treatmentEndType = string.IsNullOrWhiteSpace(treatmentEndTypeInput)
+                ? null
+                : Enum.Parse<TreatmentEndType>(treatmentEndTypeInput, true); // Assuming TreatmentEndType is an enum
+
+            // Create and return the Assignment object
+            return new Assignment(id, callId, volunteerId, admissionTime, actualEndTime, treatmentEndType);
+        }
+        private static void deleteAllAssignments()
+        {
+            try
+            {
+                s_dalAssignment.DeleteAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}"); ;
+            }
+        }
+        private static void deleteAssignment(int id)
+        {
+            try
+            {
+                s_dalAssignment.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}"); ;
+            }
         }
         private static void callMenu()
         {
 
+            Console.WriteLine("Call Sub-menu: \n" +
+              "0 - Back to main menu \n" +
+              "1 - Add Call \n" +
+              "2 - Show Call \n" +
+                "3 - Show All Calls \n" +
+             "4 - Update Call \n" +
+             "5 - Delete Call \n" +
+             "6 - Delete All Calls");
             int conditon;
             do
             {
@@ -297,27 +476,35 @@ namespace DalTest
                     {
                         case (int)SubMenuOptions.AddObject:
                             {
-
+                                addCall();
                                 break;
                             }
                         case (int)SubMenuOptions.ShowObject:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                printCall(id);
                                 break;
                             }
                         case (int)SubMenuOptions.ShowList:
                             {
+                                printAllCalls();
                                 break;
                             }
                         case (int)SubMenuOptions.Update:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                updateCall(id);
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteObject:
                             {
+                                int id = int.Parse(Console.ReadLine());
+                                deleteCall(id);
                                 break;
                             }
                         case (int)SubMenuOptions.DeleteAll:
                             {
+                                deleteAllCalls();
                                 break;
                             }
 
@@ -340,5 +527,120 @@ namespace DalTest
 
             return;
         }
+        private static Call createCall()
+        {
+            // Receive input for each parameter
+            Console.WriteLine("Enter the Call ID:");
+            int id = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the Call Type (FoodPackaging, VolunteeringWithChildren, etc. or press Enter for Undefined):");
+            string callTypeInput = Console.ReadLine();
+            CallType callType = string.IsNullOrWhiteSpace(callTypeInput)
+                ? CallType.Undefined
+                : Enum.Parse<CallType>(callTypeInput, true);
+
+            Console.WriteLine("Enter the Call Description (or press Enter to skip):");
+            string? description = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(description)) description = null;
+
+            Console.WriteLine("Enter the Call Full Address:");
+            string fullAddress = Console.ReadLine();
+
+            Console.WriteLine("Enter the Call Latitude:");
+            double latitude = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the Call Longitude:");
+            double longitude = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the Opening Time (or press Enter for current date and time):");
+            string openingTimeInput = Console.ReadLine();
+            DateTime openingTime = string.IsNullOrWhiteSpace(openingTimeInput)
+                ? DateTime.Now
+                : DateTime.Parse(openingTimeInput);
+
+            Console.WriteLine("Enter the Maximum Completion Time (or press Enter for none):");
+            string maxCompletionTimeInput = Console.ReadLine();
+            DateTime? maxCompletionTime = string.IsNullOrWhiteSpace(maxCompletionTimeInput)
+                ? null
+                : DateTime.Parse(maxCompletionTimeInput);
+
+            // Create and return the Call object
+            return new Call(
+                id,
+                callType,
+                description,
+                fullAddress,
+                latitude,
+                longitude,
+                openingTime,
+                maxCompletionTime
+            );
+        }
+        private static void updateCall(int id)
+        {
+            printCall(id);
+            deleteCall(id);
+            addCall();
+        }
+        private static void printAllCalls()
+        {
+            List<Call> temp = s_dalCall.ReadAll();
+            foreach (var call in temp)
+            {
+                printCall(call.Id);
+            }
+        }
+        static void printCall(int id)
+        {
+            Call call = s_dalCall.Read(id);
+            Console.WriteLine("Call Details:");
+            Console.WriteLine($"ID: {call.Id}");
+            Console.WriteLine($"Call Type: {call.CallType}");
+            Console.WriteLine($"Description: {call.Description ?? "No description provided"}");
+            Console.WriteLine($"Full Address: {call.FullAddress}");
+            Console.WriteLine($"Latitude: {call.Latitude}");
+            Console.WriteLine($"Longitude: {call.Longitude}");
+            Console.WriteLine($"Opening Time: {call.OpeningTime}");
+            Console.WriteLine($"Maximum Completion Time: {(call.MaxCompletionTime.HasValue ? call.MaxCompletionTime.ToString() : "No maximum time set")}");
+            Console.WriteLine(); // Add an empty line for better readability
+        }
+
+
+        private static void addCall()
+        {
+            Call temp = createCall();
+            try
+            {
+                s_dalCall.Create(temp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+       
+        private static void deleteAllCalls()
+        {
+            try
+            {
+                s_dalCall.DeleteAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}"); ;
+            }
+        }
+        private static void deleteCall(int id)
+        {
+            try
+            {
+                s_dalCall.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}"); ;
+            }
+        }
+
     }
 }
