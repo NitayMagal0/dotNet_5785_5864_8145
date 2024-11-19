@@ -1,5 +1,7 @@
 ﻿namespace DalApi;
-
+/// <summary>
+/// This is the interface of Config
+/// </summary>
 public interface IConfig
 {
     int NextCallId { get; } //Gets the next CallId.

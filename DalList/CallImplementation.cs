@@ -67,7 +67,7 @@ public class CallImplementation : ICall
     public void Update(Call item)
     {
         Call? unupdatedCall = Read(item.Id);
-        if (unupdatedCall is not null)   
+        if (unupdatedCall is not null)
         {
             Delete(unupdatedCall!.Id);
             Create(item);

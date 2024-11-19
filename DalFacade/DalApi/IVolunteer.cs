@@ -1,5 +1,8 @@
 ﻿namespace DalApi;
 using DO;
+/// <summary>
+/// This is the interface of Volunteer
+/// </summary>
 public interface IVolunteer
 {
     void Create(Volunteer item); //Creates new entity object in DAL

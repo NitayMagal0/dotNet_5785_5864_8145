@@ -1,60 +1,73 @@
 ﻿namespace DalTest;
-
 using System.Text;
-using System.Xml.Linq;
 using Dal;
 using DalApi;
 using DO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
+
+/// <summary>
+/// A class that initializes values ​​in DataSource lists so we can perform tests
+/// </summary>
 public static class Initialization
 {
-    private static IVolunteer? s_dalVolunteer; //stage 1
-    private static IConfig? s_dalConfig; //stage 1
-    private static IAssignment? s_dalAssignment; //stage 1
-    private static ICall? s_dalCall; //stage 1
+    private static IVolunteer? s_dalVolunteer;
+    private static IConfig? s_dalConfig;
+    private static IAssignment? s_dalAssignment;
+    private static ICall? s_dalCall;
     private static readonly Random s_rand = new();
 
     static List<int> VolunteerId = null;
-
+    /// <summary>
+    /// The function connects the 50 calls to the 25 volunteers by assigning two calls to each volunteer
+    /// </summary>
     private static void createAssignment()
     {
+        if (VolunteerId == null) return;
+        int i = 0;                               //The above variable is responsible for advancing the identification number of the calls
         TreatmentEndType? status = null;
-        if (VolunteerId != null)
+        foreach (var id in VolunteerId)
         {
-            foreach(var id in VolunteerId)
+            //In order to have variety in the ending state of the calls, I made these conditional sentences that for each ID will give a different state
+            if (id % 4 == 0)
             {
-                switch (id)
-                {
-                    case int n when n % 4 == 0:
-                        status = TreatmentEndType.CancelledByAdmin;
-                        break;
-                    case int n when n % 3 == 0:
-                        status = TreatmentEndType.CancelledByUser;
-                        break;
-                    case int n when n % 2 == 0:
-                        status = TreatmentEndType.Completed;
-                        break;
-                    case int n when n % 1 == 0:
-                        status = TreatmentEndType.Expired;
-                        break;
-                }      
+                status = TreatmentEndType.CancelledByAdmin;
+            }
+            else if (id % 3 == 0)
+            {
+                status = TreatmentEndType.CancelledByUser;
+            }
+            else if (id % 2 == 0)
+            {
+                status = TreatmentEndType.Completed;
+            }
+            else
+            {
+                status = TreatmentEndType.Expired;
+            }
+
+            //Since there are 50 calls and only 25 volunteers this loop assigns each volunteer two calls
+            for (int j = 0; j < 2; j++, i++)
+            {
                 s_dalAssignment!.Create(new Assignment(
-                0,
-                1000,
-                id,
-                DateTime.Now,
-                DateTime.Now,
-                status
+                    0,
+                    1000 + i,
+                    id,
+                    DateTime.Now,
+                    DateTime.Now,
+                    status
                 ));
+                i++;
             }
         }
     }
 
 
-
+    /// <summary>
+    /// The function generates 50 different calls
+    /// </summary>
     private static void createCall()
     {
+        //An array that holds all the addresses of the calls
         string[] Addresses =
         {
             // Rishon LeTsiyon
@@ -118,6 +131,8 @@ public static class Initialization
             "Eli Cohen St 8, Netanya"
         };
 
+
+        //These two arrays hold all the longitude and latitude of the addresses
         float[] latitudeArray =
         { 31.9643154f, 31.955518f, 31.9676173f, 31.9622751f, 32.0715704f, 32.0181548f, 31.9589889f,
          31.9653336f, 31.9713531f, 31.9630978f, 32.0853361f, 32.0929381f, 32.0921131f, 32.0860497f,
@@ -137,9 +152,15 @@ public static class Initialization
          34.77030269999999f, 34.7795762f, 34.787384f, 34.7538539f, 34.7724563f, 34.7777558f, 34.7873238f,
          34.7768943f, 34.8156124f, 34.8602827f, 34.8482565f, 34.853196f, 34.8536459f, 34.8515711f, 34.8573248f,
          34.857991f, 34.8516656f, 34.853196f, 34.8643746f };
+
+
+        //The date range
         DateTime start = new DateTime(2024, 1, 1);          // Start date
         DateTime today = DateTime.Today;                    // Today's date
         int range = (today - start).Days;                   // Total days between start and today
+
+
+        //A loop that creates 10 calls of type "HelpForFamiliesInNeed"
         for (int i = 0; i < 10; i++)
         {
             DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
@@ -154,6 +175,9 @@ public static class Initialization
                 DateTime.Today.AddDays(2)           //End time
                 ));
         }
+
+
+        //A loop that creates 10 calls of type "FoodPackagingForNeedyFamilies"
         for (int i = 10; i < 20; i++)
         {
             DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
@@ -168,6 +192,9 @@ public static class Initialization
                 DateTime.Today.AddDays(s_rand.Next(15, 60))         //End time
                 ));
         }
+
+
+        //A loop that creates 10 calls of type "CleaningShelters"
         for (int i = 20; i < 30; i++)
         {
             DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
@@ -182,6 +209,9 @@ public static class Initialization
                 DateTime.Today.AddDays(s_rand.Next(15, 60))     //End time
                 ));
         }
+
+
+        //A loop that creates 20 calls of type "HospitalVisitsForMoraleBoost"
         for (int i = 30; i < 50; i++)
         {
             DateTime OpeningTime = start.AddDays(s_rand.Next(range));  // Generate random date within the range
@@ -199,15 +229,20 @@ public static class Initialization
     }
 
 
-
+    /// <summary>
+    /// Creates 25 volunteers
+    /// </summary>
     private static void createVolunteers()
     {
+        //An array that saves the names of the volunteers
         string[] VolunteerNames =
         { "Amit Levi", "Noa Cohen", "Yossi Ben-David", "Tamar Shapiro", "Eitan Goldstein", "Lior Katz",
             "Rivka Avraham", "Shira Mizrahi", "Dan Alon", "Yael Rosenberg", "Ariel Bar-Zvi", "Maya Feldman",
             "David Peretz", "Orly Harel", "Yonatan Stein", "Alma Sela", "Gal Barak", "Michal Shaked",
             "Itai Blum", "Hila Golan", "Ronen Neuman", "Oren Eliav", "Nadav Segal", "Tali Ohayon", "Elior Friedman" };
 
+
+        //An array that saves the emails of the volunteers
         string[] VolunteerEmails =
         {
             "amitlevi@gmail.com", "noacohen@gmail.com", "yossiben-david@gmail.com", "tamarshapiro@gmail.com",
@@ -218,6 +253,8 @@ public static class Initialization
             "ronenneuman@gmail.com", "oreneliav@gmail.com", "nadavsegal@gmail.com", "taliohayon@gmail.com",
             "eliorfriedman@gmail.com" };
 
+
+        //A system that keeps the addresses of the volunteers
         string[] volunteerAddresses =
         {
             // Tel Aviv
@@ -252,6 +289,8 @@ public static class Initialization
             "Shivat Zion St 13, Haifa",
         };
 
+
+        //These arrays store the longitude and latitude of the addresses
         float[] latitudeArray =
         { 32.0608944f, 32.0794167f, 32.0703077f, 32.0638841f,
           32.0711762f, 32.0826139f, 32.0789016f, 32.0562879f,
@@ -267,6 +306,8 @@ public static class Initialization
          35.21595f, 35.2217105f, 35.22011570000001f, 35.2114197f,
          35.2217262f, 35.2189366f, 35.220514f, 35.2184101f, 34.9858606f,
          34.9897136f, 34.9979308f, 34.99322f, 35.0150586f };
+
+
 
         for (int i = 0; i < VolunteerNames.Length; i++)
         {
@@ -295,6 +336,11 @@ public static class Initialization
         }
     }
 
+
+    /// <summary>
+    /// The function creates an invented phone number for the volunteer
+    /// </summary>
+    /// <returns>phone number</returns>
     static string GeneratePhoneNumber()
     {
         Random random = new Random();
@@ -317,6 +363,11 @@ public static class Initialization
         return $"{prefix}{nextDigit}{lastSevenDigits}";
     }
 
+
+    /// <summary>
+    /// The function creates an invented password for the volunteer
+    /// </summary>
+    /// <returns>password</returns>
     static string GenerateRandomPassword()
     {
         Random random = new Random();

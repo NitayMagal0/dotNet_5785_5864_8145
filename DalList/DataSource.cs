@@ -1,5 +1,9 @@
 ﻿namespace Dal;
 
+
+/// <summary>
+/// A static class that contains the database (lists) of the data layer
+/// </summary>
 internal static class DataSource
 {
     internal static List<DO.Volunteer> Volunteers { get; } = new();

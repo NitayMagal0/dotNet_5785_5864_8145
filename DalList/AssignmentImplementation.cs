@@ -67,7 +67,7 @@ public class AssignmentImplementation : IAssignment
     public void Update(Assignment item)
     {
         Assignment? unupdatedAssignment = Read(item.Id);
-        if (unupdatedAssignment is not null)   
+        if (unupdatedAssignment is not null)
         {
             Delete(unupdatedAssignment!.Id);
             Create(item);

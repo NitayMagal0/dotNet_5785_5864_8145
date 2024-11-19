@@ -39,6 +39,7 @@ public class VolunteerImplementation : IVolunteer
         }
     }
 
+
     /// <summary>
     /// Deletes all the volunteers
     /// </summary>
@@ -50,6 +51,7 @@ public class VolunteerImplementation : IVolunteer
         }
     }
 
+
     /// <summary>
     /// Retrieves a volunteer by their ID.
     /// </summary>
@@ -59,6 +61,7 @@ public class VolunteerImplementation : IVolunteer
     {
         return DataSource.Volunteers.Find(x => x.Id == id);
     }
+
 
     /// <summary>
     /// Retrieves all volunteers from the data source.
