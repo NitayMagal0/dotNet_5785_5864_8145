@@ -13,47 +13,7 @@ namespace DalTest
         private static IConfig? s_dalConfig = new ConfigImplementation(); //stage 1
         private static IAssignment? s_dalAssignment = new AssignmentImplementation(); //stage 1
         private static ICall? s_dalCall = new CallImplementation(); //stage 1
-        enum MenuOptions
-        {
-            Exit = 0,                 
-            VolunteerSubMenu = 1,             
-            CallSubMenu = 2, 
-            AssignmentSubMenu = 3,
-            Initialize = 5,
-            ShowAll = 6,
-            ConfigSubMenu = 7,
-            Reset = 8
-        }
-        enum SubMenuOptions
-        {
-            Exit = 0,
-            AddObject = 1,
-            ShowObject = 2,
-            ShowList = 3,
-            Update = 4,
-            DeleteObject = 5,
-            DeleteAll = 6
-        }
-
-        enum ConfigSumMenuOptions
-        {
-            Exit = 0,
-            AddMinuteToClock = 1,
-            AddHourToClock = 2,
-            AddDayToClock = 3,
-            ShowCurrentClockValue = 4,
-            SetCurrentValue = 5,
-            ShowCurrentValue = 6,
-            Reset = 7
-
-        }
-
-        enum ConfigOptions
-        {
-            Clock = 1,
-            RiskRange = 2
-        }
-
+ 
         static void Main(string[] args)
         {
         int conditon;
@@ -139,6 +99,9 @@ namespace DalTest
             while (conditon != 0);
 
         }
+        /// <summary>
+        /// This is the sub menu of config
+        /// </summary>
         private static void configMenu()
         {
             int conditon;
@@ -193,11 +156,28 @@ namespace DalTest
                             }
                         case (int)ConfigSumMenuOptions.SetCurrentValue:
                             {
+                                try
+                                {
+                                    setConfigurationVariable();
+                                }
+                                catch (Exception ex)
+                                {
 
+                                    Console.WriteLine($"Error: {ex.Message}"); 
+                                }
                                 break;
                             }
                         case (int)ConfigSumMenuOptions.ShowCurrentValue:
                             {
+                                try
+                                {
+                                    getConfigurationVariable();
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    Console.WriteLine($"Error: {ex.Message}");
+                                }
                                 break;
                             }
                         case (int)ConfigSumMenuOptions.Reset:
@@ -224,7 +204,9 @@ namespace DalTest
             return;
         }
       
-
+        /// <summary>
+        /// This is the sub menu of volunteer
+        /// </summary>
         private static void volunteerMenu()
         {
             
@@ -302,6 +284,10 @@ namespace DalTest
 
             return;
         }
+
+        /// <summary>
+        /// This function deletes all the volunteers
+        /// </summary>
         private static void deleteAllVolunteers()
         {
             try
@@ -316,6 +302,10 @@ namespace DalTest
             
         }
 
+        /// <summary>
+        /// Get an id of a volunteer and deletes him
+        /// </summary>
+        /// <param name="id">The id of the volunteer we want to delete</param>
         private static void deleteVolunteer(int id)
         {
             try
@@ -328,6 +318,10 @@ namespace DalTest
             }
             
         }
+        /// <summary>
+        /// Get an id of a volunteer and updates him
+        /// </summary>
+        /// <param name="id">The id of the volunteer we want to update</param>
         private static void updateVolunteer(int id)
         {
             printVolunteer(id);
@@ -337,6 +331,9 @@ namespace DalTest
             //recive new values and add them
             addVolunteer();
         }
+       /// <summary>
+       /// Creates a volunteer using the function createVolunteer, and adds him to the list
+       /// </summary>
         private static void addVolunteer()
         {
             //create new volunteer with the func and try to add it to the list
@@ -397,6 +394,10 @@ namespace DalTest
                 IsActive = isActive
             };
         }
+        /// <summary>
+        /// Get an id of a volunteer and prints him values
+        /// </summary>
+        /// <param name="id">The id of the volunteer we want to print</param>
         private static void printVolunteer(int id)
         {
             try
@@ -424,6 +425,9 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+        /// <summary>
+        /// Prints all the volunteers by sending each one to the function printVolunteer
+        /// </summary>
         private static void printAllVolunteers()
         {
             List<Volunteer> temp = s_dalVolunteer!.ReadAll();
@@ -432,6 +436,9 @@ namespace DalTest
                 printVolunteer(vol.Id);
             }
         }
+        /// <summary>
+        /// Sub menu of Assignment
+        /// </summary>
         private static void assignmentMenu()
         {
          
@@ -509,13 +516,19 @@ namespace DalTest
 
             return;
         }
-
+        /// <summary>
+        /// Get an id of an assignment and updates it
+        /// </summary>
+        /// <param name="id">The id of the assignment we want to update</param>
         private static void updateAssignment(int id)
         {
             printAssignment(id);
             deleteAssignment(id);
             addAssignment();
         }
+        /// <summary>
+        /// Prints all the assignments by sending each one to the function printVolunteer
+        /// </summary>
         private static void printAllAssignments()
         {
             List<Assignment> temp = s_dalAssignment!.ReadAll();
@@ -524,6 +537,10 @@ namespace DalTest
                 printAssignment(ass.Id);
             }
         }
+        /// <summary>
+        /// Get an id of an assignment and prints it
+        /// </summary>
+        /// <param name="id">The id of the assignment we want to print</param>
         private static void printAssignment(int id)
         {
             try
@@ -545,7 +562,9 @@ namespace DalTest
             }
             
         }
-
+        /// <summary>
+        /// Creates an assignment using the function createAssignment and adds it to the list
+        /// </summary>
         private static void addAssignment()
         {
             Assignment temp = createAssignment();
@@ -558,6 +577,10 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+        /// <summary>
+        /// Recives values for an assignment and returns it
+        /// </summary>
+        /// <returns>new Assignment</returns>
         private static Assignment createAssignment()
         {
             // Receive input for each parameter
@@ -596,6 +619,9 @@ namespace DalTest
             };
 
         }
+       /// <summary>
+       /// Deletes all the assignments
+       /// </summary>
         private static void deleteAllAssignments()
         {
             try
@@ -607,6 +633,10 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}"); ;
             }
         }
+       /// <summary>
+       /// Recives an id and deletes the assignment with this id
+       /// </summary>
+       /// <param name="id">the id of the assignment we want to delete</param>
         private static void deleteAssignment(int id)
         {
             try
@@ -618,6 +648,9 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}"); ;
             }
         }
+        /// <summary>
+        /// Call sub menu
+        /// </summary>
         private static void callMenu()
         {
             
@@ -694,6 +727,10 @@ namespace DalTest
 
             return;
         }
+        /// <summary>
+        /// Recives values for a call and returns it
+        /// </summary>
+        /// <returns>new Call</returns>
         private static Call createCall()
         {
             // Receive input for each parameter
@@ -732,12 +769,19 @@ namespace DalTest
                 MaxCompletionTime = maxCompletionTime
             };
         }
+        /// <summary>
+        /// Get an id of a call and updates it
+        /// </summary>
+        /// <param name="id">The id of the call we want to update</param>
         private static void updateCall(int id)
         {
             printCall(id);
             deleteCall(id);
             addCall();
         }
+        /// <summary>
+        /// Prints all the calls by sending each one to the function printCall
+        /// </summary>
         private static void printAllCalls()
         {
             List<Call> temp = s_dalCall.ReadAll();
@@ -746,6 +790,10 @@ namespace DalTest
                 printCall(call.Id);
             }
         }
+        /// <summary>
+        /// Get an id of a call and prints it
+        /// </summary>
+        /// <param name="id">The id of the assignment we want to print</param>
         static void printCall(int id)
         {
             try
@@ -770,7 +818,9 @@ namespace DalTest
             }    
         }
 
-
+        /// <summary>
+        /// Creates a call using the function createCall and adds it to the list
+        /// </summary>
         private static void addCall()
         {
             Call temp = createCall();
@@ -783,7 +833,9 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-       
+       /// <summary>
+       /// Deletes all the calls
+       /// </summary>
         private static void deleteAllCalls()
         {
             try
@@ -795,6 +847,10 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}"); ;
             }
         }
+        /// <summary>
+        /// Get an id of a call and deletes it
+        /// </summary>
+        /// <param name="id">The id of the call we want to delete</param>
         private static void deleteCall(int id)
         {
             try
@@ -806,8 +862,11 @@ namespace DalTest
                 Console.WriteLine($"Error: {ex.Message}"); ;
             }
         }
-
-        public static void SetConfigurationVariable()
+        /// <summary>
+        /// The user can choose to change either the Clock or the RiskRange
+        /// </summary>
+        /// <exception cref="FormatException">if the user entered wrong time format</exception>
+        public static void setConfigurationVariable()
         {
             Console.WriteLine("Choose the configuration variable to update:");
             Console.WriteLine("1. Clock");
@@ -820,28 +879,20 @@ namespace DalTest
                 case ConfigOptions.Clock:
                     Console.Write("Enter the new value for Clock (yyyy-MM-dd HH:mm:ss): ");
                     DateTime newClock;
-                    if (DateTime.TryParse(Console.ReadLine(), out newClock))
+                    if (!DateTime.TryParse(Console.ReadLine(), out newClock)) throw new FormatException("Invalid date format.");
                     {
                         s_dalConfig!.Clock = newClock;
                         Console.WriteLine("Clock updated.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid date format.");
                     }
                     break;
 
                 case ConfigOptions.RiskRange:
                     Console.Write("Enter the new value for RiskRange (hh:mm:ss): ");
                     TimeSpan newRiskRange;
-                    if (TimeSpan.TryParse(Console.ReadLine(), out newRiskRange))
+                    if (!TimeSpan.TryParse(Console.ReadLine(), out newRiskRange)) throw new FormatException("Invalid date format.");
                     {
                         s_dalConfig!.RiskRange = newRiskRange;
                         Console.WriteLine("RiskRange updated.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid time format.");
                     }
                     break;
 
@@ -853,8 +904,10 @@ namespace DalTest
             }
         }
 
-
-            public static void GetConfigurationVariable()
+        /// <summary>
+        /// The user can choose to see either the Clock or the RiskRange
+        /// </summary>
+        public static void getConfigurationVariable()
         {
             Console.WriteLine("Choose a configuration variable to view:");
             Console.WriteLine("1. Clock");

@@ -44,3 +44,44 @@ public enum TreatmentEndType
     CancelledByAdmin,
     Expired
 }
+
+public enum MenuOptions
+{
+    Exit = 0,
+    VolunteerSubMenu = 1,
+    CallSubMenu = 2,
+    AssignmentSubMenu = 3,
+    Initialize = 5,
+    ShowAll = 6,
+    ConfigSubMenu = 7,
+    Reset = 8
+}
+public enum SubMenuOptions
+{
+    Exit = 0,
+    AddObject = 1,
+    ShowObject = 2,
+    ShowList = 3,
+    Update = 4,
+    DeleteObject = 5,
+    DeleteAll = 6
+}
+
+public enum ConfigSumMenuOptions
+{
+    Exit = 0,
+    AddMinuteToClock = 1,
+    AddHourToClock = 2,
+    AddDayToClock = 3,
+    ShowCurrentClockValue = 4,
+    SetCurrentValue = 5,
+    ShowCurrentValue = 6,
+    Reset = 7
+
+}
+
+public enum ConfigOptions
+{
+    Clock = 1,
+    RiskRange = 2
+}
