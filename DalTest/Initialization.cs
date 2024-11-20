@@ -16,7 +16,7 @@ public static class Initialization
     private static ICall? s_dalCall;
     private static readonly Random s_rand = new();
 
-    static List<int> VolunteerId = null;
+    static List<int> VolunteerId = new List<int>();
     /// <summary>
     /// The function connects the 50 calls to the 25 volunteers by assigning two calls to each volunteer
     /// </summary>
