@@ -20,7 +20,6 @@ internal class CallImplementation : ICall
     /// This function performs the deletion operation if the item exists otherwise throws an error
     /// </summary>
     /// <param name="id">The Id of the item to be deleted</param>
-    /// <exception cref="InvalidOperationException">Error that the user tried to perform an illegal operation (delete an item that does not exist in the database)</exception>
     public void Delete(int id)
     {
         Call? call = Read(id);
@@ -30,7 +29,7 @@ internal class CallImplementation : ICall
         }
         else
         {
-            throw new InvalidOperationException($"Object of type Call with ID {id} does not exist.");
+            throw new DalDoesNotExistException($"Object of type Call with ID {id} does not exist.");
         }
     }
     // <summary>
@@ -63,7 +62,6 @@ internal class CallImplementation : ICall
     /// This function is responsible for updating the database if the item to be updated exists, if it does not exist it will throw an error
     /// </summary>
     /// <param name="item">The item you want to update</param>
-    /// <exception cref="InvalidOperationException">Error that the user tried to do an illegal operation (update an item that does not exist)</exception>
     public void Update(Call item)
     {
         Call? unupdatedCall = Read(item.Id);
@@ -74,7 +72,7 @@ internal class CallImplementation : ICall
         }
         else                                       // if unupdatedCall is null it means the item doe's not exists
         {
-            throw new InvalidOperationException($"Object of type Call with ID {item.Id} does not exist.");
+            throw new DalDoesNotExistException($"Object of type Call with ID {item.Id} does not exist.");
         }
     }
     /// <summary>

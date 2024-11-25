@@ -880,7 +880,7 @@ namespace DalTest
                 case ConfigOptions.Clock:
                     Console.Write("Enter the new value for Clock (yyyy-MM-dd HH:mm:ss): ");
                     DateTime newClock;
-                    if (!DateTime.TryParse(Console.ReadLine(), out newClock)) throw new FormatException("Invalid date format.");
+                    if (!DateTime.TryParse(Console.ReadLine(), out newClock)) throw new DalInvalidFormatException("Invalid date format.");
                     {
                         s_dal!.Config!.Clock = newClock;
                         Console.WriteLine("Clock updated.");
@@ -890,7 +890,7 @@ namespace DalTest
                 case ConfigOptions.RiskRange:
                     Console.Write("Enter the new value for RiskRange (hh:mm:ss): ");
                     TimeSpan newRiskRange;
-                    if (!TimeSpan.TryParse(Console.ReadLine(), out newRiskRange)) throw new FormatException("Invalid date format.");
+                    if (!TimeSpan.TryParse(Console.ReadLine(), out newRiskRange)) throw new DalInvalidFormatException("Invalid date format.");
                     {
                         s_dal!.Config!.RiskRange = newRiskRange;
                         Console.WriteLine("RiskRange updated.");

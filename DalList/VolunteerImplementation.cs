@@ -15,7 +15,7 @@ internal class VolunteerImplementation : IVolunteer
     public void Create(Volunteer item)
     {
         if (Read(item.Id) is not null)
-            throw new Exception($"Volunteer with ID={item.Id} already exists");
+            throw new DalEntityAlreadyExistsException($"Volunteer with ID={item.Id} already exists");
         else
             DataSource.Volunteers.Add(item);
     }
@@ -35,7 +35,7 @@ internal class VolunteerImplementation : IVolunteer
         }
         else
         {
-            throw new InvalidOperationException($"Object of type Volunteer with ID {id} does not exist.");
+            throw new DalDoesNotExistException($"Object of type Volunteer with ID {id} does not exist.");
         }
     }
 
@@ -87,7 +87,7 @@ internal class VolunteerImplementation : IVolunteer
         }
         else                                                  // if unupdatedVolunteer is null it means the item doe's not exists
         {
-            throw new InvalidOperationException($"Object of type Volunteer with ID {item.Id} does not exist.");
+            throw new DalDoesNotExistException($"Object of type Volunteer with ID {item.Id} does not exist.");
         }
     }
 

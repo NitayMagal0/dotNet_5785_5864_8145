@@ -32,7 +32,7 @@ internal class AssignmentImplementation : IAssignment
         }
         else
         {
-            throw new InvalidOperationException($"Object of type Assignment with ID {id} does not exist.");
+            throw new DalDoesNotExistException($"Object of type Assignment with ID {id} does not exist.");
         }
     }
     /// <summary>
@@ -76,7 +76,7 @@ internal class AssignmentImplementation : IAssignment
         }
         else                                                  // if unupdatedAssignment is null it means the item doe's not exists
         {
-            throw new InvalidOperationException($"Object of type Assignment with ID {item.Id} does not exist.");
+            throw new DalDoesNotExistException($"Object of type Assignment with ID {item.Id} does not exist.");
         }
     }
 
