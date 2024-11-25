@@ -2,10 +2,12 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Linq;
+
 /// <summary>
 /// The implementation of the interface IAssignment
 /// </summary>
-public class AssignmentImplementation : IAssignment
+internal class AssignmentImplementation : IAssignment
 {
     /// <summary>
     /// This method creates a new item and updates the database
@@ -50,14 +52,14 @@ public class AssignmentImplementation : IAssignment
     /// <returns>the requested item or Null</returns>
     public Assignment? Read(int id)
     {
-        return DataSource.Assignments.Find(x => x.Id == id);
+        return DataSource.Assignments.FirstOrDefault(x => x.Id == id);
     }
     /// <summary>
     /// Returns a copy of the original list
     /// </summary>
-    public List<Assignment> ReadAll()
+    public IEnumerable<Assignment> ReadAll(Func<Assignment, bool>? filter = null)
     {
-        return new List<Assignment>(DataSource.Assignments);
+        return filter == null ? DataSource.Assignments : DataSource.Assignments.Where(filter);
     }
     /// <summary>
     /// This function is responsible for updating the database if the item to be updated exists, if it does not exist it will throw an error
@@ -76,5 +78,15 @@ public class AssignmentImplementation : IAssignment
         {
             throw new InvalidOperationException($"Object of type Assignment with ID {item.Id} does not exist.");
         }
+    }
+
+    /// <summary>
+    /// The method looks for the object in the database if it finds it, it returns it. otherwise it returns null
+    /// </summary>
+    /// <param name="filter">The filter function to find the item</param>
+    /// <returns>the requested item or Null</returns>
+    public Assignment? Read(Func<Assignment, bool> filter)
+    {
+        return DataSource.Assignments.FirstOrDefault(filter);
     }
 }

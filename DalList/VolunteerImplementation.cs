@@ -3,7 +3,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
-public class VolunteerImplementation : IVolunteer
+internal class VolunteerImplementation : IVolunteer
 {
     /// <summary>
     /// Adds a new volunteer to the data source.
@@ -59,7 +59,7 @@ public class VolunteerImplementation : IVolunteer
     /// <returns>The volunteer with the specified ID or null if the volunteer doesn't exist</returns>
     public Volunteer? Read(int id)
     {
-        return DataSource.Volunteers.Find(x => x.Id == id);
+        return DataSource.Volunteers.FirstOrDefault(x => x.Id == id);
     }
 
 
@@ -67,9 +67,9 @@ public class VolunteerImplementation : IVolunteer
     /// Retrieves all volunteers from the data source.
     /// </summary>
     /// <returns>A list of all <see cref="Volunteer"/> objects.</returns>
-    public List<Volunteer> ReadAll()
+    public IEnumerable<Volunteer> ReadAll(Func<Volunteer, bool>? filter = null)
     {
-        return new List<Volunteer>(DataSource.Volunteers);
+        return filter == null ? DataSource.Volunteers : DataSource.Volunteers.Where(filter);
     }
 
 
@@ -89,5 +89,15 @@ public class VolunteerImplementation : IVolunteer
         {
             throw new InvalidOperationException($"Object of type Volunteer with ID {item.Id} does not exist.");
         }
+    }
+
+    /// <summary>
+    /// Retrieves a volunteer by a specified filter.
+    /// </summary>
+    /// <param name="filter">The filter to apply to find the volunteer.</param>
+    /// <returns>The volunteer that matches the filter or null if no volunteer matches.</returns>
+    public Volunteer? Read(Func<Volunteer, bool> filter)
+    {
+        return DataSource.Volunteers.FirstOrDefault(filter);
     }
 }

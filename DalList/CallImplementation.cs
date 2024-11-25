@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// The implementation of the interface ICall
 /// </summary>
-public class CallImplementation : ICall
+internal class CallImplementation : ICall
 {
     /// <summary>
     /// This method creates a new item and updates the database
@@ -50,14 +50,14 @@ public class CallImplementation : ICall
     /// <returns>the requested item or Null</returns>
     public Call? Read(int id)
     {
-        return DataSource.Calls.Find(x => x.Id == id);
+        return DataSource.Calls.FirstOrDefault(x => x.Id == id);
     }
     /// <summary>
     /// Returns a copy of the original list
     /// </summary>
-    public List<Call> ReadAll()
+    public IEnumerable<Call> ReadAll(Func<Call, bool>? filter = null)
     {
-        return new List<Call>(DataSource.Calls);
+        return filter == null ? DataSource.Calls : DataSource.Calls.Where(filter);
     }
     /// <summary>
     /// This function is responsible for updating the database if the item to be updated exists, if it does not exist it will throw an error
@@ -76,5 +76,14 @@ public class CallImplementation : ICall
         {
             throw new InvalidOperationException($"Object of type Call with ID {item.Id} does not exist.");
         }
+    }
+    /// <summary>
+    /// The method looks for the object in the database if it finds it, it returns it otherwise it returns null
+    /// </summary>
+    /// <param name="filter">The filter to apply to the items</param>
+    /// <returns>the requested item or Null</returns>
+    public Call? Read(Func<Call, bool> filter)
+    {
+        return DataSource.Calls.FirstOrDefault(filter);
     }
 }

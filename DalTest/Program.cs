@@ -9,10 +9,11 @@ namespace DalTest
 {
     internal class Program
     {
-        private static IVolunteer? s_dalVolunteer = new VolunteerImplementation(); //stage 1
-        private static IConfig? s_dalConfig = new ConfigImplementation(); //stage 1
-        private static IAssignment? s_dalAssignment = new AssignmentImplementation(); //stage 1
-        private static ICall? s_dalCall = new CallImplementation(); //stage 1
+        private static readonly IDal s_dal = new DalList();
+        //private static IVolunteer? s_dalVolunteer = new VolunteerImplementation(); //stage 1
+        //private static IConfig? s_dalConfig = new ConfigImplementation(); //stage 1
+        //private static IAssignment? s_dalAssignment = new AssignmentImplementation(); //stage 1
+        //private static ICall? s_dalCall = new CallImplementation(); //stage 1
  
         static void Main(string[] args)
         {
@@ -53,7 +54,7 @@ namespace DalTest
                             }
                         case (int)MenuOptions.Initialize:
                             {
-                                Initialization.Do(s_dalVolunteer, s_dalCall, s_dalAssignment, s_dalConfig);
+                                Initialization.Do(s_dal);
                                 
                                 break;
                             }
@@ -74,10 +75,10 @@ namespace DalTest
                             }
                         case (int)MenuOptions.Reset:
                             {
-                                s_dalVolunteer!.DeleteAll();
-                                s_dalCall!.DeleteAll();
-                                s_dalAssignment!.DeleteAll();
-                                s_dalConfig!.Reset();
+                                s_dal.Volunteer!.DeleteAll();
+                                s_dal.Call!.DeleteAll();
+                                s_dal.Assignment!.DeleteAll();
+                                s_dal.Config!.Reset();
                                
 
                                 break;
@@ -129,29 +130,29 @@ namespace DalTest
                             {
                                 Console.WriteLine("Enter the amount of minutes to add to the clock");
                                 int min = int.Parse(Console.ReadLine());
-                                s_dalConfig!.Clock = s_dalConfig.Clock.AddMinutes(min);
-                                Console.WriteLine(s_dalConfig.Clock);
+                                s_dal.Config!.Clock = s_dal.Config.Clock.AddMinutes(min);
+                                Console.WriteLine(s_dal.Config.Clock);
                                 break;
                             }
                         case (int)ConfigSumMenuOptions.AddHourToClock:
                             {
                                 Console.WriteLine("Enter the amount of hours to add to the clock");
                                 int hour = int.Parse(Console.ReadLine());
-                                s_dalConfig!.Clock = s_dalConfig.Clock.AddHours(hour);
-                                Console.WriteLine(s_dalConfig.Clock);
+                                s_dal.Config!.Clock = s_dal.Config.Clock.AddHours(hour);
+                                Console.WriteLine(s_dal.Config.Clock);
                                 break;
                             }
                         case (int)ConfigSumMenuOptions.AddDayToClock:
                             {
                                 Console.WriteLine("Enter the amount of days to add to the clock");
                                 int day = int.Parse(Console.ReadLine());
-                                s_dalConfig!.Clock = s_dalConfig.Clock.AddDays(day);
-                                Console.WriteLine(s_dalConfig.Clock);
+                                s_dal.Config!.Clock = s_dal.Config.Clock.AddDays(day);
+                                Console.WriteLine(s_dal.Config.Clock);
                                 break;
                             }
                         case (int)ConfigSumMenuOptions.ShowCurrentClockValue:
                             {
-                                Console.WriteLine(s_dalConfig!.Clock);
+                                Console.WriteLine(s_dal.Config!.Clock);
                                 break;
                             }
                         case (int)ConfigSumMenuOptions.SetCurrentValue:
@@ -182,7 +183,7 @@ namespace DalTest
                             }
                         case (int)ConfigSumMenuOptions.Reset:
                             {
-                                s_dalConfig!.Reset();
+                                s_dal.Config!.Reset();
                                 break;
                             }
                         case (int)ConfigSumMenuOptions.Exit:
@@ -292,7 +293,7 @@ namespace DalTest
         {
             try
             {
-                s_dalVolunteer!.DeleteAll();
+                s_dal.Volunteer!.DeleteAll();
             }
             catch (Exception ex)
             {
@@ -310,7 +311,7 @@ namespace DalTest
         {
             try
             {
-                s_dalVolunteer!.Delete(id);
+                s_dal.Volunteer!.Delete(id);
             }
             catch (Exception ex)
             {
@@ -340,7 +341,7 @@ namespace DalTest
             Volunteer temp = createVolunteer();
             try
             {
-                s_dalVolunteer!.Create(temp);
+                s_dal.Volunteer!.Create(temp);
             }
             catch (Exception ex)
             {
@@ -403,7 +404,7 @@ namespace DalTest
             try
             {
                 Console.WriteLine(" ");
-                Volunteer vol = s_dalVolunteer!.Read(id);
+                Volunteer vol = s_dal.Volunteer!.Read(id);
                 Console.WriteLine($"ID: {vol.Id}");
                 Console.WriteLine($"Full Name: {vol.FullName}");
                 Console.WriteLine($"Phone Number: {vol.MobilePhone}");
@@ -430,7 +431,7 @@ namespace DalTest
         /// </summary>
         private static void printAllVolunteers()
         {
-            List<Volunteer> temp = s_dalVolunteer!.ReadAll();
+            List<Volunteer> temp = s_dal.Volunteer!.ReadAll().ToList();
             foreach (var vol in temp)
             {
                 printVolunteer(vol.Id);
@@ -531,7 +532,7 @@ namespace DalTest
         /// </summary>
         private static void printAllAssignments()
         {
-            List<Assignment> temp = s_dalAssignment!.ReadAll();
+            List<Assignment> temp = s_dal.Assignment!.ReadAll().ToList();
             foreach (var ass in temp)
             {
                 printAssignment(ass.Id);
@@ -546,7 +547,7 @@ namespace DalTest
             try
             {
                 Console.WriteLine();
-                Assignment assignment = s_dalAssignment!.Read(id);
+                Assignment assignment = s_dal.Assignment!.Read(id);
                 Console.WriteLine("Assignment Details:");
                 Console.WriteLine($"ID: {assignment.Id}");
                 Console.WriteLine($"Call ID: {assignment.CallId}");
@@ -570,7 +571,7 @@ namespace DalTest
             Assignment temp = createAssignment();
             try
             {
-                s_dalAssignment!.Create(temp);
+                s_dal.Assignment!.Create(temp);
             }
             catch (Exception ex)
             {
@@ -626,7 +627,7 @@ namespace DalTest
         {
             try
             {
-                s_dalAssignment!.DeleteAll();
+                s_dal.Assignment!.DeleteAll();
             }
             catch (Exception ex)
             {
@@ -641,7 +642,7 @@ namespace DalTest
         {
             try
             {
-                s_dalAssignment!.Delete(id);
+                s_dal.Assignment!.Delete(id);
             }
             catch (Exception ex)
             {
@@ -784,7 +785,7 @@ namespace DalTest
         /// </summary>
         private static void printAllCalls()
         {
-            List<Call> temp = s_dalCall.ReadAll();
+            List<Call> temp = s_dal!.Call.ReadAll().ToList();
             foreach (var call in temp)
             {
                 printCall(call.Id);
@@ -799,7 +800,7 @@ namespace DalTest
             try
             {
                 Console.WriteLine();
-                Call call = s_dalCall!.Read(id);
+                Call call = s_dal!.Call!.Read(id);
                 Console.WriteLine("Call Details:");
                 Console.WriteLine($"ID: {call.Id}");
                 Console.WriteLine($"Call Type: {call.CallType}");
@@ -826,7 +827,7 @@ namespace DalTest
             Call temp = createCall();
             try
             {
-                s_dalCall!.Create(temp);
+                s_dal!.Call!.Create(temp);
             }
             catch (Exception ex)
             {
@@ -840,7 +841,7 @@ namespace DalTest
         {
             try
             {
-                s_dalCall!.DeleteAll();
+                s_dal!.Call!.DeleteAll();
             }
             catch (Exception ex)
             {
@@ -855,7 +856,7 @@ namespace DalTest
         {
             try
             {
-                s_dalCall!.Delete(id);
+                s_dal!.Call!.Delete(id);
             }
             catch (Exception ex)
             {
@@ -881,7 +882,7 @@ namespace DalTest
                     DateTime newClock;
                     if (!DateTime.TryParse(Console.ReadLine(), out newClock)) throw new FormatException("Invalid date format.");
                     {
-                        s_dalConfig!.Clock = newClock;
+                        s_dal!.Config!.Clock = newClock;
                         Console.WriteLine("Clock updated.");
                     }
                     break;
@@ -891,7 +892,7 @@ namespace DalTest
                     TimeSpan newRiskRange;
                     if (!TimeSpan.TryParse(Console.ReadLine(), out newRiskRange)) throw new FormatException("Invalid date format.");
                     {
-                        s_dalConfig!.RiskRange = newRiskRange;
+                        s_dal!.Config!.RiskRange = newRiskRange;
                         Console.WriteLine("RiskRange updated.");
                     }
                     break;
@@ -919,10 +920,10 @@ namespace DalTest
             switch (choice)
             {
                 case ConfigOptions.Clock:
-                    Console.WriteLine($"Clock: {s_dalConfig?.Clock}");
+                    Console.WriteLine($"Clock: {s_dal!.Config?.Clock}");
                     break;
                 case ConfigOptions.RiskRange:
-                    Console.WriteLine($"RiskRange: {s_dalConfig?.RiskRange}");
+                    Console.WriteLine($"RiskRange: {s_dal!.Config?.RiskRange}");
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please enter 1 or 2.");

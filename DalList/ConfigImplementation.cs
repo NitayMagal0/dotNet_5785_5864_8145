@@ -6,7 +6,7 @@ namespace Dal;
 /// The implementation of the config interface
 /// </summary>
 
-public class ConfigImplementation : IConfig
+internal class ConfigImplementation : IConfig
 {
     /// <summary>
     /// These are Get functions for the next running ID number
