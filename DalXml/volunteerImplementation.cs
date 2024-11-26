@@ -69,7 +69,7 @@ internal class volunteerImplementation : IVolunteer
         List<Volunteer> volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
         return volunteers.FirstOrDefault(filter);
     }
-
+    
     /// <summary>
     /// Retrieves all volunteers from the XML file.
     /// </summary>
