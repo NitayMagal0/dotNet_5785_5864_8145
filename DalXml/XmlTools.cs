@@ -127,4 +127,21 @@ static class XMLTools
         int.TryParse((string?)element.Element(name), out var result) ? (int?)result : null;
     #endregion
 
+    #region MyFunctions
+
+    // Method to retrieve a TimeSpan value from an XML file
+    public static TimeSpan GetConfigTimeSpanVal(string xmlFileName, string elemName)
+    {
+        XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
+        string value = root.Element(elemName)?.Value ?? throw new FormatException($"Element {elemName} not found in {xmlFileName}");
+        return TimeSpan.Parse(value);
+    }
+    public static void SetConfigTimeSpanVal(string xmlFileName, string elemName, TimeSpan elemVal)
+    {
+        XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
+        root.Element(elemName)?.SetValue(elemVal.ToString());
+        XMLTools.SaveListToXMLElement(root, xmlFileName);
+    }
+
 }
+#endregion
