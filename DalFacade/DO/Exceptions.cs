@@ -45,3 +45,10 @@ public class DalInvalidFormatException : Exception
 {
     public DalInvalidFormatException(string? message) : base(message) { }
 }
+public class DalXMLFileLoadCreateException : Exception
+{
+    public DalXMLFileLoadCreateException(string? message) : base(message) { }
+}
+
+;
+

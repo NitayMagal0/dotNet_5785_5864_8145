@@ -5,11 +5,21 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stage0", "Stage0\Stage0.csproj", "{0DDCF74A-BD72-49DE-8A42-27DC0F4852CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalFacade", "DalFacade\DalFacade.csproj", "{633A646F-9376-4FAE-8110-FC3127C9B9CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalFacade.csproj", "{633A646F-9376-4FAE-8110-FC3127C9B9CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalList", "DalList\DalList.csproj", "{80BDF625-7754-43F1-A2A5-8E1C09157251}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{80BDF625-7754-43F1-A2A5-8E1C09157251}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalTest", "DalTest\DalTest.csproj", "{51EFBEEA-647E-4BBB-B21D-49DFA9C42134}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.csproj", "{51EFBEEA-647E-4BBB-B21D-49DFA9C42134}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{B1279BE5-743E-4D6A-805A-FC7144AD2668}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{0DA48E31-C8E9-4AA5-8416-69ED989C6BD7}"
+	ProjectSection(SolutionItems) = preProject
+		xml\assignments.xml = xml\assignments.xml
+		xml\calls.xml = xml\calls.xml
+		xml\data-config.xml = xml\data-config.xml
+		xml\volunteers.xml = xml\volunteers.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +43,10 @@ Global
 		{51EFBEEA-647E-4BBB-B21D-49DFA9C42134}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51EFBEEA-647E-4BBB-B21D-49DFA9C42134}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51EFBEEA-647E-4BBB-B21D-49DFA9C42134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1279BE5-743E-4D6A-805A-FC7144AD2668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1279BE5-743E-4D6A-805A-FC7144AD2668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1279BE5-743E-4D6A-805A-FC7144AD2668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1279BE5-743E-4D6A-805A-FC7144AD2668}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
