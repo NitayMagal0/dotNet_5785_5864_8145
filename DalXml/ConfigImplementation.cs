@@ -1,6 +1,8 @@
-﻿namespace Dal
+﻿using DalApi;
+
+namespace Dal
 {
-    internal class ConfigImplementation
+    internal class ConfigImplementation : IConfig
     {
         /// <summary>
         /// These are Get functions for the next running ID number
