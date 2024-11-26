@@ -547,9 +547,9 @@ namespace DalTest
             try
             {
                 Console.WriteLine();
-                Assignment assignment = s_dal.Assignment!.Read(id);
+                Assignment assignment = s_dal.Assignment!.Read(id) ?? throw new DalNullReferenceException("Assignment not found.");
                 Console.WriteLine("Assignment Details:");
-                Console.WriteLine($"ID: {assignment.Id}");
+                Console.WriteLine($"ID: {assignment.Id}");  
                 Console.WriteLine($"Call ID: {assignment.CallId}");
                 Console.WriteLine($"Volunteer ID: {assignment.VolunteerId}");
                 Console.WriteLine($"Admission Time: {assignment.AdmissionTime}");
