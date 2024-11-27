@@ -1,3 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfCall>
-</ArrayOfCall>
+<Calls>
+  <Call>
+    <Id>0</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Rothschild St 22, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.96431541442871</Latitude>
+    <Longitude>34.80449676513672</Longitude>
+    <OpeningTime>2024-06-19T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-29T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+</Calls>
