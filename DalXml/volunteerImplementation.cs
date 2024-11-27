@@ -52,11 +52,20 @@ internal class volunteerImplementation : IVolunteer
     /// </summary>
     /// <param name="id">The ID of the volunteer to retrieve.</param>
     /// <returns>The volunteer with the specified ID, or null if no such volunteer exists.</returns>
-    public Volunteer Read(int id) 
+  /*  public Volunteer Read(int id) 
     {
         List<Volunteer> volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
         return volunteers.FirstOrDefault(v => v.Id == id)
                ?? throw new DalDoesNotExistException($"Volunteer with ID={id} does not exist");
+    } */
+
+    public Volunteer? Read(int id)
+    {
+        // Load the list of volunteers from the XML file.
+        List<Volunteer> volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
+
+        // Return the first volunteer that matches the ID, or null if none exist.
+        return volunteers.FirstOrDefault(v => v.Id == id);
     }
 
     /// <summary>

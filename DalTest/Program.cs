@@ -10,7 +10,9 @@ namespace DalTest;
 
 internal class Program
 {
-    private static readonly IDal s_dal = new DalList();
+    static readonly IDal s_dal = new DalList(); //stage 2
+    //static readonly IDal s_dal = new DalXml(); //stage 3
+
     //private static IVolunteer? s_dalVolunteer = new VolunteerImplementation(); //stage 1
     //private static IConfig? s_dalConfig = new ConfigImplementation(); //stage 1
     //private static IAssignment? s_dalAssignment = new AssignmentImplementation(); //stage 1
@@ -55,7 +57,15 @@ internal class Program
                         }
                     case (int)MenuOptions.Initialize:
                         {
-                            Initialization.Do(s_dal);
+                            try
+                            {
+                                Initialization.Do(s_dal);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error: {ex.Message}");
+                            }
+                           
 
                             break;
                         }

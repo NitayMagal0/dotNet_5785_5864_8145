@@ -1,7 +1,7 @@
 ﻿using DalApi;
 namespace Dal;
 
-    sealed class DalXml : IDal
+    sealed public class DalXml : IDal
     {
         public IAssignment Assignment { get; } = new assignmentImplementation();
         public ICall Call { get; } = new callImplementation();

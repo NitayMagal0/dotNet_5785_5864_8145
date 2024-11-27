@@ -311,8 +311,8 @@ public static class Initialization
             int MIN_ID = 200000000, MAX_ID = 400000000, id;
             do
                 id = s_rand.Next(MIN_ID, MAX_ID);
-            while (s_dal.Volunteer!.Read(id) is not null);
-            VolunteerId.Add(id);                            // i think the problem is here
+            while (s_dal.Volunteer!.Read(id) is not null);  //here its calling for read
+            VolunteerId.Add(id);                            
             string phoneNumber = GeneratePhoneNumber();
             string password = GenerateRandomPassword();
             DateTime start = new DateTime(1995, 1, 1);
