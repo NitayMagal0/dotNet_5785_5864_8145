@@ -1,13 +1,503 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Calls>
   <Call>
-    <Id>0</Id>
+    <Id>1100</Id>
     <CallType>HelpForFamiliesInNeed</CallType>
     <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
     <FullAddress>Rothschild St 22, Rishon LeTsiyon</FullAddress>
     <Latitude>31.96431541442871</Latitude>
     <Longitude>34.80449676513672</Longitude>
-    <OpeningTime>2024-06-19T00:00:00</OpeningTime>
-    <MaxCompletionTime>2024-11-29T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-03-31T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1101</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>HaPalmach St 10, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.95551872253418</Latitude>
+    <Longitude>34.81156921386719</Longitude>
+    <OpeningTime>2024-05-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1102</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Herzl St 56, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.96761703491211</Latitude>
+    <Longitude>34.803466796875</Longitude>
+    <OpeningTime>2024-03-12T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1103</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Sderot Jerusalem St 19, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.9622745513916</Latitude>
+    <Longitude>34.81025695800781</Longitude>
+    <OpeningTime>2024-09-06T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1104</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Marmorek St 7, Rishon LeTsiyon</FullAddress>
+    <Latitude>32.071571350097656</Latitude>
+    <Longitude>34.780635833740234</Longitude>
+    <OpeningTime>2024-07-16T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1105</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Yavne St 9, Rishon LeTsiyon</FullAddress>
+    <Latitude>32.01815414428711</Latitude>
+    <Longitude>34.775901794433594</Longitude>
+    <OpeningTime>2024-06-22T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1106</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Masada St 11, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.958988189697266</Latitude>
+    <Longitude>34.89956283569336</Longitude>
+    <OpeningTime>2024-02-11T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1107</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Bialik St 14, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.965333938598633</Latitude>
+    <Longitude>34.80202102661133</Longitude>
+    <OpeningTime>2024-11-13T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1108</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>Weizmann St 17, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.97135353088379</Latitude>
+    <Longitude>34.80434799194336</Longitude>
+    <OpeningTime>2024-09-13T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1109</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>Assistance provided to families lacking essential resources, such as food, shelter, or financial aid.</Description>
+    <FullAddress>HaShikma St 24, Rishon LeTsiyon</FullAddress>
+    <Latitude>31.963098526000977</Latitude>
+    <Longitude>34.79912567138672</Longitude>
+    <OpeningTime>2024-08-25T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-11-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1110</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Herzl St 31, Petah Tikva</FullAddress>
+    <Latitude>32.08533477783203</Latitude>
+    <Longitude>34.88628387451172</Longitude>
+    <OpeningTime>2024-04-14T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-13T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1111</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Bar Ilan St 6, Petah Tikva</FullAddress>
+    <Latitude>32.09293746948242</Latitude>
+    <Longitude>34.90143585205078</Longitude>
+    <OpeningTime>2024-08-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1112</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Jabotinsky St 88, Petah Tikva</FullAddress>
+    <Latitude>32.09211349487305</Latitude>
+    <Longitude>34.860923767089844</Longitude>
+    <OpeningTime>2024-03-15T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-13T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1113</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>HaHistadrut St 40, Petah Tikva</FullAddress>
+    <Latitude>32.0860481262207</Latitude>
+    <Longitude>34.8867301940918</Longitude>
+    <OpeningTime>2024-02-22T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-24T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1114</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Kaplan St 3, Petah Tikva</FullAddress>
+    <Latitude>32.09049987792969</Latitude>
+    <Longitude>34.86908721923828</Longitude>
+    <OpeningTime>2024-05-10T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-05T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1115</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Sderot Jerusalem St 28, Petah Tikva</FullAddress>
+    <Latitude>32.091793060302734</Latitude>
+    <Longitude>34.90232467651367</Longitude>
+    <OpeningTime>2024-11-07T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-15T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1116</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Hadar St 7, Petah Tikva</FullAddress>
+    <Latitude>32.1595344543457</Latitude>
+    <Longitude>34.972782135009766</Longitude>
+    <OpeningTime>2024-11-07T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-09T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1117</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>HaRav Kook St 5, Petah Tikva</FullAddress>
+    <Latitude>32.082496643066406</Latitude>
+    <Longitude>34.88218688964844</Longitude>
+    <OpeningTime>2024-09-07T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-03T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1118</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Weizmann St 12, Petah Tikva</FullAddress>
+    <Latitude>32.080562591552734</Latitude>
+    <Longitude>34.873104095458984</Longitude>
+    <OpeningTime>2024-06-10T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-11T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1119</Id>
+    <CallType>FoodPackagingForNeedyFamilies</CallType>
+    <Description>Preparing and packaging food items for distribution to families in need.</Description>
+    <FullAddress>Em HaMoshavot St 10, Petah Tikva</FullAddress>
+    <Latitude>32.10280227661133</Latitude>
+    <Longitude>34.86481857299805</Longitude>
+    <OpeningTime>2024-09-19T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-21T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1120</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>Rager Blvd 55, Be'er Sheva</FullAddress>
+    <Latitude>31.25210189819336</Latitude>
+    <Longitude>34.78676986694336</Longitude>
+    <OpeningTime>2024-08-06T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-27T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1121</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>HaNasi St 2, Be'er Sheva</FullAddress>
+    <Latitude>31.25210189819336</Latitude>
+    <Longitude>34.78676986694336</Longitude>
+    <OpeningTime>2024-04-04T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-28T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1122</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>Rothschild St 6, Be'er Sheva</FullAddress>
+    <Latitude>31.241825103759766</Latitude>
+    <Longitude>34.80221176147461</Longitude>
+    <OpeningTime>2024-07-29T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-14T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1123</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>Eli Cohen St 12, Be'er Sheva</FullAddress>
+    <Latitude>31.247270584106445</Latitude>
+    <Longitude>34.80614471435547</Longitude>
+    <OpeningTime>2024-11-25T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-05T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1124</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>Ben Gurion Blvd 3, Be'er Sheva</FullAddress>
+    <Latitude>31.261743545532227</Latitude>
+    <Longitude>34.80076217651367</Longitude>
+    <OpeningTime>2024-07-11T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-23T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1125</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>Shazar St 20, Be'er Sheva</FullAddress>
+    <Latitude>31.25210189819336</Latitude>
+    <Longitude>34.78676986694336</Longitude>
+    <OpeningTime>2024-05-22T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-30T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1126</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>Avraham Avinu St 14, Be'er Sheva</FullAddress>
+    <Latitude>31.264108657836914</Latitude>
+    <Longitude>34.79383850097656</Longitude>
+    <OpeningTime>2024-11-03T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-25T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1127</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>Yitzhak Rager St 75, Be'er Sheva</FullAddress>
+    <Latitude>31.269819259643555</Latitude>
+    <Longitude>34.79815673828125</Longitude>
+    <OpeningTime>2024-05-08T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-02T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1128</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>HaAtzmaut St 18, Be'er Sheva</FullAddress>
+    <Latitude>31.25210189819336</Latitude>
+    <Longitude>34.78676986694336</Longitude>
+    <OpeningTime>2024-09-17T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-15T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1129</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Task focused on cleaning and maintaining shelters for displaced or at-risk individuals.</Description>
+    <FullAddress>HaPalmach St 5, Be'er Sheva</FullAddress>
+    <Latitude>31.237049102783203</Latitude>
+    <Longitude>34.791404724121094</Longitude>
+    <OpeningTime>2024-02-08T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-16T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1130</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Sokolov St 22, Holon</FullAddress>
+    <Latitude>32.022891998291016</Latitude>
+    <Longitude>34.772220611572266</Longitude>
+    <OpeningTime>2024-11-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-10T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1131</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Herzl St 15, Holon</FullAddress>
+    <Latitude>32.06208419799805</Latitude>
+    <Longitude>34.770301818847656</Longitude>
+    <OpeningTime>2024-03-08T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-07T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1132</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>HaRav Kook St 10, Holon</FullAddress>
+    <Latitude>32.02105712890625</Latitude>
+    <Longitude>34.77957534790039</Longitude>
+    <OpeningTime>2024-02-08T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-07T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1133</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Henkin St 9, Holon</FullAddress>
+    <Latitude>32.01583480834961</Latitude>
+    <Longitude>34.787384033203125</Longitude>
+    <OpeningTime>2024-07-15T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-26T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1134</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Dov Hoz St 7, Holon</FullAddress>
+    <Latitude>32.020668029785156</Latitude>
+    <Longitude>34.75385284423828</Longitude>
+    <OpeningTime>2024-10-04T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1135</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Weizmann St 16, Holon</FullAddress>
+    <Latitude>32.02156066894531</Latitude>
+    <Longitude>34.772457122802734</Longitude>
+    <OpeningTime>2024-11-02T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-18T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1136</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Bialik St 3, Holon</FullAddress>
+    <Latitude>32.020530700683594</Latitude>
+    <Longitude>34.77775573730469</Longitude>
+    <OpeningTime>2024-03-02T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-18T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1137</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Pinsker St 6, Holon</FullAddress>
+    <Latitude>32.013038635253906</Latitude>
+    <Longitude>34.787322998046875</Longitude>
+    <OpeningTime>2024-10-05T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-15T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1138</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Shenkar St 19, Holon</FullAddress>
+    <Latitude>32.02601623535156</Latitude>
+    <Longitude>34.776893615722656</Longitude>
+    <OpeningTime>2024-06-16T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-24T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1139</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>HaMeri St 11, Holon</FullAddress>
+    <Latitude>32.07512664794922</Latitude>
+    <Longitude>34.81561279296875</Longitude>
+    <OpeningTime>2024-04-27T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-05T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1140</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Herzl St 47, Netanya</FullAddress>
+    <Latitude>32.32768630981445</Latitude>
+    <Longitude>34.86028289794922</Longitude>
+    <OpeningTime>2024-07-23T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-07T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1141</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Sderot Ben Gurion St 20, Netanya</FullAddress>
+    <Latitude>32.31558609008789</Latitude>
+    <Longitude>34.8482551574707</Longitude>
+    <OpeningTime>2024-11-15T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-14T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1142</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>HaYarden St 5, Netanya</FullAddress>
+    <Latitude>32.32145690917969</Latitude>
+    <Longitude>34.85319519042969</Longitude>
+    <OpeningTime>2024-07-15T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-15T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1143</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Bialik St 18, Netanya</FullAddress>
+    <Latitude>32.33151626586914</Latitude>
+    <Longitude>34.85364532470703</Longitude>
+    <OpeningTime>2024-04-23T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-24T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1144</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>David Hamelech St 10, Netanya</FullAddress>
+    <Latitude>32.3319206237793</Latitude>
+    <Longitude>34.85157012939453</Longitude>
+    <OpeningTime>2024-01-09T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-13T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1145</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Nordau Blvd 12, Netanya</FullAddress>
+    <Latitude>32.28440475463867</Latitude>
+    <Longitude>34.85732650756836</Longitude>
+    <OpeningTime>2024-05-28T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-02T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1146</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Sokolov St 4, Netanya</FullAddress>
+    <Latitude>32.341957092285156</Latitude>
+    <Longitude>34.85799026489258</Longitude>
+    <OpeningTime>2024-01-16T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-03T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1147</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Ussishkin St 15, Netanya</FullAddress>
+    <Latitude>32.328086853027344</Latitude>
+    <Longitude>34.85166549682617</Longitude>
+    <OpeningTime>2024-05-13T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-15T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1148</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>HaSharon Blvd 7, Netanya</FullAddress>
+    <Latitude>32.32145690917969</Latitude>
+    <Longitude>34.85319519042969</Longitude>
+    <OpeningTime>2024-09-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-03T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1149</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Eli Cohen St 8, Netanya</FullAddress>
+    <Latitude>32.32685852050781</Latitude>
+    <Longitude>34.864376068115234</Longitude>
+    <OpeningTime>2024-10-18T00:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-25T00:00:00+02:00</MaxCompletionTime>
   </Call>
 </Calls>

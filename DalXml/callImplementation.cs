@@ -12,11 +12,9 @@ internal class callImplementation : ICall
     public void Create(Call item)   //need to use config to increase the id of call
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
-
-        // Check if the call already exists
+    /*    // Check if the call already exists
         if (callsRootElem.Elements().Any(c => (int?)c.Element("Id") == item.Id))
-            throw new DalEntityAlreadyExistsException($"Call with ID={item.Id} already exists");
-
+            throw new DalEntityAlreadyExistsException($"Call with ID={item.Id} already exists");*/
         // Add the new call
         callsRootElem.Add(createCallElement(item));
 
@@ -72,14 +70,15 @@ internal class callImplementation : ICall
     public void Update(Call item)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
-
+        Call newCall = item with { Id = Config.NextCallId };
         // Find the call and remove it, or throw an exception if not found
+        
         (callsRootElem.Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id)
             ?? throw new DalDoesNotExistException($"Call with ID={item.Id} does not exist"))
-            .Remove();
+            .Remove(); 
 
         // Add the updated call
-        callsRootElem.Add(createCallElement(item));
+        callsRootElem.Add(createCallElement(newCall));
 
         // Save the updated XML
         XMLTools.SaveListToXMLElement(callsRootElem, Config.s_calls_xml);
@@ -87,8 +86,11 @@ internal class callImplementation : ICall
 
     private XElement createCallElement(Call item)
     {
+        // Fetch and increment the next available ID
+        int newId = Config.NextCallId;
+        // Create a new Call object with the incremented ID
         return new XElement("Call",
-            new XElement("Id", item.Id),
+            new XElement("Id", newId),
             new XElement("CallType", item.CallType),
             new XElement("Description", item.Description),
             new XElement("FullAddress", item.FullAddress),
@@ -101,6 +103,7 @@ internal class callImplementation : ICall
 
     private Call getCall(XElement c)
     {
+
         return new Call
         {
             Id = c.ToIntNullable("Id") ?? throw new FormatException("Can't convert Id"),

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using DalApi;
 using DO;
 
@@ -14,10 +15,12 @@ internal class assignmentImplementation : IAssignment
     /// <param name="item">The assignment to create.</param>
     public void Create(Assignment item)
     {
-        List<Assignment> assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
-        Assignment newAssignment = item with { Id = XMLTools.GetAndIncreaseConfigIntVal("config.xml", "NextAssignmentId") };
-        assignments.Add(newAssignment);
-        XMLTools.SaveListToXMLSerializer(assignments, Config.s_assignments_xml);
+        XElement assignmentsRootElem = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
+        /*    // Check if the call already exists
+            if (callsRootElem.Elements().Any(c => (int?)c.Element("Id") == item.Id))
+                throw new DalEntityAlreadyExistsException($"Call with ID={item.Id} already exists");*/
+        // Add the new call
+        assignmentsRootElem.Add(createAssignmentElement(item));
     }
 
     /// <summary>
@@ -94,4 +97,22 @@ internal class assignmentImplementation : IAssignment
         assignments.Add(item);
         XMLTools.SaveListToXMLSerializer(assignments, Config.s_assignments_xml);
     }
+
+    private XElement createAssignmentElement(Assignment item)
+    {
+        // Fetch and increment the next available Assignment ID
+        int newId = Config.NextAssignmentId;
+
+        // Create the XElement for the assignment
+        return new XElement("Assignment",
+            new XElement("Id", newId),
+            new XElement("CallId", item.CallId),
+            new XElement("VolunteerId", item.VolunteerId),
+            new XElement("AdmissionTime", item.AdmissionTime),
+            new XElement("ActualEndTime", item.ActualEndTime),
+            new XElement("TreatmentEndType", item.TreatmentEndType)
+        );
+    }
+
 }
+

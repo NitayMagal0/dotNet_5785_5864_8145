@@ -27,14 +27,14 @@ namespace Dal
         // Properties for next ID
         internal static int NextCallId
         {
-            get => XMLTools.GetAndIncreaseConfigIntVal(s_calls_xml, "NextCallId");
-            private set => XMLTools.SetConfigIntVal(s_calls_xml, "NextCallId", value);
+            get => XMLTools.GetAndIncreaseConfigIntVal(s_data_config_xml, "NextCallId");
+            private set => XMLTools.SetConfigIntVal(s_data_config_xml, "NextCallId", value);
         }
 
         internal static int NextAssignmentId
         {
-            get => XMLTools.GetAndIncreaseConfigIntVal(s_assignments_xml, "NextAssignmentId");
-            set => XMLTools.SetConfigIntVal(s_assignments_xml, "NextAssignmentId", value);
+            get => XMLTools.GetAndIncreaseConfigIntVal(s_data_config_xml, "NextAssignmentId");
+            set => XMLTools.SetConfigIntVal(s_data_config_xml, "NextAssignmentId", value);
         }
 
         // Clock property
