@@ -10,8 +10,8 @@ namespace DalTest;
 
 internal class Program
 {
-    //static readonly IDal s_dal = new DalList(); //stage 2
-    static readonly IDal s_dal = new DalXml(); //stage 3
+    static readonly IDal s_dal = new DalList(); //stage 2
+    //static readonly IDal s_dal = new DalXml(); //stage 3
 
     //private static IVolunteer? s_dalVolunteer = new VolunteerImplementation(); //stage 1
     //private static IConfig? s_dalConfig = new ConfigImplementation(); //stage 1
@@ -65,7 +65,7 @@ internal class Program
                             {
                                 Console.WriteLine($"Error: {ex.Message}");
                             }
-                           
+
 
                             break;
                         }
@@ -524,41 +524,41 @@ internal class Program
                     switch (conditon)
                     {
                         case (int)SubMenuOptions.AddObject:
-                        {
-                            addAssignment();
-                            break;
-                        }
+                            {
+                                addAssignment();
+                                break;
+                            }
                         case (int)SubMenuOptions.ShowObject:
-                        {
-                            Console.WriteLine("Enter the Assignment ID: ");
-                            int id = GetValidatedIdFromConsole();
-                            printAssignment(id);
-                            break;
-                        }
+                            {
+                                Console.WriteLine("Enter the Assignment ID: ");
+                                int id = GetValidatedIdFromConsole();
+                                printAssignment(id);
+                                break;
+                            }
                         case (int)SubMenuOptions.ShowList:
-                        {
-                            printAllAssignments();
-                            break;
-                        }
+                            {
+                                printAllAssignments();
+                                break;
+                            }
                         case (int)SubMenuOptions.Update:
-                        {
-                            Console.WriteLine("Enter the Assignment ID: ");
-                            int id = GetValidatedIdFromConsole();
-                            updateAssignment(id);
-                            break;
-                        }
+                            {
+                                Console.WriteLine("Enter the Assignment ID: ");
+                                int id = GetValidatedIdFromConsole();
+                                updateAssignment(id);
+                                break;
+                            }
                         case (int)SubMenuOptions.DeleteObject:
-                        {
-                            Console.WriteLine("Enter the Assignment ID: ");
-                            int id = GetValidatedIdFromConsole();
-                            deleteAssignment(id);
-                            break;
-                        }
+                            {
+                                Console.WriteLine("Enter the Assignment ID: ");
+                                int id = GetValidatedIdFromConsole();
+                                deleteAssignment(id);
+                                break;
+                            }
                         case (int)SubMenuOptions.DeleteAll:
-                        {
-                            deleteAllAssignments();
-                            break;
-                        }
+                            {
+                                deleteAllAssignments();
+                                break;
+                            }
 
 
 
@@ -570,7 +570,7 @@ internal class Program
                             break;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
                     conditon = -1;

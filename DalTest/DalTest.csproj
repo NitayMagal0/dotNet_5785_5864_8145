@@ -5,8 +5,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<BaseOutputPath>C:\Users\Nitay\source\repos\dotNet_5785_5864_8145\bin</BaseOutputPath>
-    <OutputPath>C:\Users\Nitay\source\repos\dotNet_5785_5864_8145\bin</OutputPath>
+	<BaseOutputPath>C:\Users\ofeko\source\repos\dotNet_5785_5864_8145\bin</BaseOutputPath>
+    <OutputPath>C:\Users\ofeko\source\repos\dotNet_5785_5864_8145\bin</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
