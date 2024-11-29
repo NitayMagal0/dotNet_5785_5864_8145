@@ -21,6 +21,7 @@ internal class assignmentImplementation : IAssignment
                 throw new DalEntityAlreadyExistsException($"Call with ID={item.Id} already exists");*/
         // Add the new call
         assignmentsRootElem.Add(createAssignmentElement(item));
+        XMLTools.SaveListToXMLElement(assignmentsRootElem, Config.s_assignments_xml);
     }
 
     /// <summary>

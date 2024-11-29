@@ -18,12 +18,6 @@ namespace Dal
         internal const int startCallId = 1000;
         internal const int startAssignmentId = 1000;
 
-        internal static void setStart()
-        {
-            XMLTools.SetConfigIntVal(s_calls_xml, "NextCallId", startCallId);
-            XMLTools.SetConfigIntVal(s_assignments_xml, "NextAssignmentId", startAssignmentId);
-        }
-
         // Properties for next ID
         internal static int NextCallId
         {
@@ -54,11 +48,10 @@ namespace Dal
         // Reset method to reset values to defaults
         internal static void Reset()
         {
-            XMLTools.SetConfigIntVal(s_calls_xml, "NextCallId", startCallId);
-            XMLTools.SetConfigIntVal(s_assignments_xml, "NextAssignmentId", startAssignmentId);
             XMLTools.SetConfigDateVal(s_data_config_xml, "Clock", DateTime.Now);
             XMLTools.SetConfigTimeSpanVal(s_data_config_xml, "RiskRange", TimeSpan.Zero);
-
+            XMLTools.SetConfigIntVal(s_data_config_xml, "NextCallId", startCallId);
+            XMLTools.SetConfigIntVal(s_data_config_xml, "NextAssignmentId", startAssignmentId);
         }
     }
 }

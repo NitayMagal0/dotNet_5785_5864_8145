@@ -70,14 +70,18 @@ internal class callImplementation : ICall
     public void Update(Call item)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
-        Call newCall = item with { Id = Config.NextCallId };
-        // Find the call and remove it, or throw an exception if not found
-        
-        (callsRootElem.Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id)
-            ?? throw new DalDoesNotExistException($"Call with ID={item.Id} does not exist"))
-            .Remove(); 
 
-        // Add the updated call
+        // Find the call and remove it; return if not found
+        XElement? existingCallElement = callsRootElem.Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id);
+        if (existingCallElement == null)
+        {
+            return; // Call with the given ID does not exist, exit the method
+        }
+
+        existingCallElement.Remove();
+
+        // Create and add the updated call element
+        Call newCall = item with { Id = Config.NextCallId };
         callsRootElem.Add(createCallElement(newCall));
 
         // Save the updated XML
