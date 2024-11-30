@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Xml.Linq;
 using Dal;
 using DalApi;
 using DO;
@@ -355,12 +356,14 @@ internal class Program
     /// <param name="id">The id of the volunteer we want to update</param>
     private static void updateVolunteer(int id)
     {
-        printVolunteer(id);
-        //s_dalVolunteer.Update(temp); if we dont need to revice new values, then this line is enough
+        //if printVolunteer return false - there is no volunteer with this id in the database, so return
+        if(printVolunteer(id))
+        {
         //delete the volunteer
         deleteVolunteer(id);
-        //recive new values and add them
-        addVolunteer();
+            //recive new values and add them
+            addVolunteer();
+        }
     }
     /// <summary>
     /// Creates a volunteer using the function createVolunteer, and adds him to the list
@@ -457,7 +460,7 @@ internal class Program
     /// Get an id of a volunteer and prints him values
     /// </summary>
     /// <param name="id">The id of the volunteer we want to print</param>
-    private static void printVolunteer(int id)
+    private static bool printVolunteer(int id)
     {
         try
         {
@@ -478,10 +481,13 @@ internal class Program
                 Console.WriteLine("Is Not Active");
 
             Console.WriteLine(" ");
+
+            return true;
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
+            return false;
         }
     }
     /// <summary>
@@ -592,9 +598,12 @@ internal class Program
     /// <param name="id">The id of the assignment we want to update</param>
     private static void updateAssignment(int id)
     {
-        printAssignment(id);
-        deleteAssignment(id);
-        addAssignment();
+        //if printAssignment return false - there is no assignment with this id in the database, so we don't need to delete and add.
+        if (printAssignment(id))
+        {
+            deleteAssignment(id);
+            addAssignment();
+        }       
     }
     /// <summary>
     /// Prints all the assignments by sending each one to the function printVolunteer
@@ -611,7 +620,7 @@ internal class Program
     /// Get an id of an assignment and prints it
     /// </summary>
     /// <param name="id">The id of the assignment we want to print</param>
-    private static void printAssignment(int id)
+    private static bool printAssignment(int id)
     {
         try
         {
@@ -625,10 +634,13 @@ internal class Program
             Console.WriteLine($"Actual End Time: {(assignment.ActualEndTime.HasValue ? assignment.ActualEndTime.ToString() : "Not ended")}");
             Console.WriteLine($"Treatment End Type: {(assignment.TreatmentEndType.HasValue ? assignment.TreatmentEndType.ToString() : "None")}");
             Console.WriteLine(); // For better readability
+
+            return true;
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
+            return false;
         }
     }
     /// <summary>
@@ -914,9 +926,13 @@ internal class Program
     /// <param name="id">The id of the call we want to update</param>
     private static void updateCall(int id)
     {
-        printCall(id);
-        deleteCall(id);
-        addCall();
+        //if printCall return false - there is no call with this id in the database, so we don't need to delete and add.
+        if (printCall(id))
+        {
+            deleteCall(id);
+            addCall();
+        }
+        
     }
     /// <summary>
     /// Prints all the calls by sending each one to the function printCall
@@ -933,7 +949,7 @@ internal class Program
     /// Get an id of a call and prints it
     /// </summary>
     /// <param name="id">The id of the assignment we want to print</param>
-    static void printCall(int id)
+    static bool printCall(int id)
     {
         try
         {
@@ -949,11 +965,13 @@ internal class Program
             Console.WriteLine($"Opening Time: {call.OpeningTime}");
             Console.WriteLine($"Maximum Completion Time: {(call.MaxCompletionTime.HasValue ? call.MaxCompletionTime.ToString() : "No maximum time set")}");
             Console.WriteLine(); // Add an empty line for better readability
+
+            return true;
         }
         catch (Exception ex)
         {
-
             Console.WriteLine($"Error: {ex.Message}");
+            return false;
         }
     }
 
@@ -1082,6 +1100,7 @@ internal class Program
         }
         return id;
     }
+    
 
 }
 

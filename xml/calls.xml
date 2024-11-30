@@ -301,16 +301,6 @@
     <MaxCompletionTime>2025-01-26T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
-    <Id>1030</Id>
-    <CallType>HospitalVisitsForMoraleBoost</CallType>
-    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
-    <FullAddress>Sokolov St 22, Holon</FullAddress>
-    <Latitude>32.022891998291016</Latitude>
-    <Longitude>34.772220611572266</Longitude>
-    <OpeningTime>2024-06-28T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-01T00:00:00+02:00</MaxCompletionTime>
-  </Call>
-  <Call>
     <Id>1031</Id>
     <CallType>HospitalVisitsForMoraleBoost</CallType>
     <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
