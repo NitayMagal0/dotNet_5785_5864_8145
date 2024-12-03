@@ -407,9 +407,13 @@ public static class Initialization
 
         return new string(passwordArray);
     }
-    public static void Do(IDal dal)
+
+    //public static void Do(IDal dal) //stage 2
+    public static void Do() //stage 4
     {
-        s_dal = dal ?? throw new DalNullReferenceException("DAL object can not be null");
+        //s_dal = dal ?? throw new DalNullReferenceException("DAL object can not be null"); //stage 2
+        s_dal = DalApi.Factory.Get; //stage 4
+
 
         Console.WriteLine("Reset Configuration values and List values:");
         s_dal.ResetDB();

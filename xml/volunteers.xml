@@ -350,4 +350,18 @@
     <MaxDistanceForCall xsi:nil="true" />
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
+  <Volunteer>
+    <Id>1</Id>
+    <FullName>1</FullName>
+    <MobilePhone>1</MobilePhone>
+    <Email>1</Email>
+    <Password>1</Password>
+    <FullAddress>1</FullAddress>
+    <Latitude xsi:nil="true" />
+    <Longitude xsi:nil="true" />
+    <Role>Volunteer</Role>
+    <IsActive>true</IsActive>
+    <MaxDistanceForCall xsi:nil="true" />
+    <DistanceType>AirDistance</DistanceType>
+  </Volunteer>
 </ArrayOfVolunteer>
