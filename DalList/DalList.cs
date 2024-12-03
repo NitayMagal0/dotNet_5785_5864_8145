@@ -1,9 +1,12 @@
 ﻿using DalApi;
 namespace Dal;
 
-    sealed public class DalList : IDal
+    sealed internal class DalList : IDal
     {
-        public IAssignment Assignment { get; } = new AssignmentImplementation();
+        public static IDal Instance { get; } = new DalList();
+        private DalList() { }
+
+    public IAssignment Assignment { get; } = new AssignmentImplementation();
         public ICall Call { get; } = new CallImplementation();
         public IConfig Config { get; } = new ConfigImplementation();
         public IVolunteer Volunteer { get; } = new VolunteerImplementation();
