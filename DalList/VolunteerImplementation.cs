@@ -45,10 +45,12 @@ internal class VolunteerImplementation : IVolunteer
     /// </summary>
     public void DeleteAll()
     {
+        DataSource.Volunteers.Clear();
+        /*var volunteersCopy = DataSource.Volunteers.ToList();
         foreach (Volunteer item in DataSource.Volunteers)
         {
             Delete(item.Id);
-        }
+        }*/
     }
 
 

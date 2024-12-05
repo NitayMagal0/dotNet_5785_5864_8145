@@ -37,10 +37,12 @@ internal class CallImplementation : ICall
     /// </summary>
     public void DeleteAll()
     {
+        DataSource.Calls.Clear();
+        /*
         foreach (Call item in DataSource.Calls)
         {
             Delete(item.Id);
-        }
+        }*/
     }
     /// <summary>
     /// The method looks for the object in the database if it finds it it returns it otherwise it returns null

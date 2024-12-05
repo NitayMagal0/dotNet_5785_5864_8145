@@ -40,10 +40,11 @@ internal class AssignmentImplementation : IAssignment
     /// </summary>
     public void DeleteAll()
     {
-        foreach (Assignment item in DataSource.Assignments)
+        DataSource.Assignments.Clear();
+        /*foreach (Assignment item in DataSource.Assignments)
         {
             Delete(item.Id);
-        }
+        }*/
     }
     /// <summary>
     /// The method looks for the object in the database if it finds it it returns it otherwise it returns null
