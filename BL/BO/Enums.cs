@@ -6,9 +6,12 @@
 public enum AssignmentStatus
 {
     Undefined,
+    Open,
     InProgress,
     Completed,
-    Canceled
+    Canceled,
+    OpenAtRisk,
+    InProgressAtRisk
 }
 
 /// <summary>
@@ -39,3 +42,4 @@ public enum DistanceType
     WalkingDistance,
     DrivingDistance
 }
+

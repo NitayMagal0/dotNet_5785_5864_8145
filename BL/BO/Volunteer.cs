@@ -10,13 +10,13 @@ public class Volunteer
     public string? FullAddress { get; set; }
     public double? Latitude { get; set; }
     public double? Longitude { get; set; }
-    Role Role { get; set; }
-    bool IsActive { get; set; }
-    double? MaxDistanceForCall { get; set; }
-    DistanceType DistanceType { get; set; }
-    int HandledCalls { get; set; }
-    int CanceledCalls { get; set; }
-    int ExpiredCalls { get; set; }
-    BO.CallInProgress? CallInProgress { get; set; }
+    public Role Role { get; set; }
+    public bool IsActive { get; set; }
+    public double? MaxDistanceForCall { get; set; }
+    public DistanceType DistanceType { get; set; }
+    public int HandledCalls { get; set; }
+    public int CanceledCalls { get; set; }
+    public int ExpiredCalls { get; set; }
+    public BO.CallInProgress? CallInProgress { get; set; }
 }
 

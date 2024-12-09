@@ -9,6 +9,8 @@ public class VolunteerInList
     public int CanceledCalls { get; set; }
     public int ExpiredCalls { get; set; }
     public int CallsInProgress { get; set; }
-    
+    public int? CallId { get; set; }
+    public CallType CallType { get; set; }
 }
+
 
