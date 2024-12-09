@@ -17,11 +17,12 @@ static class DalConfig
 
     static DalConfig()
     {
-        XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml") ??
+        XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml") ??     //Load the Xml file, do parssing and builds DOM tree of it
                              throw new DalConfigException("dal-config.xml file is not found");
 
+        //save the type of file (list or xml)
         s_dalName =
-            dalConfig.Element("dal")?.Value ?? throw new DalConfigException("<dal> element is missing");
+            dalConfig.Element("dal")?.Value ?? throw new DalConfigException("<dal> element is missing");//if dal-config has list in the Dal line, return list (same for xml)
 
         var packages = dalConfig.Element("dal-packages")?.Elements() ??
                        throw new DalConfigException("<dal-packages> element is missing");
@@ -41,3 +42,7 @@ public class DalConfigException : Exception
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
 
+<<<<<<< HEAD
+=======
+//For more information look at stage4 page 5
+>>>>>>> 263a03ea0ef70dd4db011917882a6b940a20f92a

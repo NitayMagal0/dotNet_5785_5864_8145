@@ -14,6 +14,10 @@ internal class Program
     //static readonly IDal s_dal = new DalList(); //stage 2
     //static readonly IDal s_dal = new DalXml(); //stage 3
     static readonly IDal s_dal = Factory.Get; //stage 4
+<<<<<<< HEAD
+=======
+
+>>>>>>> 263a03ea0ef70dd4db011917882a6b940a20f92a
 
     //private static IVolunteer? s_dalVolunteer = new VolunteerImplementation(); //stage 1
     //private static IConfig? s_dalConfig = new ConfigImplementation(); //stage 1
@@ -61,8 +65,12 @@ internal class Program
                         {
                             try
                             {
+<<<<<<< HEAD
                                 //Initialization.Do(s_dal);
                                 Initialization.Do(); //stage 4
+=======
+                                Initialization.Do();
+>>>>>>> 263a03ea0ef70dd4db011917882a6b940a20f92a
                             }
                             catch (Exception ex)
                             {
@@ -89,10 +97,18 @@ internal class Program
                         }
                     case (int)MenuOptions.Reset:
                         {
-                            s_dal.Volunteer!.DeleteAll();
-                            s_dal.Call!.DeleteAll();
-                            s_dal.Assignment!.DeleteAll();
-                            s_dal.Config!.Reset();
+                            try
+                            {
+                                s_dal.Volunteer!.DeleteAll();
+                                s_dal.Call!.DeleteAll();
+                                s_dal.Assignment!.DeleteAll();
+                                s_dal.Config!.Reset();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error: {ex.Message}");
+                            }
+
 
 
                             break;
