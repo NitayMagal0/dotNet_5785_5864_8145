@@ -1,10 +1,7 @@
 ﻿namespace DalApi;
 public static class Factory
 {
-<<<<<<< HEAD
-=======
     //Creates/returns an initialization of DalList/DalXml (depends on whats written in dal-config.xml)
->>>>>>> 263a03ea0ef70dd4db011917882a6b940a20f92a
     public static IDal Get
     {
         get
@@ -16,15 +13,6 @@ public static class Factory
             catch (Exception ex) { throw new DalConfigException($"Failed to load {dal.Package}.dll package", ex); }
 
             Type type = Type.GetType($"{dal.Namespace}.{dal.Class}, {dal.Package}") ??
-<<<<<<< HEAD
-                        throw new DalConfigException($"Class {dal.Namespace}.{dal.Class} was not found in {dal.Package}.dll");
-
-            return type.GetProperty("Instance", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)?.GetValue(null) as IDal ??
-                   throw new DalConfigException($"Class {dal.Class} is not a singleton or wrong property name for Instance");
-        }
-    }
-}
-=======
                 throw new DalConfigException($"Class {dal.Namespace}.{dal.Class} was not found in {dal.Package}.dll");
 
             return type.GetProperty("Instance", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)?.GetValue(null) as IDal ??
@@ -32,4 +20,3 @@ public static class Factory
         }
     }
 }
->>>>>>> 263a03ea0ef70dd4db011917882a6b940a20f92a

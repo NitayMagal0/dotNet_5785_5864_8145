@@ -407,18 +407,8 @@ public static class Initialization
 
         return new string(passwordArray);
     }
-<<<<<<< HEAD
-
-    //public static void Do(IDal dal) //stage 2
-    public static void Do() //stage 4
-    {
-        //s_dal = dal ?? throw new DalNullReferenceException("DAL object can not be null"); //stage 2
-        s_dal = DalApi.Factory.Get; //stage 4
-
-=======
  
     public static void Do() 
->>>>>>> 263a03ea0ef70dd4db011917882a6b940a20f92a
 
     {
         s_dal = DalApi.Factory.Get;

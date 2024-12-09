@@ -42,7 +42,4 @@ public class DalConfigException : Exception
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
 
-<<<<<<< HEAD
-=======
 //For more information look at stage4 page 5
->>>>>>> 263a03ea0ef70dd4db011917882a6b940a20f92a
