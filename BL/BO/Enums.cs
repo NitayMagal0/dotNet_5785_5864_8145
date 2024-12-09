@@ -1,5 +1,4 @@
-﻿
-namespace BO;
+﻿namespace BO;
 
 /// <summary>
 /// Enum to define the status of the assignment.
@@ -21,4 +20,22 @@ public enum CallType
     FoodPackaging,
     VolunteeringWithChildren,
     // Add additional call types as needed
+}
+
+/// <summary>
+/// enum for the roles in the system
+/// </summary>
+public enum Role
+{
+    Manager,
+    Volunteer
+}
+/// <summary>
+/// enum for user preference of distance calculation
+/// </summary>
+public enum DistanceType
+{
+    AirDistance,
+    WalkingDistance,
+    DrivingDistance
 }

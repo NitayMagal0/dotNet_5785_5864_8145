@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+
+public class CallAssignInList
 {
-    public class CallAssignInList
-    {
-    }
 }
+
