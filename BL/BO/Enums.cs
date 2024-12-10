@@ -42,4 +42,11 @@ public enum DistanceType
     WalkingDistance,
     DrivingDistance
 }
+public enum TimeUnit
+{
+    second,
+    minute,
+    hour,
+}
+
 

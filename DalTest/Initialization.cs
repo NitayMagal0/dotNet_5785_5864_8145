@@ -71,62 +71,63 @@ public static class Initialization
             "Rothschild St 22, Rishon LeTsiyon",
             "HaPalmach St 10, Rishon LeTsiyon",
             "Herzl St 56, Rishon LeTsiyon",
-            "Sderot Jerusalem St 19, Rishon LeTsiyon",
-            "Marmorek St 7, Rishon LeTsiyon",
-            "Yavne St 9, Rishon LeTsiyon",
+            "HaPalmach St 10, Rishon LeTsiyon",
+            "HaPalmach St 14, Rishon LeTsiyon",
+            "HaAlon St 15, Rishon LeTsiyon",
             "Masada St 11, Rishon LeTsiyon",
             "Bialik St 14, Rishon LeTsiyon",
             "Weizmann St 17, Rishon LeTsiyon",
             "HaShikma St 24, Rishon LeTsiyon",
 
             // Petah Tikva
-            "Herzl St 31, Petah Tikva",
             "Bar Ilan St 6, Petah Tikva",
-            "Jabotinsky St 88, Petah Tikva",
+            "Kaplan St 1, Petah Tikva",
             "HaHistadrut St 40, Petah Tikva",
             "Kaplan St 3, Petah Tikva",
-            "Sderot Jerusalem St 28, Petah Tikva",
+            "Emek Dotan St 5, Petah Tikva",
             "Hadar St 7, Petah Tikva",
             "HaRav Kook St 5, Petah Tikva",
             "Weizmann St 12, Petah Tikva",
             "Em HaMoshavot St 10, Petah Tikva",
+            "Weizmann St 17, Petah Tikva",
 
             // Be'er Sheva
-            "Rager Blvd 55, Be'er Sheva",
             "HaNasi St 2, Be'er Sheva",
             "Rothschild St 6, Be'er Sheva",
             "Eli Cohen St 12, Be'er Sheva",
             "Ben Gurion Blvd 3, Be'er Sheva",
             "Shazar St 20, Be'er Sheva",
             "Avraham Avinu St 14, Be'er Sheva",
-            "Yitzhak Rager St 75, Be'er Sheva",
+            "Avraham Avinu St 17, Be'er Sheva",
             "HaAtzmaut St 18, Be'er Sheva",
             "HaPalmach St 5, Be'er Sheva",
+            "Eli Cohen St 11, Be'er Sheva",
 
             // Holon
             "Sokolov St 22, Holon",
-            "Herzl St 15, Holon",
+            "Weizmann St 16, Holon",
             "HaRav Kook St 10, Holon",
-            "Henkin St 9, Holon",
             "Dov Hoz St 7, Holon",
             "Weizmann St 16, Holon",
             "Bialik St 3, Holon",
             "Pinsker St 6, Holon",
             "Shenkar St 19, Holon",
-            "HaMeri St 11, Holon",
+            "Weizmann St 16, Holon",
+            "Weizmann St 16, Holon",
 
             // Netanya
-            "Herzl St 47, Netanya",
-            "Sderot Ben Gurion St 20, Netanya",
             "HaYarden St 5, Netanya",
             "Bialik St 18, Netanya",
-            "David Hamelech St 10, Netanya",
-            "Nordau Blvd 12, Netanya",
+            "Ussishkin St 14, Netanya",
+            "Ussishkin St 11, Netanya",
             "Sokolov St 4, Netanya",
             "Ussishkin St 15, Netanya",
-            "HaSharon Blvd 7, Netanya",
-            "Eli Cohen St 8, Netanya"
-        };
+            "Eli Cohen St 8, Netanya",
+            "Ussishkin St 15, Netanya",
+            "Eli Cohen St 8, Netanya",
+            "Bialik St 18, Netanya"
+};
+
 
 
         //These two arrays hold all the longitude and latitude of the addresses
@@ -422,5 +423,7 @@ public static class Initialization
         Console.WriteLine("Initializing Assignments list:");
         createAssignment();
     }
+
+   
 }
 
