@@ -37,14 +37,24 @@ public enum CallType
 /// <summary>
 /// enum for the treatment termination type
 /// </summary>
-public enum TreatmentEndType
+//public enum TreatmentEndType
+//{
+//    Completed,
+//    CancelledByUser,
+//    CancelledByAdmin,
+//    Expired
+//}
+public enum AssignmentStatus
 {
+    Undefined,
+    Open,
+    InProgress,
     Completed,
     CancelledByUser,
     CancelledByAdmin,
-    Expired
+    OpenAtRisk,
+    InProgressAtRisk
 }
-
 public enum MenuOptions
 {
     Exit = 0,

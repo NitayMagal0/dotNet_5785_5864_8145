@@ -9,7 +9,8 @@ public enum AssignmentStatus
     Open,
     InProgress,
     Completed,
-    Canceled,
+    CancelledByUser,
+    CancelledByAdmin,
     OpenAtRisk,
     InProgressAtRisk
 }

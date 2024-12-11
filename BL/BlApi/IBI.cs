@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace BlApi;
 
-namespace BlApi
+public interface IBI
 {
-    public interface IBI
-    {
-        IVolunteer Volunteer { get; }
-        ICall Call { get; }
-        IAdmin Admin { get; }
-    }
+    IVolunteer Volunteer { get; }
+    ICall Call { get; }
+    IAdmin Admin { get; }
 }
+

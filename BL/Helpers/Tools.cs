@@ -52,7 +52,7 @@ internal static class Tools
     public static (double Latitude, double Longitude) GetCoordinates(string address)
         {
             if (string.IsNullOrWhiteSpace(address))
-                throw new ArgumentException("Address cannot be null or empty.");
+                throw new Exception("Address cannot be null or empty.");
 
             using (HttpClient client = new HttpClient())
             {

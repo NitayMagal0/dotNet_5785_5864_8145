@@ -111,7 +111,7 @@ internal class assignmentImplementation : IAssignment
             new XElement("VolunteerId", item.VolunteerId),
             new XElement("AdmissionTime", item.AdmissionTime),
             new XElement("ActualEndTime", item.ActualEndTime),
-            new XElement("TreatmentEndType", item.TreatmentEndType)
+            new XElement("TreatmentEndType", item.AssignmentStatus)
         );
     }
 
