@@ -25,16 +25,17 @@ public enum CallStatus
 }
 
 /// <summary>
-/// Enum to define the type of call.
+/// enum for the call type
 /// </summary>
 public enum CallType
 {
     Undefined,
-    FoodPackaging,
-    VolunteeringWithChildren,
-    // Add additional call types as needed
-    None
+    CleaningShelters,
+    HelpForFamiliesInNeed,
+    FoodPackagingForNeedyFamilies,
+    HospitalVisitsForMoraleBoost
 }
+
 
 /// <summary>
 /// enum for the roles in the system
