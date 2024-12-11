@@ -1,7 +1,5 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using DO;
+﻿using DO;
 using Helpers;
-using Call = BO.Call;
 
 namespace BlImplementation;
 using BlApi;
@@ -163,7 +161,7 @@ internal class CallImplementation : ICall
 
         // Group calls by their status and count the number of calls in each group
         var callCountsByStatus = calls
-            .GroupBy(call => (int)call.CallType)
+            .GroupBy(call => (int)call.Call)
             .Select(group => new { Status = group.Key, Count = group.Count() })
             .ToDictionary(g => g.Status, g => g.Count);
 
@@ -213,7 +211,7 @@ internal class CallImplementation : ICall
             Longitude = doCall.Longitude,
             OpeningTime = doCall.OpeningTime,
             MaxCompletionTime = doCall.MaxCompletionTime,
-            Status = (BO.AssignmentStatus)doCall.Status,
+            Status = doCall.Status,
             CallAssigns = callAssignments
         };
 

@@ -35,26 +35,16 @@ public enum CallType
 
 
 /// <summary>
-/// enum for the treatment termination type
+/// Enum to define the status of the assignment.
 /// </summary>
-//public enum TreatmentEndType
-//{
-//    Completed,
-//    CancelledByUser,
-//    CancelledByAdmin,
-//    Expired
-//}
 public enum AssignmentStatus
 {
-    Undefined,
-    Open,
-    InProgress,
     Completed,
     CancelledByUser,
     CancelledByAdmin,
-    OpenAtRisk,
-    InProgressAtRisk
+    ExpiredCancellation
 }
+
 public enum MenuOptions
 {
     Exit = 0,
@@ -94,4 +84,18 @@ public enum ConfigOptions
 {
     Clock = 1,
     RiskRange = 2
+}
+
+
+/// <summary>
+/// Enum to define the status of the call.
+/// </summary>
+public enum CallStatus
+{
+    Open,
+    InProgress,
+    Completed,
+    Expired,
+    OpenAtRisk,
+    InProgressAtRisk
 }

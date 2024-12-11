@@ -5,12 +5,21 @@
 /// </summary>
 public enum AssignmentStatus
 {
-    Undefined,
-    Open,
-    InProgress,
     Completed,
     CancelledByUser,
     CancelledByAdmin,
+    ExpiredCancellation
+}
+
+/// <summary>
+/// Enum to define the status of the call.
+/// </summary>
+public enum CallStatus
+{
+    Open,
+    InProgress,
+    Completed,
+    Expired,
     OpenAtRisk,
     InProgressAtRisk
 }
@@ -24,6 +33,7 @@ public enum CallType
     FoodPackaging,
     VolunteeringWithChildren,
     // Add additional call types as needed
+    None
 }
 
 /// <summary>

@@ -15,6 +15,6 @@ public class CallInProgress
     public DateTime? MaxCompletionTime { get; set; } // Nullable maximum completion time for the call
     public DateTime EntryTime { get; set; }  //The time the volunteer entered the call 
     public double? DistanceFromVolunteer { get; set; } // Nullable distance from the volunteer
-    public AssignmentStatus? Status { get; set; } // Nullable enum for the status of the assignment
+    public CallStatus? Status { get; set; } // Nullable enum for the status of the assignment
 }
 

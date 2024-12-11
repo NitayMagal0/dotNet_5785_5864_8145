@@ -642,7 +642,7 @@ internal class Program
             Console.WriteLine($"Volunteer ID: {assignment.VolunteerId}");
             Console.WriteLine($"Admission Time: {assignment.AdmissionTime}");
             Console.WriteLine($"Actual End Time: {(assignment.ActualEndTime.HasValue ? assignment.ActualEndTime.ToString() : "Not ended")}");
-            Console.WriteLine($"Treatment End Type: {(assignment.TreatmentEndType.HasValue ? assignment.TreatmentEndType.ToString() : "None")}");
+            Console.WriteLine($"Treatment End Type: {(assignment.AssignmentStatus.HasValue ? assignment.AssignmentStatus.ToString() : "None")}");
             Console.WriteLine(); // For better readability
 
             return true;
@@ -678,7 +678,7 @@ internal class Program
         bool flag = false;
         DateTime admissionTime = DateTime.Now;
         DateTime? actualEndTime = null;
-        TreatmentEndType? treatmentEndType = null;
+        AssignmentStatus? treatmentEndType = null;
         do
         {
             try
@@ -716,7 +716,7 @@ internal class Program
                 string treatmentEndTypeInput = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(treatmentEndTypeInput))
                 {
-                    if (!Enum.TryParse<TreatmentEndType>(treatmentEndTypeInput, true, out TreatmentEndType parsedTreatmentEndType))
+                    if (!Enum.TryParse<AssignmentStatus>(treatmentEndTypeInput, true, out AssignmentStatus parsedTreatmentEndType))
                     {
                         throw new FormatException("Treatment End Type is invalid!");
                     }
@@ -738,7 +738,7 @@ internal class Program
             VolunteerId = volunteerId,
             AdmissionTime = admissionTime,
             ActualEndTime = actualEndTime,
-            TreatmentEndType = treatmentEndType
+            AssignmentStatus = treatmentEndType
         };
 
     }

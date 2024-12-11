@@ -21,25 +21,25 @@ public static class Initialization
     {
         if (VolunteerId == null) return;
         int i = 0;                               //The above variable is responsible for advancing the identification number of the calls
-        TreatmentEndType? status = null;
+        AssignmentStatus? status = null;
         foreach (var id in VolunteerId)
         {
             //In order to have variety in the ending state of the calls, I made these conditional sentences that for each ID will give a different state
             if (id % 4 == 0)
             {
-                status = TreatmentEndType.CancelledByAdmin;
+                status = AssignmentStatus.CancelledByAdmin;
             }
             else if (id % 3 == 0)
             {
-                status = TreatmentEndType.CancelledByUser;
+                status = AssignmentStatus.CancelledByUser;
             }
             else if (id % 2 == 0)
             {
-                status = TreatmentEndType.Completed;
+                status = AssignmentStatus.Completed;
             }
             else
             {
-                status = TreatmentEndType.Expired;
+                status = AssignmentStatus.ExpiredCancellation;
             }
 
             //Since there are 50 calls and only 25 volunteers this loop assigns each volunteer two calls

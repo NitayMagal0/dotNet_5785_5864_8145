@@ -19,8 +19,9 @@ public record Call
     double Latitude = 0.0,
     double Longitude = 0.0,
     DateTime OpeningTime = default,
-    DateTime? MaxCompletionTime = null
-)
+    DateTime? MaxCompletionTime = null,
+    CallStatus Status = CallStatus.Open
+    )
 {
     /// <summary>
     /// A default constructor initializes with default values.
