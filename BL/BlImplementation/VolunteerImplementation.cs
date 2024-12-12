@@ -1,7 +1,9 @@
 ﻿namespace BlImplementation;
 using Helpers;
 using BlApi;
+using BO;
 
+//need to fix the exeptions
 internal class VolunteerImplementation : IVolunteer
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
@@ -14,6 +16,10 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">Thrown when the volunteer cannot be added.</exception>
     public void AddVolunteer(BO.Volunteer vol)
     {
+        //check if the volunteer is valid
+        if (!VolunteerManager.IsValidVolunteer(vol))
+            throw new Exception("Invalid volunteer details");
+
         var volunteer = VolunteerManager.ConvertVolunteerToDO(vol);
         try
         {
@@ -32,6 +38,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">Thrown when the volunteer cannot be deleted.</exception>
     public void DeleteVolunteer(int id)
     {
+        //need to check if he has a call in progress of if he never had a call
         try
         {
             var volunteers = _dal.Volunteer.ReadAll().ToList();
@@ -123,14 +130,23 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">Thrown when the volunteer cannot be updated.</exception>
     public void UpdateVolunteer(int id, BO.Volunteer vol)
     {
-        try
-        {
-            _dal.Volunteer.Update(VolunteerManager.ConvertVolunteerToDO(vol));
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Couldn't update the volunteer", ex);
-        }
+        //need to check if he is Admin/the volunteer himself
+
+        //check if the volunteer is valid
+        if (!VolunteerManager.IsValidVolunteer(vol))
+            throw new Exception("Invalid volunteer details");
+      
+            vol.Latitude = Tools.GetCoordinates(vol.FullAddress).Item1;
+            vol.Longitude = Tools.GetCoordinates(vol.FullAddress).Item2;
+            try
+            {
+                _dal.Volunteer.Update(VolunteerManager.ConvertVolunteerToDO(vol));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Couldn't update the volunteer", ex);
+            }
+        
     }
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Helpers
@@ -136,6 +137,80 @@ namespace Helpers
                 throw new Exception("Volunteer doesn't exist");
             return ConvertVolunteerToBO(volunteer);
         }
-      
+        /// <summary>
+        /// Validates if the given volunteer object is valid.
+        /// </summary>
+        /// <param name="volunteer">The volunteer to validate</param>
+        /// <returns>True - the volunteer values are valid, false otherwise</returns>
+        internal static bool IsValidVolunteer(BO.Volunteer volunteer)
+        {
+            //if the address is not valid, the coordinates will not be valid so it will catch the exception and return false
+            //if the email, id or phone number is not valid, it will return false
+            try
+            {
+                Tools.GetCoordinates(volunteer.FullAddress);
+                return IsValidEmail(volunteer.Email) && IsValidPhoneNumber(volunteer.MobilePhone) && IsValidID(volunteer.Id);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Validation failed: {ex.Message}");
+                return false;
+            }
+        }
+        /// <summary>
+        /// Validates if the given string is a valid email.
+        /// </summary>
+        /// <param name="email">The string to validate</param>
+        /// <returns>True - the string is a valid email address, false otherwise</returns>
+        internal static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            // Regular expression to validate email format
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
+            return Regex.IsMatch(email, emailPattern);
+        }
+
+        /// <summary>
+        /// Validates if the given string is a valid phone number.
+        /// </summary>
+        /// <param name="phone">The string to validate</param>
+        /// <returns>True if the phone number is valid, false otherwise.</returns>
+        internal static bool IsValidPhoneNumber(string phone)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
+                return false;
+
+            // Regular expression to validate phone number format
+            string phonePattern = @"^0\d([\d]{0,1})([-]{0,1})\d{7}$";
+
+            return Regex.IsMatch(phone, phonePattern);
+        }
+
+        /// <summary>
+        /// Validates if the given ID is a valid Israeli ID.
+        /// </summary>
+        /// <param name="id">The ID to validate.</param>
+        /// <returns>True if the ID is valid, false otherwise.</returns>
+        internal static bool IsValidID(int id)
+        {
+            string idString = id.ToString("D9"); // Ensure the ID has 9 digits
+            if (idString.Length != 9)
+                return false;
+
+            int sum = 0;
+            for (int i = 0; i < 9; i++)
+            {
+                int digit = idString[i] - '0';
+                int multiplied = digit * ((i % 2) + 1);
+                sum += (multiplied > 9) ? multiplied - 9 : multiplied;
+            }
+
+            return sum % 10 == 0;
+        }
+
     }
 }
