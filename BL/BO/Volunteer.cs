@@ -19,4 +19,16 @@ public class Volunteer
     public int ExpiredCalls { get; set; }
     public BO.CallInProgress? CallInProgress { get; set; }
 }
+/*int Id,
+    string FullName,
+    string MobilePhone,
+    string Email,
+    string? Password = null,
+    string? FullAddress = null,
+    double? Latitude = null,
+    double? Longitude = null,
+    Role Role = Role.Volunteer,
+    bool IsActive = false,
+    double? MaxDistanceForCall = null,
+    DistanceType DistanceType = DistanceType.AirDistance*/
 
