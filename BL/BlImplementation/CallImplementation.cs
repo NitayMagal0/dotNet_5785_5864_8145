@@ -70,31 +70,29 @@ internal class CallImplementation : ICall
             var call = _dal.Call.Read(callId);
             if (call == null)
             {
-                throw new BO.BoDoesNotExistException($"Call with ID {callId} does not exist.");
+                throw new ArgumentException("Call not found");
             }
 
-            // Check if the call has not expired
-            if (call.Status.ToString() == "Expired" )
+            // Check if the call has expired
+            var systemClock = ClockManager.Now;
+            if (call.MaxCompletionTime.HasValue && systemClock > call.MaxCompletionTime.Value)
             {
                 throw new InvalidOperationException("The call has expired");
             }
 
-            // Check if the call is not already being handled
-            var assignments = _dal.Assignment.ReadAll();
-            foreach (var assignment in assignments)
+            // Check if the call is already being handled
+            var assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
+            if (assignments.Any(a => a.ActualEndTime == null))
             {
-                if (assignment.CallId == callId)
-                {
-                    throw new InvalidOperationException("The call is already being handled by another volunteer");
-                }
+                throw new InvalidOperationException("The call is already being handled by another volunteer");
             }
 
-            // Create a new assignment entity
+            // Create a new assignment
             var newAssignment = new DO.Assignment
             {
                 CallId = callId,
                 VolunteerId = volunteerId,
-                AdmissionTime = ClockManager.Now,
+                AdmissionTime = systemClock,
                 ActualEndTime = null,
                 AssignmentStatus = null
             };
@@ -104,8 +102,8 @@ internal class CallImplementation : ICall
         }
         catch (Exception ex)
         {
-            // Catch any exceptions from the data layer and re-throw them with an appropriate message
-            throw new ApplicationException("An error occurred while assigning the call to the volunteer", ex);
+            // Catch any exceptions thrown by the data layer and re-throw them
+            throw new InvalidOperationException("Failed to assign the call to the volunteer", ex);
         }
     }
 
@@ -117,17 +115,17 @@ internal class CallImplementation : ICall
             var assignment = _dal.Assignment.Read(assignmentId);
             if (assignment == null)
             {
-                throw new BO.BoDoesNotExistException($"Assignment with ID {assignmentId} does not exist.");
+                throw new ArgumentException("Assignment not found");
             }
 
             // Check for cancellation permission
             var requester = _dal.Volunteer.Read(requesterId);
             if (requester == null)
             {
-                throw new BO.BoDoesNotExistException($"Volunteer with ID {assignmentId} does not exist.");
+                throw new UnauthorizedAccessException("Requester not found");
             }
 
-            bool isAdmin = requester.Role == DO.Role.Manager;
+            bool isAdmin = requester.Role == VolunteerManager.MapRole(Role.Manager);
             bool isVolunteer = assignment.VolunteerId == requesterId;
 
             if (!isAdmin && !isVolunteer)
@@ -135,28 +133,28 @@ internal class CallImplementation : ICall
                 throw new UnauthorizedAccessException("The requester is not authorized to cancel this assignment");
             }
 
-            // Check if the assignment is open and not processed
-            if (assignment.AssignmentStatus != null || assignment.ActualEndTime != null)
+            // Check if the assignment is open (actual end time is still null)
+            if (assignment.ActualEndTime != null)
             {
-                throw new InvalidOperationException("The assignment is not open or has already been processed/canceled/expired");
+                throw new InvalidOperationException("The assignment is already completed or canceled");
             }
 
-            // Update the assignment entity
-            Assignment newAssignment = new Assignment(
-                assignment.Id,
-                assignment.CallId,
-                assignment.VolunteerId,
-                assignment.AdmissionTime,
-                Helpers.ClockManager.Now,
-                isVolunteer ? DO.AssignmentStatus.CancelledByUser : DO.AssignmentStatus.CancelledByAdmin);
-
-            // Apply the update to the data layer
+            var newAssignment = new DO.Assignment
+            {
+                Id = assignment.Id,
+                CallId = assignment.CallId,
+                VolunteerId = assignment.VolunteerId,
+                AdmissionTime = assignment.AdmissionTime,
+                ActualEndTime = ClockManager.Now,
+                AssignmentStatus = isVolunteer ? DO.AssignmentStatus.CancelledByUser : DO.AssignmentStatus.CancelledByAdmin
+            };
+            // Attempt to update the assignment in the data layer
             _dal.Assignment.Update(newAssignment);
         }
         catch (Exception ex)
         {
-            // Catch any exceptions from the data layer and re-throw them with an appropriate message
-            throw new ApplicationException("An error occurred while canceling the assignment", ex);
+            // Catch any exceptions thrown by the data layer and re-throw them
+            throw new InvalidOperationException("Failed to cancel the assignment", ex);
         }
     }
 
@@ -193,52 +191,49 @@ internal class CallImplementation : ICall
     }
 
     public IEnumerable<OpenCallInList> GetAvailableOpenCallsForVolunteer(int volunteerId, CallType? callTypeFilter, Enum? sortField)
-    {
-        // Retrieve the volunteer's details to get their location
+    { 
+        // Retrieve volunteer details to get their location
         var volunteer = _dal.Volunteer.Read(volunteerId);
         if (volunteer == null)
         {
-            throw new ArgumentException("Invalid volunteer ID");
+            throw new InvalidOperationException("Volunteer not found");
         }
 
-        // Retrieve all open calls from the data layer
-        var openCalls = _dal.Call.ReadAll()
-            .Where(call => call.Status == DO.CallStatus.Open || call.Status == DO.CallStatus.OpenAtRisk)
-            .Select(call => new BO.OpenCallInList
-            {
-                Id = call.Id,
-                CallType = (BO.CallType)call.CallType,
-                FullAddress = call.FullAddress,
-                OpeningTime = call.OpeningTime,
-                MaxCompletionTime = call.MaxCompletionTime,
-                DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude ?? 0.0, volunteer.Longitude ?? 0.0, call.Latitude, call.Longitude)
-            });
+        // Retrieve all calls and convert them to BO.Call
+        var allCalls = _dal.Call.ReadAll().Select(CallManager.ConvertCallToBO).ToList();
 
-        // Filter by call type if provided
+        // Filter calls by status
+        var openCalls = allCalls.Where(c => c.Status == BO.CallStatus.Open || c.Status == BO.CallStatus.OpenAtRisk).ToList();
+
+        // Filter calls by call type if a filter is provided
         if (callTypeFilter.HasValue)
         {
-            openCalls = openCalls.Where(call => call.CallType == callTypeFilter.Value);
+            openCalls = openCalls.Where(c => c.CallType == callTypeFilter.Value).ToList();
         }
 
-        // Sort by the specified field if provided, otherwise sort by call number (Id)
-        if (sortField != null)
+        // Convert BO.Call to BO.OpenCallInList and calculate distance from volunteer
+        var openCallInLists = openCalls.Select(c => new BO.OpenCallInList
         {
-            openCalls = sortField.ToString() switch
-            {
-                nameof(BO.OpenCallInList.CallType) => openCalls.OrderBy(call => call.CallType),
-                nameof(BO.OpenCallInList.FullAddress) => openCalls.OrderBy(call => call.FullAddress),
-                nameof(BO.OpenCallInList.OpeningTime) => openCalls.OrderBy(call => call.OpeningTime),
-                nameof(BO.OpenCallInList.MaxCompletionTime) => openCalls.OrderBy(call => call.MaxCompletionTime),
-                nameof(BO.OpenCallInList.DistanceFromVolunteer) => openCalls.OrderBy(call => call.DistanceFromVolunteer),
-                _ => openCalls.OrderBy(call => call.Id)
-            };
+            Id = c.Id,
+            CallType = c.CallType,
+            CallTypeDescription = c.Description,
+            FullAddress = c.FullAddress,
+            OpeningTime = c.OpeningTime,
+            MaxCompletionTime = c.MaxCompletionTime,
+            DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude ?? 0.0, volunteer.Longitude ?? 0.0, c.Latitude ?? 0.0, c.Longitude ?? 0.0)
+        }).ToList();
+
+        // Sort the list by the specified field or by call number if no sort field is provided
+        if (sortField == null)
+        {
+            openCallInLists = openCallInLists.OrderBy(c => c.Id).ToList();
         }
         else
         {
-            openCalls = openCalls.OrderBy(call => call.Id);
+            openCallInLists = openCallInLists.OrderBy(c => c.GetType().GetProperty(sortField.ToString()).GetValue(c)).ToList();
         }
 
-        return openCalls.ToList();
+        return openCallInLists;
     }
 
     public int[] GetCallCountsByStatus()
@@ -378,7 +373,7 @@ internal class CallImplementation : ICall
             var assignment = _dal.Assignment.Read(assignmentId);
             if (assignment == null)
             {
-                throw new BoDoesNotExistException($"Assignment with ID: {assignmentId} does not exist");
+                throw new ArgumentException("Assignment not found");
             }
 
             // Check if the requester is the volunteer for whom the assignment is registered
@@ -387,27 +382,29 @@ internal class CallImplementation : ICall
                 throw new UnauthorizedAccessException("The requester is not authorized to complete this assignment");
             }
 
-            // Check if the assignment is open
-            if (assignment.AssignmentStatus != null || assignment.ActualEndTime != null)
+            // Check if the assignment is open (actual end time is still null)
+            if (assignment.ActualEndTime != null)
             {
-                throw new InvalidOperationException("The assignment is not open or has already been completed/canceled/expired");
+                throw new InvalidOperationException("The assignment is already completed or canceled");
             }
 
-            Assignment newAssignment = new Assignment(
-                assignment.Id,
-                assignment.CallId,
-                assignment.VolunteerId,
-                assignment.AdmissionTime, 
-                Helpers.ClockManager.Now,
-                DO.AssignmentStatus.Completed);
-
-            // Apply the update to the data layer
+            // Update the assignment with the end type "treated" and the actual end time
+            var newAssignment = new DO.Assignment
+            {
+                Id = assignment.Id,
+                CallId = assignment.CallId,
+                VolunteerId = assignment.VolunteerId,
+                AdmissionTime = assignment.AdmissionTime,
+                ActualEndTime = ClockManager.Now,
+                AssignmentStatus = DO.AssignmentStatus.Completed
+            };
+            // Attempt to update the assignment in the data layer
             _dal.Assignment.Update(newAssignment);
         }
         catch (Exception ex)
         {
-            // Catch any exceptions from the data layer and re-throw them with an appropriate message
-            throw new ApplicationException("An error occurred while marking the assignment as completed", ex);
+            // Catch any exceptions thrown by the data layer and re-throw them
+            throw new InvalidOperationException("Failed to complete the assignment", ex);
         }
     }
 
