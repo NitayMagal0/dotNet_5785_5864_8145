@@ -84,7 +84,12 @@ internal class VolunteerImplementation : IVolunteer
             var volunteers = _dal.Volunteer.ReadAll().ToList();
 
             // Step 2: Filter the volunteers based on the isActive parameter
-            var filteredVolunteers = volunteers.Where(v => isActive == null || v.IsActive == isActive).ToList();
+                    var filteredVolunteers = volunteers
+            .Where(v => isActive == null || v.IsActive == isActive)
+            .OrderBy(v => VolunteerInList == null ? v.Id : VolunteerInList)
+            .ToList();
+
+           
 
             // Step 3: Convert each filtered volunteer to a BO volunteer
             var volunteersList = new List<BO.Volunteer>();

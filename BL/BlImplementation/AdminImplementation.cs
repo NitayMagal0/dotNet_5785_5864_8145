@@ -6,6 +6,11 @@ internal class AdminImplementation : IAdmin
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
+    /// <summary>
+    /// Forwards the clock by the specified time unit.
+    /// </summary>
+    /// <param name="unit">The time unit to forward the clock by.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when an unsupported time unit is provided.</exception>
     public void ForwardClock(BO.TimeUnit unit)
     {
         switch (unit)
@@ -27,11 +32,18 @@ internal class AdminImplementation : IAdmin
         }
     }
 
+    /// <summary>
+    /// Retrieves the current time from the clock.
+    /// </summary>
+    /// <returns>Current time</returns>
     public DateTime GetClock()
     {
         return ClockManager.Now;
     }
 
+    /// <summary>
+    /// Initializes the database 
+    /// </summary>
     public void InitializeDB()
     {
         try
@@ -46,6 +58,9 @@ internal class AdminImplementation : IAdmin
 
     }
 
+    /// <summary>
+    /// Resets the database
+    /// </summary>
     public void ResetDB()
     {
         try
@@ -61,11 +76,19 @@ internal class AdminImplementation : IAdmin
         }
     }
 
+    /// <summary>
+    /// Retrieves the maximum range for a call.
+    /// </summary>
+    /// <returns>Maximum time range</returns>
     public TimeSpan GetMaxRange()
     {
         return _dal.Config.RiskRange;
     }
 
+    /// <summary>
+    /// Sets the maximum range for a call.
+    /// </summary>
+    /// <param name="maxRange">The new maximum time range for a call.</param>
     public void SetMaxRange(TimeSpan maxRange)
     {
         _dal.Config.RiskRange = maxRange;
