@@ -220,7 +220,7 @@ internal class CallImplementation : ICall
             FullAddress = c.FullAddress,
             OpeningTime = c.OpeningTime,
             MaxCompletionTime = c.MaxCompletionTime,
-            DistanceFromVolunteer = Tools.CalculateDistance(volunteer.Latitude ?? 0.0, volunteer.Longitude ?? 0.0, c.Latitude ?? 0.0, c.Longitude ?? 0.0)
+            DistanceFromVolunteer = Tools.GetResultAsync((volunteer.Latitude ?? 0.0, volunteer.Longitude ?? 0.0), (c.Latitude ?? 0.0, c.Longitude ?? 0.0), calculationType: DistanceType.AirDistance)
         }).ToList();
 
         // Sort the list by the specified field or by call number if no sort field is provided

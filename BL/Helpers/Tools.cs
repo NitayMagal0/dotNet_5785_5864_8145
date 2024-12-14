@@ -3,11 +3,15 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Xml.Linq;
+using System.Text.Json;
+using BO;
 
 namespace Helpers;
 
 internal static class Tools
 {
+    private const string ApiEndpoint = "https://api.openrouteservice.org/v2/directions/foot-walking";
+    private const string _apiKey = "5b3ce3597851110001cf62484a4dcf303a1d4a5a936fe4d23963d50e";
     public static string ToStringProperty<T>(this T t)
     {
         if (t == null) return string.Empty;
@@ -85,24 +89,77 @@ internal static class Tools
             return (latitude, longitude);
         }
     }
-    public static double CalculateDistance(double lat1, double lon1, double? lat2, double? lon2)
+
+
+    private static double CalculateAirDistance((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination)
     {
-        if (lat2 == null || lon2 == null)
-        {
-            return double.MaxValue;
-        }
+        const double EarthRadiusKm = 6371;
 
-        var R = 6371; // Radius of the Earth in kilometers
-        var dLat = (lat2.Value - lat1) * Math.PI / 180.0;
-        var dLon = (lon2.Value - lon1) * Math.PI / 180.0;
+        double toRadians(double angle) => Math.PI * angle / 180.0;
+
+        var lat1 = toRadians(start.Latitude);
+        var lon1 = toRadians(start.Longitude);
+        var lat2 = toRadians(destination.Latitude);
+        var lon2 = toRadians(destination.Longitude);
+
+        var dLat = lat2 - lat1;
+        var dLon = lon2 - lon1;
+
         var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-                Math.Cos(lat1 * Math.PI / 180.0) * Math.Cos(lat2.Value * Math.PI / 180.0) *
+                Math.Cos(lat1) * Math.Cos(lat2) *
                 Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
-        var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-        var distance = R * c; // Distance in kilometers
 
-        return distance;
+        var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+        return EarthRadiusKm * c; // Returns distance in kilometers
     }
+
+    private static async Task<double> GetTravelTimeAsync((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination, string profile)
+    {
+        using var httpClient = new HttpClient();
+
+        var requestUri = $"{ApiEndpoint}{profile}?api_key={_apiKey}&start={start.Longitude},{start.Latitude}&end={destination.Longitude},{destination.Latitude}";
+
+        try
+        {
+            var response = await httpClient.GetAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var jsonDoc = JsonDocument.Parse(jsonResponse);
+
+            var durationInSeconds = jsonDoc.RootElement
+                .GetProperty("features")[0]
+                .GetProperty("properties")
+                .GetProperty("segments")[0]
+                .GetProperty("duration").GetDouble();
+
+            return Math.Round(durationInSeconds / 60, 2); // Returns duration in minutes
+        }
+        catch (Exception)
+        {
+            return -1; // Return -1 on error
+        }
+    }
+
+    public static double GetResultAsync((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination, DistanceType calculationType)
+    {
+        switch (calculationType)
+        {
+            case DistanceType.AirDistance:
+                return CalculateAirDistance(start, destination);
+
+            case DistanceType.WalkingDistance:
+                return  GetTravelTimeAsync(start, destination, "foot-walking").Result;
+
+            case DistanceType.DrivingDistance:
+                return GetTravelTimeAsync(start, destination, "driving-car").Result;
+
+            default:
+                throw new ArgumentException("Invalid calculation type");
+        }
+    }
+
 }
 
 
