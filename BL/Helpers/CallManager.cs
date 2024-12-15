@@ -1,4 +1,6 @@
-﻿using BO;
+﻿using BlApi;
+using BlImplementation;
+using BO;
 using DO;
 
 namespace Helpers;
@@ -21,7 +23,7 @@ internal class CallManager
         // Handle case where no assignments exist
         if (!assignments.Any())
         {
-            if (call.MaxCompletionTime.HasValue && (call.MaxCompletionTime.Value - systemClock).TotalDays <= 5)
+            if (call.MaxCompletionTime.HasValue && (call.MaxCompletionTime.Value - systemClock).TotalDays <= AdminImplementation.GetMaxRange())
             {
                 return BO.CallStatus.OpenAtRisk;
             }

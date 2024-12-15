@@ -3,7 +3,7 @@
 public class Call
 {
     public int Id { get; init; }
-    public CallType CallType { get; init; }
+    public CallType CallType { get; set; }
     public string? Description { get; set; } // Nullable string for additional call details
     public string? FullAddress { get; set; } // Full address of the call location
     public double? Latitude { get; set; }

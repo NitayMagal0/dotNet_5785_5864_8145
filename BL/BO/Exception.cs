@@ -4,55 +4,55 @@
 /// Exception thrown when an entity is not found in the database.
 /// </summary>
 [Serializable]
-public class BoDoesNotExistException : Exception
+public class BlDoesNotExistException : Exception
 {
-    public BoDoesNotExistException(string? message) : base(message) { }
-    public BoDoesNotExistException(string? message, Exception? innerException) : base(message, innerException) { }
+    public BlDoesNotExistException(string? message) : base(message) { }
+    public BlDoesNotExistException(string message, Exception innerException) : base(message, innerException) { }
 }
 
 /// <summary>
 /// Exception thrown when an invalid operation is attempted on an entity.
 /// </summary>
 [Serializable]
-public class BoInvalidOperationException : Exception
+public class BlInvalidOperationException : Exception
 {
-    public BoInvalidOperationException(string? message) : base(message) { }
-    public BoInvalidOperationException(string? message, Exception? innerException) : base(message, innerException) { }
+    public BlInvalidOperationException(string? message) : base(message) { }
+    public BlInvalidOperationException(string message, Exception innerException) : base(message, innerException) { }
 }
 
 /// <summary>
 /// Exception thrown when an entity already exists in the database.
 /// </summary>
 [Serializable]
-public class BoEntityAlreadyExistsException : Exception
+public class BlEntityAlreadyExistsException : Exception
 {
-    public BoEntityAlreadyExistsException(string? message) : base(message) { }
-    public BoEntityAlreadyExistsException(string? message, Exception? innerException) : base(message, innerException) { }
+    public BlEntityAlreadyExistsException(string? message) : base(message) { }
+    public BlEntityAlreadyExistsException(string message, Exception innerException) : base(message, innerException) { }
 }
 
 /// <summary>
 /// Exception thrown when a null reference is encountered where an object is expected.
 /// </summary>
 [Serializable]
-public class BoNullReferenceException : Exception
+public class BlNullReferenceException : Exception
 {
-    public BoNullReferenceException(string? message) : base(message) { }
-    public BoNullReferenceException(string? message, Exception? innerException) : base(message, innerException) { }
+    public BlNullReferenceException(string? message) : base(message) { }
+    public BlNullReferenceException(string message, Exception innerException) : base(message, innerException) { }
 }
 
 /// <summary>
 /// Exception thrown when an invalid format is encountered.
 /// </summary>
 [Serializable]
-public class BoInvalidFormatException : Exception
+public class BlInvalidFormatException : Exception
 {
-    public BoInvalidFormatException(string? message) : base(message) { }
-    public BoInvalidFormatException(string? message, Exception? innerException) : base(message, innerException) { }
+    public BlInvalidFormatException(string? message) : base(message) { }
+    public BlInvalidFormatException(string message, Exception innerException) : base(message, innerException) { }
 }
 
 [Serializable]
-public class BoXMLFileLoadCreateException : Exception
+public class BlXMLFileLoadCreateException : Exception
 {
-    public BoXMLFileLoadCreateException(string? message) : base(message) { }
-    public BoXMLFileLoadCreateException(string? message, Exception? innerException) : base(message, innerException) { }
+    public BlXMLFileLoadCreateException(string? message) : base(message) { }
+    public BlXMLFileLoadCreateException(string message, Exception innerException) : base(message, innerException) { }
 }

@@ -15,27 +15,27 @@ internal class CallImplementation : ICall
     {
         if (call == null)
         {
-            throw new BoNullReferenceException("Call cannot be null");
+            throw new BlNullReferenceException("Call cannot be null");
         }
 
         if (call.Latitude < -90 || call.Latitude > 90)
         {
-            throw new BoInvalidFormatException("Latitude must be between -90 and 90");
+            throw new BlInvalidFormatException("Latitude must be between -90 and 90");
         }
 
         if (call.Longitude < -180 || call.Longitude > 180)
         {
-            throw new BoInvalidFormatException("Longitude must be between -180 and 180");
+            throw new BlInvalidFormatException("Longitude must be between -180 and 180");
         }
 
         if (call.OpeningTime == default)
         {
-            throw new BoInvalidFormatException("Opening time must be set");
+            throw new BlInvalidFormatException("Opening time must be set");
         }
 
         if (call.MaxCompletionTime.HasValue && call.MaxCompletionTime.Value <= call.OpeningTime)
         {
-            throw new BoInvalidFormatException("Max completion time must be after the opening time");
+            throw new BlInvalidFormatException("Max completion time must be after the opening time");
         }
         // Convert BO.Call to DO.Call
         var doCall = new DO.Call
@@ -425,7 +425,7 @@ internal class CallImplementation : ICall
         }
         catch
         {
-            throw new BO.BoInvalidFormatException("Invalid address.");
+            throw new BO.BlInvalidFormatException("Invalid address.");
         }
 
         // Create DO.Call from BO.Call
