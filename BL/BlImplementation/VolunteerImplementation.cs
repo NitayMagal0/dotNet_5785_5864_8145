@@ -2,7 +2,9 @@
 using Helpers;
 using BlApi;
 using BO;
-//need to fix the exeptions
+using DO;
+
+//need to fix the exeptions and getvolunteerdetails
 internal class VolunteerImplementation : IVolunteer
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
@@ -11,15 +13,15 @@ internal class VolunteerImplementation : IVolunteer
     /// <summary>
     /// Adds a new volunteer to the system.
     /// </summary>
-    /// <param name="vol">The volunteer object to be added.</param>
+    /// <param name="volunteerToAdd">The volunteer object to be added.</param>
     /// <exception cref="Exception">Thrown when the volunteer cannot be added.</exception>
-    public void AddVolunteer(BO.Volunteer vol)
+    public void AddVolunteer(BO.Volunteer volunteerToAdd)
     {
         //check if the volunteer is valid
-        if (!VolunteerManager.IsValidVolunteer(vol))
+        if (!VolunteerManager.IsValidVolunteer(volunteerToAdd))
             throw new Exception("Invalid volunteer details");
 
-        var volunteer = VolunteerManager.ConvertVolunteerToDO(vol);
+        var volunteer = VolunteerManager.ConvertVolunteerToDO(volunteerToAdd);
         try
         {
             _dal.Volunteer.Create(volunteer);
@@ -38,15 +40,24 @@ internal class VolunteerImplementation : IVolunteer
     public void DeleteVolunteer(int id)
     {
         //need to check if he has a call in progress of if he never had a call
-        try
-        {
-            var volunteers = _dal.Volunteer.ReadAll().ToList();
-            volunteers.RemoveAll(v => v.Id == id);
+        var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
+        //Check if the volunteer has a call in progress (might not be working cause when we convert to BO im not sure whats happening to CallInProgress)
+        if (volunteer.CallInProgress == null)
+        {//the document says to check if he either has a call in progress or never had a call so i think its enough to check if he has a call in progress
+            try
+            {
+                _dal.Volunteer.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Couldn't delete the volunteer", ex);
+            }
         }
-        catch (Exception ex)
+        else
         {
-            throw new Exception("Couldn't delete the volunteer", ex);
+            throw new Exception("Volunteer has a call in progress");
         }
+
     }
 
     /// <summary>
@@ -59,15 +70,45 @@ internal class VolunteerImplementation : IVolunteer
     {
         try
         {
-            var volunteer = _dal.Volunteer.Read(id);
-            var BOvolunteer = VolunteerManager.ConvertVolunteerToBO(volunteer);
-            return BOvolunteer;
+            // Step 1: Retrieve the volunteer details from the DAL
+            var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
+
+            
+
+            // Step 2: Retrieve the call in progress for the volunteer, if any
+            var callInProgressDO = _dal.Assignment.Read(a => a.VolunteerId == id && a.Status == CallStatus.InProgress);
+            var call = new BO.Call();
+            if (callInProgressDO != null)
+            {
+                volunteer.CallInProgress = new BO.CallInProgress
+                {
+                    Id = callInProgressDO.Id,
+                    CallId = callInProgressDO.CallId,
+                    CallType = callInProgressDO.CallType,
+                    Description = _dal.Call.Read(callInProgressDO.CallId).Description,
+                    FullAddress = _dal.Call.Read(callInProgressDO.CallId).FullAddress,
+                    OpeningTime = _dal.Call.Read(callInProgressDO.CallId).OpeningTime,
+                    MaxCompletionTime = _dal.Call.Read(callInProgressDO.CallId).MaxCompletionTime,
+                    EntryTime = callInProgressDO.EntryTime,
+                    DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
+                    (_dal.Call.Read(callInProgressDO.CallId).Latitude, _dal.Call.Read(callInProgressDO.CallId).Longitude)),
+                 
+
+
+
+
+                 };
+            }
+
+            // Step 4: Return the volunteer details
+            return volunteer;
         }
         catch (Exception ex)
         {
             throw new Exception($"Volunteer with id {id} doesn't exist", ex);
         }
     }
+
 
     /// <summary>
     /// Retrieves a list of volunteers based on their active status .
@@ -76,31 +117,41 @@ internal class VolunteerImplementation : IVolunteer
     /// <param name="VolunteerInList">Optional enumeration parameter to filter volunteers.</param>
     /// <returns>A list of volunteers matching the specified criteria.</returns>
     /// <exception cref="Exception">Thrown when there is an error retrieving the volunteers list.</exception>
-    public IEnumerable<BO.Volunteer> GetVolunteersList(bool? isActive, Enum? VolunteerInList)
+    public IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive, Enum? VolunteerInList)
     {
         try
         {
-            // Step 1: Retrieve all volunteers from the DAL
-            var volunteers = _dal.Volunteer.ReadAll().ToList();
-
+            // Step 1: Retrieve all volunteers from the DAL and convert to BO
+            var volunteers = _dal.Volunteer.ReadAll().Select(VolunteerManager.ConvertVolunteerToBO).ToList();
             // Step 2: Filter the volunteers based on the isActive parameter
-                    var filteredVolunteers = volunteers
-            .Where(v => isActive == null || v.IsActive == isActive)
-            .OrderBy(v => VolunteerInList == null ? v.Id : VolunteerInList)
-            .ToList();
+            var filteredVolunteers = volunteers.Where(v => isActive == null || v.IsActive == isActive).ToList();
 
-           
-
-            // Step 3: Convert each filtered volunteer to a BO volunteer
-            var volunteersList = new List<BO.Volunteer>();
-            foreach (var volunteer in filteredVolunteers)
+            // Step 3: Convert the list of volunteers to a list of VolunteerInList objects
+            var volunteersInList = filteredVolunteers.Select(v => new VolunteerInList
             {
-                // Use VolunteerManager to convert DAL volunteer to BO volunteer
-                volunteersList.Add(VolunteerManager.ConvertVolunteerToBO(volunteer));
-            }
+                Id = v.Id,
+                FullName = v.FullName,
+                IsActive = v.IsActive,
+                HandledCalls = v.HandledCalls,
+                CanceledCalls = v.CanceledCalls,
+                ExpiredCalls = v.ExpiredCalls,
+                CallsInProgress = v.CallInProgress?.Id,
+                CallType = v.CallInProgress?.CallType ?? CallType.Undefined
+            }).ToList();
 
-            // Step 4: Return the list of BO volunteers
-            return volunteersList;
+            // Step 4: Sort the list of volunteers based on the VolunteerInList parameter
+            if (VolunteerInList != null)
+            {
+                volunteersInList = volunteersInList.OrderBy(v => v.CallType == (CallType)VolunteerInList).ToList();
+            }
+            //if the parameter is null, sort by ID
+            else
+            {
+                volunteersInList = volunteersInList.OrderBy(v => v.Id).ToList();
+            }
+            // Step 5: Return the list of volunteers
+            return volunteersInList;
+
         }
         catch (Exception ex)
         {
@@ -130,21 +181,39 @@ internal class VolunteerImplementation : IVolunteer
     /// Updates the details of an existing volunteer.
     /// </summary>
     /// <param name="id">The ID of the volunteer to be updated.</param>
-    /// <param name="vol">The updated volunteer object.</param>
+    /// <param name="updatedVolunteer">The updated volunteer object.</param>
     /// <exception cref="Exception">Thrown when the volunteer cannot be updated.</exception>
-    public void UpdateVolunteer(int id, BO.Volunteer vol)
+    public void UpdateVolunteer(int requesterId, BO.Volunteer updatedVolunteer)
     {
-        //need to check if he is Admin/the volunteer himself
+        
+        var requester = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(requesterId));
+        if (requester == null)
+        {
+            throw new UnauthorizedAccessException("Requester not found");
+        }
+        bool isAdmin = requester.Role == BO.Role.Manager;
+        bool isVolunteer = updatedVolunteer.Id == requesterId;
+        //Check if the requester is an Admin/the volunteer himself
+        if (!isAdmin && !isVolunteer)
+        {
+            throw new UnauthorizedAccessException("The requester is not authorized to cancel this assignment");
+        }
 
-        //check if the volunteer is valid
-        if (!VolunteerManager.IsValidVolunteer(vol))
+        //Check if the requester is an Admin and the role of the volunteer is different
+        if (!isAdmin && requester.Role != updatedVolunteer.Role)
+            throw new Exception("Non Admin volunteer can't change his role");
+
+        //Check if the updated volunteer is valid
+        if (!VolunteerManager.IsValidVolunteer(updatedVolunteer))
             throw new Exception("Invalid volunteer details");
       
-            vol.Latitude = Tools.GetCoordinates(vol.FullAddress).Item1;
-            vol.Longitude = Tools.GetCoordinates(vol.FullAddress).Item2;
-            try
-            {
-                _dal.Volunteer.Update(VolunteerManager.ConvertVolunteerToDO(vol));
+            updatedVolunteer.Latitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item1;
+            updatedVolunteer.Longitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item2;
+        
+
+        try
+        {
+                _dal.Volunteer.Update(VolunteerManager.ConvertVolunteerToDO(updatedVolunteer));
             }
             catch (Exception ex)
             {

@@ -144,7 +144,7 @@ internal class VolunteerManager
         try
         {
             Tools.GetCoordinates(volunteer.FullAddress);
-            return IsValidEmail(volunteer.Email) && IsValidPhoneNumber(volunteer.MobilePhone) && IsValidID(volunteer.Id);
+            return IsValidEmail(volunteer.Email) && IsValidPhoneNumber(volunteer.MobilePhone) && IsValidID(volunteer.Id)&&IsStrongPassword(volunteer.Password);
         }
         catch (Exception ex)
         {
@@ -206,6 +206,39 @@ internal class VolunteerManager
 
         return sum % 10 == 0;
     }
+
+    internal static bool IsStrongPassword(string password)
+    {
+        if (string.IsNullOrEmpty(password))
+            return false;
+
+        // Check length
+        if (password.Length < 8)
+            return false;
+
+        // Check for at least one uppercase letter
+        if (!password.Any(char.IsUpper))
+            return false;
+
+        // Check for at least one lowercase letter
+        if (!password.Any(char.IsLower))
+            return false;
+
+        // Check for at least one digit
+        if (!password.Any(char.IsDigit))
+            return false;
+
+        // Check for at least one special character
+        if (!password.Any(ch => "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~".Contains(ch)))
+            return false;
+
+        // Check for whitespace
+        if (password.Any(char.IsWhiteSpace))
+            return false;
+
+        return true;
+    }
+
 
 }
 

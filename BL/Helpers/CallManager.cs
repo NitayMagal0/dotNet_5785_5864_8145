@@ -165,6 +165,19 @@ internal class CallManager
 
         }
     }
+
+    internal static bool IsCallInRiskRange(int callId)
+    {
+       TimeSpan riskRange = _dal.Config.RiskRange;
+        var call = ConvertCallToBO(_dal.Call.Read(callId));
+        var maxCompletionTime = call.MaxCompletionTime;
+        if (maxCompletionTime.HasValue && (maxCompletionTime.Value - ClockManager.Now).TotalDays <= riskRange.TotalDays)
+             return true;
+        
+        return false;
+    }
+
+  
 }
 
 

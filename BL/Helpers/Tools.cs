@@ -91,7 +91,7 @@ internal static class Tools
     }
 
 
-    private static double CalculateAirDistance((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination)
+    public static double CalculateAirDistance((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination)
     {
         const double EarthRadiusKm = 6371;
 
@@ -114,7 +114,7 @@ internal static class Tools
         return EarthRadiusKm * c; // Returns distance in kilometers
     }
 
-    private static async Task<double> GetTravelTimeAsync((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination, string profile)
+    internal static async Task<double> GetTravelTimeAsync((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination, string profile)
     {
         using var httpClient = new HttpClient();
 
