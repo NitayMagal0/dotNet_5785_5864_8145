@@ -72,36 +72,11 @@ internal class VolunteerImplementation : IVolunteer
         {
             // Step 1: Retrieve the volunteer details from the DAL
             var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
-            
-            
 
-            // Step 2: Retrieve the call in progress for the volunteer, if any
-            /*
-            var callInProgressDO = _dal.Assignment.Read(a => a.VolunteerId == id && a.Status == CallStatus.InProgress);
-            var call = new BO.Call();
-            if (callInProgressDO != null)
-            {
-                volunteer.CallInProgress = new BO.CallInProgress
-                {
-                    Id = callInProgressDO.Id,
-                    CallId = callInProgressDO.CallId,
-                    CallType = callInProgressDO.CallType,
-                    Description = _dal.Call.Read(callInProgressDO.CallId).Description,
-                    FullAddress = _dal.Call.Read(callInProgressDO.CallId).FullAddress,
-                    OpeningTime = _dal.Call.Read(callInProgressDO.CallId).OpeningTime,
-                    MaxCompletionTime = _dal.Call.Read(callInProgressDO.CallId).MaxCompletionTime,
-                    EntryTime = callInProgressDO.EntryTime,
-                    DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
-                    (_dal.Call.Read(callInProgressDO.CallId).Latitude, _dal.Call.Read(callInProgressDO.CallId).Longitude)),
-                 
+            // Step 2: Retrieve the call in progress for the volunteer
+            volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);
 
-
-
-
-                 };
-            }
-            */
-            // Step 4: Return the volunteer details
+            // Step 3: Return the volunteer details
             return volunteer;
         }
         catch (Exception ex)

@@ -13,7 +13,7 @@ public class CallInProgress
     public string? FullAddress { get; set; } // Full address of the call location
     public DateTime OpeningTime { get; set; } // Opening time of the call
     public DateTime? MaxCompletionTime { get; set; } // Nullable maximum completion time for the call
-    public DateTime EntryTime { get; set; }  //The time the volunteer entered the call 
+    public DateTime AdmissionTime { get; set; }  //The time the volunteer entered the call 
     public double? DistanceFromVolunteer { get; set; } // Nullable distance from the volunteer
     public CallStatus? Status { get; set; } // Nullable enum for the status of the assignment
 }
