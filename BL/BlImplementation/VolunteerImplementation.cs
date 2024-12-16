@@ -20,8 +20,11 @@ internal class VolunteerImplementation : IVolunteer
         //check if the volunteer is valid
         if (!VolunteerManager.IsValidVolunteer(volunteerToAdd))
             throw new Exception("Invalid volunteer details");
-
+        // Encode the password before adding the volunteer
+        volunteerToAdd.Password = VolunteerManager.EncodePassword(volunteerToAdd.Password);
+        // Convert the BO to DO and add the volunteer
         var volunteer = VolunteerManager.ConvertVolunteerToDO(volunteerToAdd);
+
         try
         {
             _dal.Volunteer.Create(volunteer);
@@ -75,7 +78,8 @@ internal class VolunteerImplementation : IVolunteer
 
             // Step 2: Retrieve the call in progress for the volunteer
             volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);
-
+            // Decode the password before returning the volunteer
+            volunteer.Password = VolunteerManager.DecodePassword(volunteer.Password);
             // Step 3: Return the volunteer details
             return volunteer;
         }
@@ -148,7 +152,7 @@ internal class VolunteerImplementation : IVolunteer
         var volunteer = volunteers.FirstOrDefault(v => v.FullName == name);
         if (volunteer == null)
             throw new Exception("Volunteer doesn't exist");
-        if (volunteer.Password != password)
+        if (VolunteerManager.DecodePassword(volunteer.Password) != password)
             throw new Exception("Password is incorrect");
         return VolunteerManager.MapRole(volunteer.Role);
     }
@@ -185,7 +189,9 @@ internal class VolunteerImplementation : IVolunteer
       
             updatedVolunteer.Latitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item1;
             updatedVolunteer.Longitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item2;
-        
+        // Encode the password before updating the volunteer
+        updatedVolunteer.Password = VolunteerManager.EncodePassword(updatedVolunteer.Password);
+
 
         try
         {

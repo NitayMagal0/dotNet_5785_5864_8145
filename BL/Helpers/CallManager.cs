@@ -8,6 +8,7 @@ namespace Helpers;
 internal class CallManager
 {
     private static readonly DalApi.IDal _dal = DalApi.Factory.Get; //stage 4
+
     internal static BO.CallStatus GetCallStatus(int callId)
     {
         // Fetch the call and its related data
@@ -22,8 +23,8 @@ internal class CallManager
 
         // Handle case where no assignments exist
         if (!assignments.Any())
-        {
-            if (call.MaxCompletionTime.HasValue && (call.MaxCompletionTime.Value - systemClock).TotalDays <= AdminImplementation.GetMaxRange())
+        {                                                                                            //It was AdminImplementation.GetMaxRange()
+            if (call.MaxCompletionTime.HasValue && (call.MaxCompletionTime.Value - systemClock).TotalDays <= (_dal.Config.RiskRange).TotalDays)
             {
                 return BO.CallStatus.OpenAtRisk;
             }

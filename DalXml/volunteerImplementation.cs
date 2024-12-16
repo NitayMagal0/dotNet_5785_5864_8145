@@ -56,6 +56,7 @@ internal class volunteerImplementation : IVolunteer
     /// <returns>The volunteer with the specified ID, or null if no such volunteer exists.</returns>
     public Volunteer? Read(int id)
     {
+        
         XElement? volunteerElem =
     XMLTools.LoadListFromXMLElement(Config.s_volunteers_xml).Elements().FirstOrDefault(st => (int?)st.Element("Id") == id);
         return volunteerElem is null ? null : getVolunteer(volunteerElem);
@@ -71,8 +72,8 @@ internal class volunteerImplementation : IVolunteer
             Email = (string?)v.Element("Email") ?? "",
             Password = (string?)v.Element("Password"),
             FullAddress = (string?)v.Element("FullAddress"),
-            Latitude = v.ToDoubleNullable("Latitude"),
-            Longitude = v.ToDoubleNullable("Longitude"),
+           // Latitude = v.ToDoubleNullable("Latitude"),
+           // Longitude = v.ToDoubleNullable("Longitude"),
             Role = v.ToEnumNullable<Role>("Role") ?? Role.Volunteer,
             IsActive = (bool?)v.Element("IsActive") ?? false,
             MaxDistanceForCall = v.ToDoubleNullable("MaxDistanceForCall"),

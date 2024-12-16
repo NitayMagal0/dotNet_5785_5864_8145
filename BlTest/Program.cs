@@ -12,6 +12,7 @@ namespace BlTest
         {
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine("Main Menu:");
                 Console.WriteLine("1. Admin Operations");
                 Console.WriteLine("2. Volunteer Operations");
@@ -46,6 +47,7 @@ namespace BlTest
         {
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine("Admin Operations:");
                 Console.WriteLine("1. Reset DB");
                 Console.WriteLine("2. Initialize DB");
@@ -119,6 +121,7 @@ namespace BlTest
         {
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine("Volunteer Operations:");
                 Console.WriteLine("1. Sign In");
                 Console.WriteLine("2. Add Volunteer");
@@ -297,6 +300,7 @@ namespace BlTest
         {
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine("Call Operations:");
                 Console.WriteLine("1. Add Call");
                 Console.WriteLine("2. Update Call");

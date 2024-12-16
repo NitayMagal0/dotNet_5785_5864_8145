@@ -234,7 +234,7 @@ public static class Initialization
     {
         //An array that saves the names of the volunteers
         string[] VolunteerNames =
-        { "Amit Levi", "Noa Cohen", "Yossi Ben-David", "Tamar Shapiro", "Eitan Goldstein", "Lior Katz",
+        { "Amit Leeeeevi", "Noa Cohen", "Yossi Ben-David", "Tamar Shapiro", "Eitan Goldstein", "Lior Katz",
             "Rivka Avraham", "Shira Mizrahi", "Dan Alon", "Yael Rosenberg", "Ariel Bar-Zvi", "Maya Feldman",
             "David Peretz", "Orly Harel", "Yonatan Stein", "Alma Sela", "Gal Barak", "Michal Shaked",
             "Itai Blum", "Hila Golan", "Ronen Neuman", "Oren Eliav", "Nadav Segal", "Tali Ohayon", "Elior Friedman" };
@@ -315,7 +315,7 @@ public static class Initialization
             while (s_dal.Volunteer!.Read(id) is not null);  //here its calling for read
             VolunteerId.Add(id);                            
             string phoneNumber = GeneratePhoneNumber();
-            string password = GenerateRandomPassword();
+            string password = EncodePassword(GenerateRandomPassword());
             DateTime start = new DateTime(1995, 1, 1);
             DateTime bdt = start.AddDays(s_rand.Next((s_dal.Config.Clock - start).Days));
 
@@ -424,6 +424,17 @@ public static class Initialization
         createAssignment();
     }
 
-   
+    /// <summary>
+    /// Encodes the given password to a Base64 string.
+    /// </summary>
+    /// <param name="password">The password to encode.</param>
+    /// <returns>The Base64 encoded string of the password.</returns>
+    public static string EncodePassword(string password)
+    {
+        var plainTextBytes = Encoding.UTF8.GetBytes(password);
+        return Convert.ToBase64String(plainTextBytes);
+    }
+
+
 }
 

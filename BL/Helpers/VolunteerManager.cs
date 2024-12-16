@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Helpers;
 
@@ -275,6 +276,28 @@ internal class VolunteerManager
             return newCallInProgress;
         }
         throw new Exception("Volunteer doesn't have a call in progress");
+    }
+
+    /// <summary>
+    /// Encodes the given password to a Base64 string.
+    /// </summary>
+    /// <param name="password">The password to encode.</param>
+    /// <returns>The Base64 encoded string of the password.</returns>
+    public static string EncodePassword(string password)
+    {
+        var plainTextBytes = Encoding.UTF8.GetBytes(password);
+        return Convert.ToBase64String(plainTextBytes);
+    }
+
+    /// <summary>
+    /// Decodes the given Base64 encoded password.
+    /// </summary>
+    /// <param name="encodedPassword">The Base64 encoded password to decode.</param>
+    /// <returns>The decoded password as a string.</returns>
+    public static string DecodePassword(string encodedPassword)
+    {
+        var base64EncodedBytes = Convert.FromBase64String(encodedPassword);
+        return Encoding.UTF8.GetString(base64EncodedBytes);
     }
 }
 
