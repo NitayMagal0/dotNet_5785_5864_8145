@@ -72,10 +72,11 @@ internal class VolunteerImplementation : IVolunteer
         {
             // Step 1: Retrieve the volunteer details from the DAL
             var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
-
+            
             
 
             // Step 2: Retrieve the call in progress for the volunteer, if any
+            /*
             var callInProgressDO = _dal.Assignment.Read(a => a.VolunteerId == id && a.Status == CallStatus.InProgress);
             var call = new BO.Call();
             if (callInProgressDO != null)
@@ -99,7 +100,7 @@ internal class VolunteerImplementation : IVolunteer
 
                  };
             }
-
+            */
             // Step 4: Return the volunteer details
             return volunteer;
         }
@@ -136,13 +137,13 @@ internal class VolunteerImplementation : IVolunteer
                 CanceledCalls = v.CanceledCalls,
                 ExpiredCalls = v.ExpiredCalls,
                 CallsInProgress = v.CallInProgress?.Id,
-                CallType = v.CallInProgress?.CallType ?? CallType.Undefined
+                CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined
             }).ToList();
 
             // Step 4: Sort the list of volunteers based on the VolunteerInList parameter
             if (VolunteerInList != null)
             {
-                volunteersInList = volunteersInList.OrderBy(v => v.CallType == (CallType)VolunteerInList).ToList();
+                volunteersInList = volunteersInList.OrderBy(v => v.CallType == (BO.CallType)VolunteerInList).ToList();
             }
             //if the parameter is null, sort by ID
             else
