@@ -164,6 +164,7 @@ namespace BlTest
                             newVolunteer.Password = Console.ReadLine();
                             Console.Write("Enter volunteer full address: ");
                             newVolunteer.FullAddress = Console.ReadLine();
+                            /* I DONT THINK WE NEED TO RECIVE THESE VALUES BECAUSE WE R GONNA CALCULATE THEM WITH THE FUCNTION
                             Console.Write("Enter volunteer latitude: ");
                             if (double.TryParse(Console.ReadLine(), out double latitude))
                             {
@@ -173,7 +174,7 @@ namespace BlTest
                             if (double.TryParse(Console.ReadLine(), out double longitude))
                             {
                                 newVolunteer.Longitude = longitude;
-                            }
+                            }*/ 
                             Console.Write("Enter volunteer role (Manager/Volunteer): ");
                             if (Enum.TryParse(Console.ReadLine(), out Role role2))
                             {
@@ -214,6 +215,7 @@ namespace BlTest
                                 updateVolunteer.Password = Console.ReadLine();
                                 Console.Write("Enter new volunteer full address: ");
                                 updateVolunteer.FullAddress = Console.ReadLine();
+                                /* I DONT THINK WE NEED TO RECIVE THESE VALUES BECAUSE WE R GONNA CALCULATE THEM WITH THE FUCNTION
                                 Console.Write("Enter new volunteer latitude: ");
                                 if (double.TryParse(Console.ReadLine(), out double newLatitude))
                                 {
@@ -223,7 +225,7 @@ namespace BlTest
                                 if (double.TryParse(Console.ReadLine(), out double newLongitude))
                                 {
                                     updateVolunteer.Longitude = newLongitude;
-                                }
+                                }*/
                                 Console.Write("Enter new volunteer role (Manager/Volunteer): ");
                                 if (Enum.TryParse(Console.ReadLine(), out Role newRole))
                                 {

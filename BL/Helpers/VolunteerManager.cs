@@ -259,21 +259,42 @@ internal class VolunteerManager
         if (assignment != null)
         {
             // Fill the call in progress details (we converted from DO to BO and DO doesn't have the field CallInProgress)
-            BO.CallInProgress newCallInProgress = new BO.CallInProgress
+            try
             {
-                Id = assignment.Id,
-                CallId = assignment.CallId,
-                CallType = CallManager.MapCallType(_dal.Call.Read(assignment.CallId).CallType),
-                Description = _dal.Call.Read(assignment.CallId).Description,
-                FullAddress = _dal.Call.Read(assignment.CallId).FullAddress,
-                OpeningTime = _dal.Call.Read(assignment.CallId).OpeningTime,
-                MaxCompletionTime = _dal.Call.Read(assignment.CallId).MaxCompletionTime,
-                AdmissionTime = assignment.AdmissionTime,
-                DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
+                
+                {
+                    volunteer.CallInProgress.Id.Equals(assignment.Id);
+                    volunteer.CallInProgress.CallId.Equals(assignment.CallId);
+                    volunteer.CallInProgress.CallType.Equals(CallManager.MapCallType(_dal.Call.Read(assignment.CallId).CallType));
+                    volunteer.CallInProgress.Description.Equals(_dal.Call.Read(assignment.CallId).Description);
+                    volunteer.CallInProgress.FullAddress.Equals(_dal.Call.Read(assignment.CallId).FullAddress);
+                    volunteer.CallInProgress.OpeningTime.Equals(_dal.Call.Read(assignment.CallId).OpeningTime);
+                    volunteer.CallInProgress.MaxCompletionTime.Equals(_dal.Call.Read(assignment.CallId).MaxCompletionTime);
+                    volunteer.CallInProgress.AdmissionTime.Equals(assignment.AdmissionTime);
+                    volunteer.CallInProgress.DistanceFromVolunteer.Equals(Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
+                (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)));
+                    volunteer.CallInProgress.Status.Equals(CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress);
+
+                    /* Id = assignment.Id,
+                     CallId = assignment.CallId,
+                     CallType = CallManager.MapCallType(_dal.Call.Read(assignment.CallId).CallType),
+                     Description = _dal.Call.Read(assignment.CallId).Description,
+                     FullAddress = _dal.Call.Read(assignment.CallId).FullAddress,
+                     OpeningTime = _dal.Call.Read(assignment.CallId).OpeningTime,
+                     MaxCompletionTime = _dal.Call.Read(assignment.CallId).MaxCompletionTime,
+                     AdmissionTime = assignment.AdmissionTime,
+                     DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
                 (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)),
-                Status = CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress
-            };
-            return newCallInProgress;
+                     Status = CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress*/
+                };
+                return volunteer.CallInProgress;
+                //return newCallInProgress;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex);
+            }  
         }
         throw new Exception("Volunteer doesn't have a call in progress");
     }

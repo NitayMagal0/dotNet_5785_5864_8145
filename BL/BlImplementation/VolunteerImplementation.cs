@@ -75,9 +75,8 @@ internal class VolunteerImplementation : IVolunteer
         {
             // Step 1: Retrieve the volunteer details from the DAL
             var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
-
             // Step 2: Retrieve the call in progress for the volunteer
-            volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);
+            volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);      
             // Decode the password before returning the volunteer
             volunteer.Password = VolunteerManager.DecodePassword(volunteer.Password);
             // Step 3: Return the volunteer details
