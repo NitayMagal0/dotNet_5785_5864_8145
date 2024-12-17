@@ -18,6 +18,15 @@ internal class VolunteerImplementation : IVolunteer
     public void AddVolunteer(BO.Volunteer volunteerToAdd)
     {
         //check if the volunteer is valid
+        try
+        {
+            VolunteerManager.IsValidVolunteer(volunteerToAdd);
+        }
+        catch (Exception ex)
+        {
+
+            throw new Exception(ex.Message);
+        }
         if (!VolunteerManager.IsValidVolunteer(volunteerToAdd))
             throw new Exception("Invalid volunteer details");
         // Encode the password before adding the volunteer
@@ -76,7 +85,7 @@ internal class VolunteerImplementation : IVolunteer
             // Step 1: Retrieve the volunteer details from the DAL
             var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
             // Step 2: Retrieve the call in progress for the volunteer
-            volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);      
+            volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);
             // Decode the password before returning the volunteer
             volunteer.Password = VolunteerManager.DecodePassword(volunteer.Password);
             // Step 3: Return the volunteer details
@@ -84,7 +93,9 @@ internal class VolunteerImplementation : IVolunteer
         }
         catch (Exception ex)
         {
-            throw new Exception($"Volunteer with id {id} doesn't exist", ex);
+            // Print the error message to the output pane
+            Console.WriteLine($"ERROR: {ex.Message}");
+            throw new Exception($"ERROR: ", ex);
         }
     }
 
@@ -114,7 +125,7 @@ internal class VolunteerImplementation : IVolunteer
                 HandledCalls = v.HandledCalls,
                 CanceledCalls = v.CanceledCalls,
                 ExpiredCalls = v.ExpiredCalls,
-                CallsInProgress = v.CallInProgress?.Id,
+                CurrentCallId = VolunteerManager.GetCallInProgress(v.Id)?.CallId,
                 CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined
             }).ToList();
 
@@ -134,7 +145,8 @@ internal class VolunteerImplementation : IVolunteer
         }
         catch (Exception ex)
         {
-            throw new Exception("Couldn't get the volunteers list", ex);
+            Console.WriteLine($"ERROR: {ex.Message}");
+            throw new Exception($"ERROR: ", ex);
         }
     }
 
@@ -163,8 +175,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <param name="updatedVolunteer">The updated volunteer object.</param>
     /// <exception cref="Exception">Thrown when the volunteer cannot be updated.</exception>
     public void UpdateVolunteer(int requesterId, BO.Volunteer updatedVolunteer)
-    {
-        
+    {   
         var requester = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(requesterId));
         if (requester == null)
         {

@@ -8,8 +8,20 @@ public class VolunteerInList
     public int HandledCalls { get; set; }
     public int CanceledCalls { get; set; }
     public int ExpiredCalls { get; set; }
-    public int? CallsInProgress { get; set; }
+    public int? CurrentCallId { get; set; }
     public CallType CallType { get; set; }
+
+    public override string ToString()
+    {
+        return $"Id: {Id}\n" +
+               $"FullName: {FullName}\n" +
+               $"IsActive: {IsActive}\n" +
+               $"HandledCalls: {HandledCalls}\n" +
+               $"CanceledCalls: {CanceledCalls}\n" +
+               $"ExpiredCalls: {ExpiredCalls}\n" +
+               $"CallsInProgress: {CurrentCallId}\n" +
+               $"CallType: {CallType}";
+    }
 }
 
 

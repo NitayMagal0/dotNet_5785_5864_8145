@@ -91,16 +91,21 @@ internal static class Tools
     }
 
 
-    public static double CalculateAirDistance((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination)
+    public static double CalculateAirDistance((double Latitude, double Longitude)? start, (double Latitude, double Longitude)? destination)
     {
+        if (start == null || destination == null)
+        {
+            throw new ArgumentNullException("Start and destination coordinates cannot be null.");
+        }
+
         const double EarthRadiusKm = 6371;
 
         double toRadians(double angle) => Math.PI * angle / 180.0;
 
-        var lat1 = toRadians(start.Latitude);
-        var lon1 = toRadians(start.Longitude);
-        var lat2 = toRadians(destination.Latitude);
-        var lon2 = toRadians(destination.Longitude);
+        var lat1 = toRadians(start.Value.Latitude);
+        var lon1 = toRadians(start.Value.Longitude);
+        var lat2 = toRadians(destination.Value.Latitude);
+        var lon2 = toRadians(destination.Value.Longitude);
 
         var dLat = lat2 - lat1;
         var dLon = lon2 - lon1;

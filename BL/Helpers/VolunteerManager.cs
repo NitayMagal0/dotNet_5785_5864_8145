@@ -7,6 +7,9 @@ internal class VolunteerManager
 {
     private static readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
+
+
+
     /// <summary>
     /// Convert BO.Volunteer to DO.Volunteer
     /// </summary>
@@ -81,6 +84,8 @@ internal class VolunteerManager
             FullAddress = volunteer.FullAddress,
             Latitude = volunteer.Latitude,
             Longitude = volunteer.Longitude,
+            //Latitude = Tools.GetCoordinates(volunteer.FullAddress).Item1,
+            //Longitude = Tools.GetCoordinates(volunteer.FullAddress).Item2,
             Role = MapRole(volunteer.Role),
             IsActive = volunteer.IsActive,
             MaxDistanceForCall = volunteer.MaxDistanceForCall,
@@ -140,20 +145,44 @@ internal class VolunteerManager
     /// <returns>True - the volunteer values are valid, false otherwise</returns>
     internal static bool IsValidVolunteer(BO.Volunteer volunteer)
     {
-        //if the address is not valid, the coordinates will not be valid so it will catch the exception and return false
-        //if the email, id or phone number is not valid, it will return false
         try
         {
+            // Check if the address is valid
             Tools.GetCoordinates(volunteer.FullAddress);
-            return IsValidEmail(volunteer.Email) && IsValidPhoneNumber(volunteer.MobilePhone) && IsValidID(volunteer.Id)&&IsStrongPassword(volunteer.Password);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Log the exception or handle it as needed
-            Console.WriteLine($"Validation failed: {ex.Message}");
-            return false;
+            throw new Exception("Address isn't valid");
         }
+
+        // Check if the email is valid
+        if (!IsValidEmail(volunteer.Email))
+        {
+            throw new Exception("Email isn't valid");
+        }
+
+        // Check if the phone number is valid
+        if (!IsValidPhoneNumber(volunteer.MobilePhone))
+        {
+            throw new Exception("Mobile phone number isn't valid");
+        }
+
+        // Check if the ID is valid
+        if (!IsValidID(volunteer.Id))
+        {
+            throw new Exception("ID isn't valid");
+        }
+
+        // Check if the password is strong
+        if (!IsStrongPassword(volunteer.Password))
+        {
+            throw new Exception("Password isn't strong enough");
+        }
+
+        // If all checks pass
+        return true;
     }
+
     /// <summary>
     /// Validates if the given string is a valid email.
     /// </summary>
@@ -251,49 +280,36 @@ internal class VolunteerManager
     {  
         // Retrieve the volunteer details
         var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(volunteerId));
-
         // Retrieve the assignment for the volunteer, if any
         var assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId && // Check if the volunteer of this assignment has the requested ID
         _dal.Call.Read(a.CallId).MaxCompletionTime > DateTime.Now); // Check if the call is still in progress
-
+ 
         if (assignment != null)
         {
             // Fill the call in progress details (we converted from DO to BO and DO doesn't have the field CallInProgress)
             try
             {
-                
+                BO.CallInProgress newCallInProgress = new BO.CallInProgress
                 {
-                    volunteer.CallInProgress.Id.Equals(assignment.Id);
-                    volunteer.CallInProgress.CallId.Equals(assignment.CallId);
-                    volunteer.CallInProgress.CallType.Equals(CallManager.MapCallType(_dal.Call.Read(assignment.CallId).CallType));
-                    volunteer.CallInProgress.Description.Equals(_dal.Call.Read(assignment.CallId).Description);
-                    volunteer.CallInProgress.FullAddress.Equals(_dal.Call.Read(assignment.CallId).FullAddress);
-                    volunteer.CallInProgress.OpeningTime.Equals(_dal.Call.Read(assignment.CallId).OpeningTime);
-                    volunteer.CallInProgress.MaxCompletionTime.Equals(_dal.Call.Read(assignment.CallId).MaxCompletionTime);
-                    volunteer.CallInProgress.AdmissionTime.Equals(assignment.AdmissionTime);
-                    volunteer.CallInProgress.DistanceFromVolunteer.Equals(Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
-                (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)));
-                    volunteer.CallInProgress.Status.Equals(CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress);
-
-                    /* Id = assignment.Id,
-                     CallId = assignment.CallId,
-                     CallType = CallManager.MapCallType(_dal.Call.Read(assignment.CallId).CallType),
-                     Description = _dal.Call.Read(assignment.CallId).Description,
-                     FullAddress = _dal.Call.Read(assignment.CallId).FullAddress,
-                     OpeningTime = _dal.Call.Read(assignment.CallId).OpeningTime,
-                     MaxCompletionTime = _dal.Call.Read(assignment.CallId).MaxCompletionTime,
-                     AdmissionTime = assignment.AdmissionTime,
-                     DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
-                (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)),
-                     Status = CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress*/
+                    Id = assignment.Id,
+                    CallId = assignment.CallId,
+                    CallType = CallManager.MapCallType(_dal.Call.Read(assignment.CallId).CallType),
+                    Description = _dal.Call.Read(assignment.CallId).Description,
+                    FullAddress = _dal.Call.Read(assignment.CallId).FullAddress,
+                    OpeningTime = _dal.Call.Read(assignment.CallId).OpeningTime,
+                    MaxCompletionTime = _dal.Call.Read(assignment.CallId).MaxCompletionTime,
+                    AdmissionTime = assignment.AdmissionTime,
+                    DistanceFromVolunteer = 234.2342,
+                    //DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
+                      // (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)),
+                    Status = CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress
                 };
-                return volunteer.CallInProgress;
-                //return newCallInProgress;
+                return newCallInProgress;
             }
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex);
+                throw new Exception(ex.Message);
             }  
         }
         throw new Exception("Volunteer doesn't have a call in progress");
@@ -320,5 +336,6 @@ internal class VolunteerManager
         var base64EncodedBytes = Convert.FromBase64String(encodedPassword);
         return Encoding.UTF8.GetString(base64EncodedBytes);
     }
+    
 }
 

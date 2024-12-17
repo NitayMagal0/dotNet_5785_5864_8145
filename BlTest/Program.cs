@@ -154,6 +154,11 @@ namespace BlTest
                         case 2:
                             // Add Volunteer
                             var newVolunteer = new BO.Volunteer();
+                            Console.WriteLine("Enter volunteer id: ");
+                            if (int.TryParse(Console.ReadLine(), out int id))
+                            {
+                                newVolunteer.Id = id;
+                            }
                             Console.Write("Enter volunteer name: ");
                             newVolunteer.FullName = Console.ReadLine();
                             Console.Write("Enter volunteer mobile phone: ");
@@ -273,6 +278,7 @@ namespace BlTest
                             if (int.TryParse(Console.ReadLine(), out int volunteerId))
                             {
                                 var volunteer = s_bl.Volunteer.GetVolunteerDetails(volunteerId);
+                                Console.WriteLine();
                                 Console.WriteLine(volunteer);
                             }
                             else
@@ -284,6 +290,7 @@ namespace BlTest
                             // Get Volunteers List
                             foreach (var volunteer in s_bl.Volunteer.GetVolunteersList(null, null))
                             {
+                                Console.WriteLine();
                                 Console.WriteLine(volunteer);
                             }
                             break;

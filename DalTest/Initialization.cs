@@ -53,7 +53,7 @@ public static class Initialization
                     DateTime.Now,
                     status
                 ));
-                i++;
+                //i++;
             }
         }
     }

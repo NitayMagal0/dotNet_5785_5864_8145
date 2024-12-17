@@ -16,5 +16,21 @@ public class CallInProgress
     public DateTime AdmissionTime { get; set; }  //The time the volunteer entered the call 
     public double? DistanceFromVolunteer { get; set; } // Nullable distance from the volunteer
     public CallStatus? Status { get; set; } // Nullable enum for the status of the assignment
+
+    public override string ToString()
+    {
+        return "\n____________________\n" +
+               $"Id: {Id}\n" +
+               $"CallId: {CallId}\n" +
+               $"CallType: {CallType}\n" +
+               $"Description: {Description}\n" +
+               $"FullAddress: {FullAddress}\n" +
+               $"OpeningTime: {OpeningTime}\n" +
+               $"MaxCompletionTime: {MaxCompletionTime}\n" +
+               $"AdmissionTime: {AdmissionTime}\n" +
+               $"DistanceFromVolunteer: {DistanceFromVolunteer}\n" +
+               $"Status: {Status}\n" +
+               "--------------------";
+    }
 }
 
