@@ -61,7 +61,7 @@ internal static class Tools
         using (HttpClient client = new HttpClient())
         {
             // Add the required User-Agent header
-            client.DefaultRequestHeaders.Add("User-Agent", "YourAppName/1.0");
+            client.DefaultRequestHeaders.Add("User-Agent", "GeocodingApp/1.0");
 
             // Build the URL with the address as a parameter and format=xml
             string url = $"{BaseUrl}?q={Uri.EscapeDataString(address)}&format=xml";

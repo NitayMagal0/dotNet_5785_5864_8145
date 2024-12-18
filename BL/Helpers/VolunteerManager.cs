@@ -74,21 +74,24 @@ internal class VolunteerManager
     /// <returns></returns>
     internal static BO.Volunteer ConvertVolunteerToBO(DO.Volunteer volunteer)
     {
-        return new BO.Volunteer
-        {
-            Id = volunteer.Id,
-            FullName = volunteer.FullName,
-            MobilePhone = volunteer.MobilePhone,
-            Email = volunteer.Email,
-            Password = volunteer.Password,
-            FullAddress = volunteer.FullAddress,
-            Latitude = volunteer.Latitude,
-            Longitude = volunteer.Longitude,
-            Role = MapRole(volunteer.Role),
-            IsActive = volunteer.IsActive,
-            MaxDistanceForCall = volunteer.MaxDistanceForCall,
-            DistanceType = MapDistanceType(volunteer.DistanceType)
-        };
+        if (volunteer == null)
+            throw new BO.BlNullReferenceException("volunteer can't be null");
+        else
+            return new BO.Volunteer
+            {
+                Id = volunteer.Id,
+                FullName = volunteer.FullName,
+                MobilePhone = volunteer.MobilePhone,
+                Email = volunteer.Email,
+                Password = volunteer.Password,
+                FullAddress = volunteer.FullAddress,
+                Latitude = volunteer.Latitude,
+                Longitude = volunteer.Longitude,
+                Role = MapRole(volunteer.Role),
+                IsActive = volunteer.IsActive,
+                MaxDistanceForCall = volunteer.MaxDistanceForCall,
+                DistanceType = MapDistanceType(volunteer.DistanceType)
+            };
     }
     /// <summary>
     /// Convert Enum Role from DO to BO
