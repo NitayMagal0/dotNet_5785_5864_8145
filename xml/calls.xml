@@ -5,9 +5,9 @@
     <CallType>CleaningShelters</CallType>
     <Description>sd</Description>
     <FullAddress>Hagefen 28 Dimona</FullAddress>
-    <Latitude>0</Latitude>
-    <Longitude>0</Longitude>
-    <OpeningTime>2024-12-12T13:00:00</OpeningTime>
-    <MaxCompletionTime>2024-12-19T13:00:00</MaxCompletionTime>
+    <Latitude>31.0649184</Latitude>
+    <Longitude>35.0258622</Longitude>
+    <OpeningTime>2024-12-18T13:00:00</OpeningTime>
+    <MaxCompletionTime>2024-12-24T13:00:00</MaxCompletionTime>
   </Call>
 </Calls>

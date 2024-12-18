@@ -12,5 +12,20 @@ public class Call
     public DateTime? MaxCompletionTime { get; set; } // Nullable maximum completion time for the call
     public CallStatus Status { get; set; } // Nullable enum for the status of the assignment
     public List<BO.CallAssignInList>? CallAssigns { get; set; }
+
+    public override string ToString()
+    {
+        var callAssignsString = CallAssigns != null ? string.Join(", ", CallAssigns.Select(ca => ca.ToString())) : "None";
+        return $"Call ID: {Id}\n" +
+               $"Call Type: {CallType}\n" +
+               $"Description: {Description}\n" +
+               $"Full Address: {FullAddress}\n" +
+               $"Latitude: {Latitude}\n" +
+               $"Longitude: {Longitude}\n" +
+               $"Opening Time: {OpeningTime}\n" +
+               $"Max Completion Time: {MaxCompletionTime}\n" +
+               $"Status: {Status}\n" +
+               $"Call Assigns: {callAssignsString}";
+    }
 }
 

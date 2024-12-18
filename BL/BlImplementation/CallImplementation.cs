@@ -18,16 +18,6 @@ internal class CallImplementation : ICall
             throw new BlNullReferenceException("Call cannot be null");
         }
 
-        if (call.Latitude < -90 || call.Latitude > 90)
-        {
-            throw new BlInvalidFormatException("Latitude must be between -90 and 90");
-        }
-
-        if (call.Longitude < -180 || call.Longitude > 180)
-        {
-            throw new BlInvalidFormatException("Longitude must be between -180 and 180");
-        }
-
         if (call.OpeningTime == default)
         {
             throw new BlInvalidFormatException("Opening time must be set");
@@ -37,6 +27,9 @@ internal class CallImplementation : ICall
         {
             throw new BlInvalidFormatException("Max completion time must be after the opening time");
         }
+
+        double Latitude, Longitude = 0;
+        (Latitude, Longitude) = Helpers.Tools.GetCoordinates(call.FullAddress);
         // Convert BO.Call to DO.Call
         var doCall = new DO.Call
         {
@@ -44,8 +37,8 @@ internal class CallImplementation : ICall
             CallType = CallManager.MapCallType(call.CallType),
             Description = call.Description,
             FullAddress = call.FullAddress,
-            Latitude = call.Latitude ?? 0.0,
-            Longitude = call.Longitude ?? 0.0,
+            Latitude = Latitude,
+            Longitude = Longitude,
             OpeningTime = call.OpeningTime,
             MaxCompletionTime = call.MaxCompletionTime
         };

@@ -11,5 +11,6 @@ public class CallInList
     public TimeSpan? TotalTime { get; set; }
     public CallStatus? Status { get; set; } // Nullable enum for the status of the assignment
     public int AssignmentsCount { get; set; }
+
 }
 
