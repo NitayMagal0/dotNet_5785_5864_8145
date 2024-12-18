@@ -10,8 +10,6 @@ namespace Helpers;
 
 internal static class Tools
 {
-    private const string ApiEndpoint = "https://api.openrouteservice.org/v2/directions/foot-walking";
-    private const string _apiKey = "5b3ce3597851110001cf62484a4dcf303a1d4a5a936fe4d23963d50e";
     public static string ToStringProperty<T>(this T t)
     {
         if (t == null) return string.Empty;
@@ -46,6 +44,8 @@ internal static class Tools
 
 
 
+    private const string ApiEndpoint = "https://api.openrouteservice.org/v2/directions/foot-walking";
+    private const string _apiKey = "5b3ce3597851110001cf62484a4dcf303a1d4a5a936fe4d23963d50e";
 
     /// <summary>
     /// Takes an address and returns coordinates (latitude and longitude).

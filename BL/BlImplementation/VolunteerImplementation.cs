@@ -36,7 +36,14 @@ internal class VolunteerImplementation : IVolunteer
 
         try
         {
-            _dal.Volunteer.Create(volunteer);
+            var coordinates = Tools.GetCoordinates(volunteer.FullAddress);
+            var updatedVolunteer = volunteer with
+            {
+                Latitude = coordinates.Item1,
+                Longitude = coordinates.Item2
+            };
+
+            _dal.Volunteer.Create(updatedVolunteer);
         }
         catch (Exception ex)
         {
@@ -85,7 +92,16 @@ internal class VolunteerImplementation : IVolunteer
             // Step 1: Retrieve the volunteer details from the DAL
             var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
             // Step 2: Retrieve the call in progress for the volunteer
-            volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);
+            try
+            {
+                volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);
+
+            }
+            catch (Exception)
+            {
+
+                
+            }
             // Decode the password before returning the volunteer
             volunteer.Password = VolunteerManager.DecodePassword(volunteer.Password);
             // Step 3: Return the volunteer details

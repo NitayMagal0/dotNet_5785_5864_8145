@@ -84,8 +84,6 @@ internal class VolunteerManager
             FullAddress = volunteer.FullAddress,
             Latitude = volunteer.Latitude,
             Longitude = volunteer.Longitude,
-            //Latitude = Tools.GetCoordinates(volunteer.FullAddress).Item1,
-            //Longitude = Tools.GetCoordinates(volunteer.FullAddress).Item2,
             Role = MapRole(volunteer.Role),
             IsActive = volunteer.IsActive,
             MaxDistanceForCall = volunteer.MaxDistanceForCall,
@@ -299,9 +297,8 @@ internal class VolunteerManager
                     OpeningTime = _dal.Call.Read(assignment.CallId).OpeningTime,
                     MaxCompletionTime = _dal.Call.Read(assignment.CallId).MaxCompletionTime,
                     AdmissionTime = assignment.AdmissionTime,
-                    DistanceFromVolunteer = 234.2342,
-                    //DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
-                      // (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)),
+                    DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
+                       (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)),
                     Status = CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress
                 };
                 return newCallInProgress;
@@ -313,6 +310,7 @@ internal class VolunteerManager
             }  
         }
         throw new Exception("Volunteer doesn't have a call in progress");
+        
     }
 
     /// <summary>
