@@ -198,8 +198,6 @@ namespace BlTest
                             if (int.TryParse(Console.ReadLine(), out int updateVolunteerId))
                             {
                                 var updateVolunteer = s_bl.Volunteer.GetVolunteerDetails(updateVolunteerId);
-                                Console.Write("Enter new volunteer name: ");
-                                updateVolunteer.FullName = Console.ReadLine();
                                 // Update other properties as needed
                                 Console.Write("Enter new volunteer mobile phone: ");
                                 updateVolunteer.MobilePhone = Console.ReadLine();
@@ -266,7 +264,16 @@ namespace BlTest
                             break;
                         case 6:
                             // Get Volunteers List
-                            foreach (var volunteer in s_bl.Volunteer.GetVolunteersList(null, null))
+                            Console.Write("Enter filter field (e.g., IsActive) or leave empty for no filter: ");
+                            string filterFieldInput = Console.ReadLine();
+                            bool? isActiveFilter = string.IsNullOrEmpty(filterFieldInput) ? (bool?)null : bool.Parse(filterFieldInput);
+
+                            Console.Write("Enter sort field (CallType) or leave empty for no sorting: ");
+                            string sortFieldInput = Console.ReadLine();
+                            Enum? sortField = string.IsNullOrEmpty(sortFieldInput) ? null : Enum.Parse<CallType>(sortFieldInput);
+
+                            var volunteers = s_bl.Volunteer.GetVolunteersList(isActiveFilter, sortField);
+                            foreach (var volunteer in volunteers)
                             {
                                 Console.WriteLine();
                                 Console.WriteLine(volunteer);
@@ -300,6 +307,7 @@ namespace BlTest
                 Console.WriteLine("9. Mark Assignment As Completed");
                 Console.WriteLine("10. Cancel Assignment");
                 Console.WriteLine("11. Assign Call To Volunteer");
+                Console.WriteLine("12. Filter and Sort Calls");
                 Console.WriteLine("0. Back to Main Menu");
                 Console.Write("Select an option: ");
 
@@ -414,7 +422,8 @@ namespace BlTest
                             Console.WriteLine("Call Counts By Status:");
                             for (int i = 0; i < counts.Length; i++)
                             {
-                                Console.WriteLine($"Status {i}: {counts[i]}");
+                                string statusName = Enum.GetName(typeof(CallStatus), i);
+                                Console.WriteLine($"{statusName}: {counts[i]}");
                             }
                             break;
                         case 7:
@@ -508,6 +517,23 @@ namespace BlTest
                             else
                             {
                                 Console.WriteLine("Invalid volunteer ID.");
+                            }
+                            break;
+
+                        case 12:
+                            // Filter and Sort Calls
+                            Console.Write("Enter call type to filter (or leave empty for no filter): ");
+                            string callTypeInput = Console.ReadLine();
+                            CallType? filterCallType = string.IsNullOrEmpty(callTypeInput) ? (CallType?)null : Enum.Parse<CallType>(callTypeInput);
+
+                            Console.Write("Enter sort field (e.g., CallType, FullAddress, OpeningTime): ");
+                            string sortFieldInput = Console.ReadLine();
+                            Enum? sortField = string.IsNullOrEmpty(sortFieldInput) ? null : Enum.Parse<CallType>(sortFieldInput);
+
+                            var filteredAndSortedCalls = s_bl.Call.GetFilteredAndSortedCalls(filterCallType, null, sortField);
+                            foreach (var call in filteredAndSortedCalls)
+                            {
+                                Console.WriteLine(call);
                             }
                             break;
                         case 0:

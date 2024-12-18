@@ -1,5 +1,4 @@
-﻿using DO;
-using Helpers;
+﻿using Helpers;
 
 namespace BlImplementation;
 using BlApi;
@@ -168,7 +167,7 @@ internal class CallImplementation : ICall
 
             // Check if the call is in the open status and has never been assigned
             var assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
-            if (boCall.Status != BO.CallStatus.Open || assignments.Any())
+            if ((boCall.Status != BO.CallStatus.Open && boCall.Status != BO.CallStatus.OpenAtRisk) || assignments.Any())
             {
                 throw new InvalidOperationException("Call cannot be deleted. It is either not open or has been assigned.");
             }
