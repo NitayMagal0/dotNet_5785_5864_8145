@@ -324,16 +324,6 @@ namespace BlTest
                             }
                             Console.Write("Enter full address: ");
                             newCall.FullAddress = Console.ReadLine();
-                            Console.Write("Enter latitude: ");
-                            if (double.TryParse(Console.ReadLine(), out double latitude))
-                            {
-                                newCall.Latitude = latitude;
-                            }
-                            Console.Write("Enter longitude: ");
-                            if (double.TryParse(Console.ReadLine(), out double longitude))
-                            {
-                                newCall.Longitude = longitude;
-                            }
                             Console.Write("Enter opening time (yyyy-MM-dd HH:mm:ss): ");
                             if (DateTime.TryParse(Console.ReadLine(), out DateTime openingTime))
                             {
@@ -343,11 +333,6 @@ namespace BlTest
                             if (DateTime.TryParse(Console.ReadLine(), out DateTime maxCompletionTime))
                             {
                                 newCall.MaxCompletionTime = maxCompletionTime;
-                            }
-                            Console.Write("Enter call status (Open, InProgress, Completed, Expired, OpenAtRisk, InProgressAtRisk): ");
-                            if (Enum.TryParse(Console.ReadLine(), out CallStatus status))
-                            {
-                                newCall.Status = status;
                             }
                             newCall.CallAssigns = new List<BO.CallAssignInList>();
                             Console.Write("Enter call description: ");
@@ -372,16 +357,6 @@ namespace BlTest
                                 }
                                 Console.Write("Enter new full address: ");
                                 updateCall.FullAddress = Console.ReadLine();
-                                Console.Write("Enter new latitude: ");
-                                if (double.TryParse(Console.ReadLine(), out double newLatitude))
-                                {
-                                    updateCall.Latitude = newLatitude;
-                                }
-                                Console.Write("Enter new longitude: ");
-                                if (double.TryParse(Console.ReadLine(), out double newLongitude))
-                                {
-                                    updateCall.Longitude = newLongitude;
-                                }
                                 Console.Write("Enter new opening time (yyyy-MM-dd HH:mm:ss): ");
                                 if (DateTime.TryParse(Console.ReadLine(), out DateTime newOpeningTime))
                                 {
@@ -391,11 +366,6 @@ namespace BlTest
                                 if (DateTime.TryParse(Console.ReadLine(), out DateTime newMaxCompletionTime))
                                 {
                                     updateCall.MaxCompletionTime = newMaxCompletionTime;
-                                }
-                                Console.Write("Enter new call status (Open, InProgress, Completed, Expired, OpenAtRisk, InProgressAtRisk): ");
-                                if (Enum.TryParse(Console.ReadLine(), out CallStatus newStatus))
-                                {
-                                    updateCall.Status = newStatus;
                                 }
                                 s_bl.Call.UpdateCall(updateCall);
                                 Console.WriteLine("Call updated successfully.");
@@ -424,7 +394,7 @@ namespace BlTest
                             if (int.TryParse(Console.ReadLine(), out int callId))
                             {
                                 var call = s_bl.Call.GetCallDetails(callId);
-                                Console.WriteLine(call);
+                                Console.WriteLine(call.ToString());
                             }
                             else
                             {

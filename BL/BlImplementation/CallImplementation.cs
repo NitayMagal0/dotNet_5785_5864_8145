@@ -271,7 +271,7 @@ internal class CallImplementation : ICall
         }
 
         // Convert DO.Call to BO.Call using CallManager.ConvertCallToBO
-        var boCall = CallManager.ConvertCallToBO(doCall);
+        BO.Call boCall = CallManager.ConvertCallToBO(doCall);
 
         return boCall;
     }
