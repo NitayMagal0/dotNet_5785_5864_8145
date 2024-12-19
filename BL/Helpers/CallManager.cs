@@ -107,23 +107,24 @@ internal class CallManager
     public static List<BO.CallAssignInList> AssignsCall(int callId)
     {
         // Retrieve the list of assignments for the call
-        var assignments = _dal.Assignment.ReadAll(a => a.CallId == callId).ToList();
+        var assignments = _dal.Assignment.ReadAll(a => a.CallId == callId)?.ToList() ?? new List<Assignment>();
+        //var assignments = _dal.Assignment.ReadAll(a => a.CallId == callId).ToList();
         if (!assignments.Any())
-            return null;  // Or return an empty list if needed
+            new List<BO.CallAssignInList>();
 
-        List<BO.CallAssignInList> callAssigns = new List<BO.CallAssignInList>();
-        callAssigns = assignments.Select(a => new BO.CallAssignInList
+        //List<BO.CallAssignInList> callAssigns = new List<BO.CallAssignInList>();
+        var callAssigns = assignments.Select(a => new BO.CallAssignInList
         {
             VolunteerId = a.VolunteerId,
             VolunteerName = _dal.Volunteer.Read(a.VolunteerId)?.FullName,
             EntryTime = a.AdmissionTime,
             FinishTime = a.ActualEndTime,
-            AssignmentStatus = AssignmentManager.MapAssignmentStatus(a.AssignmentStatus)
+            AssignmentStatus = a.AssignmentStatus==null ? null : AssignmentManager.MapAssignmentStatus(a.AssignmentStatus)
         }).ToList();
 
         return callAssigns;
     }
-
+ 
 
     internal static void PeriodicCallsUpdates(DateTime oldClock, DateTime newClock)
     {

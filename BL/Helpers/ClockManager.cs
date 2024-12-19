@@ -39,6 +39,7 @@ internal static class ClockManager //stage 4
         //(students becomes not active after 5 years etc.)
 
         CallManager.PeriodicCallsUpdates(oldClock, newClock); //stage 4
+        AssignmentManager.PeriodicAssignmentsUpdates(oldClock, newClock); //stage 4
         //etc ...
 
         //Calling all the observers of clock update

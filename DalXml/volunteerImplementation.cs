@@ -58,7 +58,7 @@ internal class volunteerImplementation : IVolunteer
     {
         
         XElement? volunteerElem =
-    XMLTools.LoadListFromXMLElement(Config.s_volunteers_xml).Elements().FirstOrDefault(st => (int?)st.Element("Id") == id);
+        XMLTools.LoadListFromXMLElement(Config.s_volunteers_xml).Elements().FirstOrDefault(st => (int?)st.Element("Id") == id);
         return volunteerElem is null ? null : getVolunteer(volunteerElem);
     }
 

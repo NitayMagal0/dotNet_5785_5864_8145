@@ -21,39 +21,20 @@ public static class Initialization
     {
         if (VolunteerId == null) return;
         int i = 0;                               //The above variable is responsible for advancing the identification number of the calls
-        AssignmentStatus? status = null;
         foreach (var id in VolunteerId)
         {
-            //In order to have variety in the ending state of the calls, I made these conditional sentences that for each ID will give a different state
-            if (id % 4 == 0)
-            {
-                status = AssignmentStatus.CancelledByAdmin;
-            }
-            else if (id % 3 == 0)
-            {
-                status = AssignmentStatus.CancelledByUser;
-            }
-            else if (id % 2 == 0)
-            {
-                status = AssignmentStatus.Completed;
-            }
-            else
-            {
-                status = AssignmentStatus.ExpiredCancellation;
-            }
-
+            Call call = s_dal.Call.Read(1000 + i);
             //Since there are 50 calls and only 25 volunteers this loop assigns each volunteer two calls
             for (int j = 0; j < 2; j++, i++)
             {
                 s_dal.Assignment!.Create(new Assignment(
                     0,
-                    1000 + i,
+                    call.Id,
                     id,
-                    DateTime.Now,
-                    DateTime.Now,
-                    status
+                    call.OpeningTime,
+                    call.MaxCompletionTime,
+                    null
                 ));
-                //i++;
             }
         }
     }

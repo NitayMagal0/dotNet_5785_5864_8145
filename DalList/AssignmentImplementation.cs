@@ -73,7 +73,8 @@ internal class AssignmentImplementation : IAssignment
         if (unupdatedAssignment is not null)
         {
             Delete(unupdatedAssignment!.Id);
-            Create(item);
+            Assignment newAssignment = item with { Id = item.Id };
+            DataSource.Assignments.Add(newAssignment);
         }
         else                                                  // if unupdatedAssignment is null it means the item doe's not exists
         {

@@ -70,7 +70,8 @@ internal class CallImplementation : ICall
         if (unupdatedCall is not null)
         {
             Delete(unupdatedCall!.Id);
-            Create(item);
+            Call newCall = item with { Id = item.Id };
+            DataSource.Calls.Add(newCall);
         }
         else                                       // if unupdatedCall is null it means the item doe's not exists
         {
