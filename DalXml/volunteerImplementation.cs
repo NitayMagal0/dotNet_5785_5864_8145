@@ -106,20 +106,6 @@ internal class volunteerImplementation : IVolunteer
     }
 
 
-    /* public void Update(Volunteer item)
-    {
-        List<Volunteer> volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
-
-        Volunteer? existingVolunteer = volunteers.FirstOrDefault(v => v.Id == item.Id);
-        if (existingVolunteer == null)
-            throw new DalDoesNotExistException($"Volunteer with ID={item.Id} does not exist");
-
-        volunteers.Remove(existingVolunteer);
-        volunteers.Add(item);
-        XMLTools.SaveListToXMLSerializer(volunteers, Config.s_volunteers_xml);
-    }*/
-
-
     /// <summary>
     /// Updates an existing volunteer in the XML file.
     /// </summary>
@@ -130,12 +116,21 @@ internal class volunteerImplementation : IVolunteer
         XElement volunteersRootElem = XMLTools.LoadListFromXMLElement(Config.s_volunteers_xml);
 
         // Find the volunteer with the matching ID or throw an exception if it doesn't exist
-        (volunteersRootElem.Elements().FirstOrDefault(v => (int?)v.Element("Id") == item.Id)
-            ?? throw new DO.DalDoesNotExistException($"Volunteer with ID={item.Id} does not exist"))
-            .Remove();
+        XElement volunteerElem = volunteersRootElem.Elements().FirstOrDefault(v => (int?)v.Element("Id") == item.Id)
+            ?? throw new DO.DalDoesNotExistException($"Volunteer with ID={item.Id} does not exist");
 
-        // Add the updated volunteer as a new XElement
-        volunteersRootElem.Add(new XElement("Volunteer", createVolunteerElement(item)));
+        // Update the existing volunteer element
+        volunteerElem.SetElementValue("FullName", item.FullName);
+        volunteerElem.SetElementValue("MobilePhone", item.MobilePhone);
+        volunteerElem.SetElementValue("Email", item.Email);
+        volunteerElem.SetElementValue("Password", item.Password);
+        volunteerElem.SetElementValue("FullAddress", item.FullAddress);
+        volunteerElem.SetElementValue("Latitude", item.Latitude);
+        volunteerElem.SetElementValue("Longitude", item.Longitude);
+        volunteerElem.SetElementValue("Role", item.Role);
+        volunteerElem.SetElementValue("IsActive", item.IsActive);
+        volunteerElem.SetElementValue("MaxDistanceForCall", item.MaxDistanceForCall);
+        volunteerElem.SetElementValue("DistanceType", item.DistanceType);
 
         // Save the updated XML back to the file
         XMLTools.SaveListToXMLElement(volunteersRootElem, Config.s_volunteers_xml);

@@ -309,9 +309,9 @@ public static class Initialization
         
         for (int i = 0; i < VolunteerNames.Length; i++)
         {
-            int MIN_ID = 200000000, MAX_ID = 400000000, id;
+            int id;
             do
-                id = s_rand.Next(MIN_ID, MAX_ID);
+                id = GenerateValidIsraeliId();
             while (s_dal.Volunteer!.Read(id) is not null);  //here its calling for read
             VolunteerId.Add(id);                            
             string phoneNumber = GeneratePhoneNumber();
@@ -363,6 +363,50 @@ public static class Initialization
         return $"{prefix}{nextDigit}{lastSevenDigits}";
     }
 
+    public static int GenerateValidIsraeliId()
+    {
+        Random random = new Random();
+        int[] id = new int[9];
+
+        // Generate the first 8 digits randomly
+        for (int i = 0; i < 8; i++)
+        {
+            id[i] = random.Next(0, 10);
+        }
+
+        // Calculate the checksum for the first 8 digits
+        int checksum = CalculateChecksum(id);
+
+        // The last digit is the checksum modulo 10
+        id[8] = checksum;
+
+        // Convert the ID array to an integer
+        string idString = string.Join("", id);
+        return int.Parse(idString);
+    }
+
+    private static int CalculateChecksum(int[] id)
+    {
+        int sum = 0;
+
+        for (int i = 0; i < 8; i++)
+        {
+            int value = id[i];
+            if (i % 2 == 1) // Multiply every second digit by 2
+            {
+                value *= 2;
+                if (value > 9) // If the result is greater than 9, sum its digits
+                {
+                    value -= 9;
+                }
+            }
+            sum += value;
+        }
+
+        // Calculate the checksum digit
+        int checksum = (10 - (sum % 10)) % 10;
+        return checksum;
+    }
 
     /// <summary>
     /// The function creates an invented password for the volunteer

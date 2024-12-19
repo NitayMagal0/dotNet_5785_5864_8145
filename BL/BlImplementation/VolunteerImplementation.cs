@@ -89,6 +89,9 @@ internal class VolunteerImplementation : IVolunteer
     {
         try
         {
+            Console.WriteLine("HERE");
+            //var dovolunteer = _dal.Volunteer.Read(id);
+            //Console.WriteLine("Name "+dovolunteer.FullName);
             // Step 1: Retrieve the volunteer details from the DAL
             var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
             // Step 2: Retrieve the call in progress for the volunteer
