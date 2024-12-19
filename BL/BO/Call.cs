@@ -25,7 +25,7 @@ public class Call
                $"Opening Time: {OpeningTime}\n" +
                $"Max Completion Time: {MaxCompletionTime}\n" +
                $"Status: {Status}\n" +
-               $"Call Assigns: {callAssignsString}";
+               $"Call Assigns: {callAssignsString}"+"\n";
     }
 }
 

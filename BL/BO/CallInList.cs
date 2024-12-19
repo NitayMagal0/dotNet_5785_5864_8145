@@ -12,5 +12,18 @@ public class CallInList
     public CallStatus? Status { get; set; } // Nullable enum for the status of the assignment
     public int AssignmentsCount { get; set; }
 
+    public override string ToString()
+    {
+        return $"Id: {Id}\n" +
+               $"CallId: {CallId}\n" +
+               $"CallType: {CallType}\n" +
+               $"OpeningTime: {OpeningTime}\n" +
+               $"RemainingTime: {RemainingTime}\n" +
+               $"LastVolunteer: {LastVolunteer}\n" +
+               $"TotalTime: {TotalTime}\n" +
+               $"Status: {Status}\n" +
+               $"AssignmentsCount: {AssignmentsCount}";
+    }
+
 }
 

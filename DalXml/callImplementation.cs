@@ -80,9 +80,19 @@ internal class callImplementation : ICall
 
         existingCallElement.Remove();
 
-        // Create and add the updated call element
-        Call newCall = item with { Id = Config.NextCallId };
-        callsRootElem.Add(createCallElement(newCall));
+        
+       
+        callsRootElem.Add(
+            new XElement("Call",
+                new XElement("Id", item.Id),
+                new XElement("CallType", item.CallType),
+                new XElement("Description", item.Description),
+                new XElement("FullAddress", item.FullAddress),
+                new XElement("Latitude", item.Latitude),
+                new XElement("Longitude", item.Longitude),
+                new XElement("OpeningTime", item.OpeningTime),
+                new XElement("MaxCompletionTime", item.MaxCompletionTime))
+            );
 
         // Save the updated XML
         XMLTools.SaveListToXMLElement(callsRootElem, Config.s_calls_xml);

@@ -16,12 +16,7 @@ internal class CallImplementation : ICall
         {
             throw new BlNullReferenceException("Call cannot be null");
         }
-
-        if (call.OpeningTime == default)
-        {
-            throw new BlInvalidFormatException("Opening time must be set");
-        }
-
+        call.OpeningTime = Helpers.ClockManager.Now;
         if (call.MaxCompletionTime.HasValue && call.MaxCompletionTime.Value <= call.OpeningTime)
         {
             throw new BlInvalidFormatException("Max completion time must be after the opening time");

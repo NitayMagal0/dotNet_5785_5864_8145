@@ -311,7 +311,7 @@ namespace BlTest
                 Console.WriteLine("0. Back to Main Menu");
                 Console.Write("Select an option: ");
 
-                if (!int.TryParse(Console.ReadLine(), out int callOption) || callOption < 0 || callOption > 11)
+                if (!int.TryParse(Console.ReadLine(), out int callOption) || callOption < 0 || callOption > 12)
                 {
                     Console.WriteLine("Invalid option. Please try again.");
                     continue;
@@ -332,11 +332,7 @@ namespace BlTest
                             }
                             Console.Write("Enter full address: ");
                             newCall.FullAddress = Console.ReadLine();
-                            Console.Write("Enter opening time (yyyy-MM-dd HH:mm:ss): ");
-                            if (DateTime.TryParse(Console.ReadLine(), out DateTime openingTime))
-                            {
-                                newCall.OpeningTime = openingTime;
-                            }
+                            newCall.OpeningTime = default;
                             Console.Write("Enter max completion time (yyyy-MM-dd HH:mm:ss): ");
                             if (DateTime.TryParse(Console.ReadLine(), out DateTime maxCompletionTime))
                             {
@@ -519,7 +515,6 @@ namespace BlTest
                                 Console.WriteLine("Invalid volunteer ID.");
                             }
                             break;
-
                         case 12:
                             // Filter and Sort Calls
                             Console.Write("Enter call type to filter (or leave empty for no filter): ");
