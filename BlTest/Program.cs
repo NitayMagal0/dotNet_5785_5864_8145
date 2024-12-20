@@ -398,6 +398,7 @@ namespace BlTest
                             if (int.TryParse(Console.ReadLine(), out int callId))
                             {
                                 var call = s_bl.Call.GetCallDetails(callId);
+                                Console.WriteLine();
                                 Console.WriteLine(call.ToString());
                             }
                             else

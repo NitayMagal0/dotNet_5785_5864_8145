@@ -400,4 +400,12 @@
     <ActualEndTime>2025-01-29T00:00:00+02:00</ActualEndTime>
     <TreatmentEndType />
   </Assignment>
+  <Assignment>
+    <Id>1050</Id>
+    <CallId>1005</CallId>
+    <VolunteerId>696204296</VolunteerId>
+    <AdmissionTime>2024-12-19T16:05:45</AdmissionTime>
+    <ActualEndTime />
+    <TreatmentEndType />
+  </Assignment>
 </ArrayOfAssignment>
