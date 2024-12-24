@@ -356,6 +356,7 @@ internal class CallImplementation : ICall
         try
         {
             // Fetch the assignment from the data layer
+
             var assignment = _dal.Assignment.Read(assignmentId);
             if (assignment == null)
             {
@@ -390,10 +391,9 @@ internal class CallImplementation : ICall
         catch (Exception ex)
         {
             // Catch any exceptions thrown by the data layer and re-throw them
-            throw new InvalidOperationException("Failed to complete the assignment", ex);
+            throw new InvalidOperationException($"Failed to complete the assignment: {ex.Message}");
         }
     }
-
     public void UpdateCall(Call call)
     {
         // Check the correctness of all values in terms of format

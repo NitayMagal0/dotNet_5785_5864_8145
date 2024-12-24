@@ -89,7 +89,6 @@ internal class VolunteerImplementation : IVolunteer
     {
         try
         {
-            Console.WriteLine("HERE");
             //var dovolunteer = _dal.Volunteer.Read(id);
             //Console.WriteLine("Name "+dovolunteer.FullName);
             // Step 1: Retrieve the volunteer details from the DAL

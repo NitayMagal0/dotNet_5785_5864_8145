@@ -178,6 +178,29 @@ internal class CallManager
         
         return false;
     }
+    internal static bool IsValidCall(BO.Call call)
+    {
+        if (call == null)
+        {
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(call.Description) || string.IsNullOrEmpty(call.FullAddress))
+        {
+            return false;
+        }
+        if (call.MaxCompletionTime.HasValue && call.MaxCompletionTime.Value <= call.OpeningTime)
+        {
+            return false;
+        }
+
+        if (call.OpeningTime == default || call.MaxCompletionTime == null)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
   
 }

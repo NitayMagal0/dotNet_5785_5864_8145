@@ -55,9 +55,13 @@ internal class assignmentImplementation : IAssignment
     /// <returns>The assignment with the specified ID.</returns>
     public Assignment Read(int id)
     {
-        List<Assignment> assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
-        return assignments.FirstOrDefault(a => a.Id == id)
-               ?? throw new DalDoesNotExistException($"Assignment with ID={id} does not exist.");
+        XElement assignmentsRootElem = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
+
+        // Find the call or throw an exception if not found
+        XElement? assignmentElem = assignmentsRootElem.Elements().FirstOrDefault(c => (int?)c.Element("Id") == id);
+        return assignmentElem is null
+            ? throw new DalDoesNotExistException($"Assignment with ID={id} does not exist")
+            : getAssignmnet(assignmentElem);
     }
 
     /// <summary>
@@ -113,6 +117,18 @@ internal class assignmentImplementation : IAssignment
             new XElement("ActualEndTime", item.ActualEndTime),
             new XElement("TreatmentEndType", item.AssignmentStatus)
         );
+    }
+    private Assignment getAssignmnet(XElement a)
+    {
+        return new Assignment
+        {
+            Id = a.ToIntNullable("Id") ?? throw new FormatException("Can't convert Id"),
+            CallId = a.ToIntNullable("CallId") ?? throw new FormatException("Can't convert CallId"),
+            VolunteerId = a.ToIntNullable("VolunteerId") ?? throw new FormatException("Can't convert VolunteerId"),
+            AdmissionTime = a.ToDateTimeNullable("AdmissionTime") ?? default,
+            ActualEndTime = a.ToDateTimeNullable("ActualEndTime"),
+            AssignmentStatus = a.ToEnumNullable<AssignmentStatus>("AssignmentStatus")
+        };
     }
 
 }

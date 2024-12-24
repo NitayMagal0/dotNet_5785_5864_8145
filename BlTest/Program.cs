@@ -343,7 +343,7 @@ namespace BlTest
                             newCall.Description = Console.ReadLine();
                             // Add other properties as needed
                             s_bl.Call.AddCall(newCall);
-                            Console.WriteLine("Call added successfully.");
+                            Console.WriteLine($"Call added successfully");
                             break;
                         case 2:
                             // Update Call
@@ -426,8 +426,9 @@ namespace BlTest
                         case 7:
                             // Get Volunteer Closed Calls History
                             Console.Write("Enter volunteer ID: ");
-                            if (int.TryParse(Console.ReadLine(), out int volunteerId))
+                            if (int.TryParse(Console.ReadLine(), out int volunteerId)&&s_bl.Volunteer.GetVolunteerDetails(volunteerId)!=null)
                             {
+                                Console.WriteLine(s_bl.Volunteer.GetVolunteerDetails(volunteerId).FullName+"'s closed calls: ");
                                 foreach (var closedCall in s_bl.Call.GetVolunteerClosedCallsHistory(volunteerId, null, null))
                                 {
                                     Console.WriteLine(closedCall);
@@ -441,7 +442,7 @@ namespace BlTest
                         case 8:
                             // Get Available Open Calls For Volunteer
                             Console.Write("Enter volunteer ID: ");
-                            if (int.TryParse(Console.ReadLine(), out int openVolunteerId))
+                            if (int.TryParse(Console.ReadLine(), out int openVolunteerId) && s_bl.Volunteer.GetVolunteerDetails(openVolunteerId) != null)
                             {
                                 foreach (var openCall in s_bl.Call.GetAvailableOpenCallsForVolunteer(openVolunteerId, null, null))
                                 {
