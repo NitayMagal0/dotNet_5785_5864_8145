@@ -113,9 +113,9 @@ internal class assignmentImplementation : IAssignment
             new XElement("Id", newId),
             new XElement("CallId", item.CallId),
             new XElement("VolunteerId", item.VolunteerId),
-            new XElement("AdmissionTime", item.AdmissionTime),
-            new XElement("ActualEndTime", item.ActualEndTime),
-            new XElement("TreatmentEndType", item.AssignmentStatus)
+            new XElement("AdmissionTime", item.AdmissionTime)
+            //new XElement("ActualEndTime", item.ActualEndTime),
+            //new XElement("AssignmentStatus", item.AssignmentStatus)
         );
     }
     private Assignment getAssignmnet(XElement a)

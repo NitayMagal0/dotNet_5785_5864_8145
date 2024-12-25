@@ -90,7 +90,7 @@ internal class CallImplementation : ICall
         catch (Exception ex)
         {
             // Catch any exceptions thrown by the data layer and re-throw them
-            throw new InvalidOperationException("Failed to assign the call to the volunteer", ex);
+            throw new InvalidOperationException($"Failed to assign the call to the volunteer {ex.Message}");
         }
     }
 
@@ -141,7 +141,7 @@ internal class CallImplementation : ICall
         catch (Exception ex)
         {
             // Catch any exceptions thrown by the data layer and re-throw them
-            throw new InvalidOperationException("Failed to cancel the assignment", ex);
+            throw new InvalidOperationException($"Failed to cancel the assignment - {ex.Message}");
         }
     }
 
@@ -266,7 +266,7 @@ internal class CallImplementation : ICall
     {
         // Fetch all calls
         var calls = _dal.Call.ReadAll();
-
+        
         // Convert DO.Call to BO.Call using CallManager.ConvertCallToBO
         var boCalls = calls.Select(CallManager.ConvertCallToBO);
 
@@ -281,7 +281,7 @@ internal class CallImplementation : ICall
         });
 
         // Apply filtering if filterField and filterValue are not null
-        if (filterField.HasValue && filterValue != null)
+        if (filterField!=null && filterValue != null)
         {
             callInList = callInList.Where(call =>
             {
@@ -307,6 +307,53 @@ internal class CallImplementation : ICall
 
         return callInList;
     }
+
+    public IEnumerable<CallInList> GetFilteredAndSortedCallstest(Enum? filterField, object? filterValue, Enum? sortField)
+    {
+        // Fetch all calls
+        var calls = _dal.Call.ReadAll();
+        
+        // Convert DO.Call to BO.Call using CallManager.ConvertCallToBO
+        var boCalls = calls.Select(CallManager.ConvertCallToBO);
+
+        // Convert BO.Call to BO.CallInList
+        var callInList = boCalls.Select(call => new CallInList
+        {
+            CallId = call.Id,
+            CallType = call.CallType,
+            LastVolunteer = call.CallAssigns?.LastOrDefault()?.VolunteerName,
+            Status = call.Status,
+            AssignmentsCount = call.CallAssigns?.Count ?? 0
+        });
+
+        // Apply filtering if filterField and filterValue are not null
+        if (filterField != null && filterValue != null)
+        {
+            callInList = callInList.Where(call =>
+            {
+                var property = typeof(CallInList).GetProperty(filterField.ToString());
+                return property != null && property.GetValue(call)?.Equals(filterValue) == true;
+            });
+        }
+
+        // Apply sorting
+        if (sortField != null)
+        {
+            var property = typeof(CallInList).GetProperty(sortField.ToString());
+            if (property != null)
+            {
+                callInList = callInList.OrderBy(call => property.GetValue(call));
+            }
+        }
+        else
+        {
+            // Default sorting by CallId
+            callInList = callInList.OrderBy(call => call.CallId);
+        }
+
+        return callInList;
+    }
+
 
     public IEnumerable<ClosedCallInList> GetVolunteerClosedCallsHistory(int volunteerId, CallType? callTypeFilter, Enum? sortField)
     {

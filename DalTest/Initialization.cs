@@ -33,7 +33,7 @@ public static class Initialization
                     id,
                     call.OpeningTime,
                     call.MaxCompletionTime,
-                    null
+                    AssignmentStatus.Completed
                 ));
             }
         }
