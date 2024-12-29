@@ -5,7 +5,7 @@ namespace Helpers;
 internal class AssignmentManager
 {
     private static readonly DalApi.IDal _dal = DalApi.Factory.Get; //stage 4
-
+    internal static ObserverManager Observers = new(); //stage 5 
     public static BO.AssignmentStatus MapAssignmentStatus(DO.AssignmentStatus? status)
     {
         return status switch
@@ -45,8 +45,9 @@ internal class AssignmentManager
                     AssignmentStatus = DO.AssignmentStatus.ExpiredCancellation
                 };
                 _dal.Assignment.Update(updatedAssignment);
-
-               CallManager.PeriodicCallsUpdates(oldClock, newClock);
+                AssignmentManager.Observers.NotifyItemUpdated(updatedAssignment.Id);  //stage 5
+                AssignmentManager.Observers.NotifyListUpdated();  //stage 5
+                CallManager.PeriodicCallsUpdates(oldClock, newClock);
             }
         }
     }

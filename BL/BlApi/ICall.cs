@@ -2,7 +2,7 @@
 
 namespace BlApi;
 
-    public interface ICall
+public interface ICall : IObservable
 {
     int[] GetCallCountsByStatus();
     IEnumerable<CallInList> GetFilteredAndSortedCalls(CallType? filterField, object? filterValue, Enum? sortField);

@@ -16,15 +16,15 @@ internal class AdminImplementation : IAdmin
         switch (unit)
         {
             case BO.TimeUnit.second:
-                ClockManager.UpdateClock(ClockManager.Now.AddSeconds(1));
+                AdminManager.UpdateClock(AdminManager.Now.AddSeconds(1));
                 break;
 
             case BO.TimeUnit.minute:
-                ClockManager.UpdateClock(ClockManager.Now.AddMinutes(1));
+                AdminManager.UpdateClock(AdminManager.Now.AddMinutes(1));
                 break;
 
             case BO.TimeUnit.hour:
-                ClockManager.UpdateClock(ClockManager.Now.AddHours(1));
+                AdminManager.UpdateClock(AdminManager.Now.AddHours(1));
                 break;
 
             default:
@@ -38,7 +38,7 @@ internal class AdminImplementation : IAdmin
     /// <returns>Current time</returns>
     public DateTime GetClock()
     {
-        return ClockManager.Now;
+        return AdminManager.Now;
     }
 
     /// <summary>
@@ -49,7 +49,8 @@ internal class AdminImplementation : IAdmin
         try
         {
             DalTest.Initialization.Do();
-            ClockManager.UpdateClock(ClockManager.Now);
+            AdminManager.UpdateClock(AdminManager.Now);
+            AdminManager.RiskRange = AdminManager.RiskRange;
         }
         catch (Exception ex)
         {
@@ -68,7 +69,8 @@ internal class AdminImplementation : IAdmin
             // Reset the database
             _dal.ResetDB();
             // Update the clock
-            ClockManager.UpdateClock(ClockManager.Now);
+            AdminManager.UpdateClock(AdminManager.Now);
+            AdminManager.RiskRange = AdminManager.RiskRange;
         }
         catch (Exception ex)
         {
@@ -80,17 +82,24 @@ internal class AdminImplementation : IAdmin
     /// Retrieves the maximum range for a call.
     /// </summary>
     /// <returns>Maximum time range</returns>
-    public TimeSpan GetMaxRange()
-    {
-        return _dal.Config.RiskRange;
-    }
 
+    public TimeSpan GetMaxRange() => AdminManager.RiskRange;
     /// <summary>
     /// Sets the maximum range for a call.
     /// </summary>
     /// <param name="maxRange">The new maximum time range for a call.</param>
-    public void SetMaxRange(TimeSpan maxRange)
-    {
-        _dal.Config.RiskRange = maxRange;
-    }
+
+    public void SetMaxRange(TimeSpan maxRange) => AdminManager.RiskRange = maxRange;
+
+
+    #region Stage 5
+    public void AddClockObserver(Action clockObserver) =>
+        AdminManager.ClockUpdatedObservers += clockObserver;
+    public void RemoveClockObserver(Action clockObserver) =>
+        AdminManager.ClockUpdatedObservers -= clockObserver;
+    public void AddConfigObserver(Action configObserver) =>
+        AdminManager.ConfigUpdatedObservers += configObserver;
+    public void RemoveConfigObserver(Action configObserver) =>
+        AdminManager.ConfigUpdatedObservers -= configObserver;
+    #endregion Stage 5
 }

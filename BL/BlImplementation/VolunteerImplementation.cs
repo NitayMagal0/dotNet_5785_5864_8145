@@ -44,6 +44,7 @@ internal class VolunteerImplementation : IVolunteer
             };
 
             _dal.Volunteer.Create(updatedVolunteer);
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5                                                    
         }
         catch (Exception ex)
         {
@@ -66,6 +67,7 @@ internal class VolunteerImplementation : IVolunteer
             try
             {
                 _dal.Volunteer.Delete(id);
+                VolunteerManager.Observers.NotifyListUpdated();  //stage 5  	
             }
             catch (Exception ex)
             {
@@ -102,7 +104,7 @@ internal class VolunteerImplementation : IVolunteer
             catch (Exception)
             {
 
-                
+
             }
             // Decode the password before returning the volunteer
             volunteer.Password = VolunteerManager.DecodePassword(volunteer.Password);
@@ -193,7 +195,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <param name="updatedVolunteer">The updated volunteer object.</param>
     /// <exception cref="Exception">Thrown when the volunteer cannot be updated.</exception>
     public void UpdateVolunteer(int requesterId, BO.Volunteer updatedVolunteer)
-    {   
+    {
         var requester = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(requesterId));
         if (requester == null)
         {
@@ -214,22 +216,36 @@ internal class VolunteerImplementation : IVolunteer
         //Check if the updated volunteer is valid
         if (!VolunteerManager.IsValidVolunteer(updatedVolunteer))
             throw new Exception("Invalid volunteer details");
-      
-            updatedVolunteer.Latitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item1;
-            updatedVolunteer.Longitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item2;
+
+        updatedVolunteer.Latitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item1;
+        updatedVolunteer.Longitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item2;
         // Encode the password before updating the volunteer
         updatedVolunteer.Password = VolunteerManager.EncodePassword(updatedVolunteer.Password);
 
 
         try
         {
-                _dal.Volunteer.Update(VolunteerManager.ConvertVolunteerToDO(updatedVolunteer));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Couldn't update the volunteer", ex);
-            }
-        
+            _dal.Volunteer.Update(VolunteerManager.ConvertVolunteerToDO(updatedVolunteer));
+            VolunteerManager.Observers.NotifyItemUpdated(updatedVolunteer.Id);  //stage 5
+            VolunteerManager.Observers.NotifyListUpdated();  //stage 5
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Couldn't update the volunteer", ex);
+        }
+
     }
+
+
+    #region Stage 5
+    public void AddObserver(Action listObserver) =>
+        VolunteerManager.Observers.AddListObserver(listObserver); //stage 5
+    public void AddObserver(int id, Action observer) =>
+        VolunteerManager.Observers.AddObserver(id, observer); //stage 5
+    public void RemoveObserver(Action listObserver) =>
+        VolunteerManager.Observers.RemoveListObserver(listObserver); //stage 5
+    public void RemoveObserver(int id, Action observer) =>
+        VolunteerManager.Observers.RemoveObserver(id, observer); //stage 5
+    #endregion Stage 5
 }
 

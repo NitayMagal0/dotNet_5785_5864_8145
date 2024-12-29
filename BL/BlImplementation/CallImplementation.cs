@@ -16,7 +16,7 @@ internal class CallImplementation : ICall
         {
             throw new BlNullReferenceException("Call cannot be null");
         }
-        call.OpeningTime = Helpers.ClockManager.Now;
+        call.OpeningTime = Helpers.AdminManager.Now;
         if (call.MaxCompletionTime.HasValue && call.MaxCompletionTime.Value <= call.OpeningTime)
         {
             throw new BlInvalidFormatException("Max completion time must be after the opening time");
@@ -41,6 +41,7 @@ internal class CallImplementation : ICall
         {
             // Attempt to add the new call to the data layer
             _dal.Call.Create(doCall);
+            CallManager.Observers.NotifyListUpdated(); //stage 5                                                    
         }
         catch (Exception ex)
         {
@@ -61,7 +62,7 @@ internal class CallImplementation : ICall
             }
 
             // Check if the call has expired
-            var systemClock = ClockManager.Now;
+            var systemClock = AdminManager.Now;
             if (call.MaxCompletionTime.HasValue && systemClock > call.MaxCompletionTime.Value)
             {
                 throw new InvalidOperationException("The call has expired");
@@ -86,6 +87,8 @@ internal class CallImplementation : ICall
 
             // Add the new assignment to the data layer
             _dal.Assignment.Create(newAssignment);
+            AssignmentManager.Observers.NotifyListUpdated(); //stage 5                                                    
+
         }
         catch (Exception ex)
         {
@@ -132,11 +135,13 @@ internal class CallImplementation : ICall
                 CallId = assignment.CallId,
                 VolunteerId = assignment.VolunteerId,
                 AdmissionTime = assignment.AdmissionTime,
-                ActualEndTime = ClockManager.Now,
+                ActualEndTime = AdminManager.Now,
                 AssignmentStatus = isVolunteer ? DO.AssignmentStatus.CancelledByUser : DO.AssignmentStatus.CancelledByAdmin
             };
             // Attempt to update the assignment in the data layer
             _dal.Assignment.Update(newAssignment);
+            AssignmentManager.Observers.NotifyItemUpdated(newAssignment.Id);  //stage 5
+            AssignmentManager.Observers.NotifyListUpdated();  //stage 5
         }
         catch (Exception ex)
         {
@@ -169,6 +174,7 @@ internal class CallImplementation : ICall
 
             // Attempt to delete the call
             _dal.Call.Delete(callId);
+            CallManager.Observers.NotifyListUpdated();  //stage 5 
         }
         catch (Exception ex)
         {
@@ -429,11 +435,13 @@ internal class CallImplementation : ICall
                 CallId = assignment.CallId,
                 VolunteerId = assignment.VolunteerId,
                 AdmissionTime = assignment.AdmissionTime,
-                ActualEndTime = ClockManager.Now,
+                ActualEndTime = AdminManager.Now,
                 AssignmentStatus = DO.AssignmentStatus.Completed
             };
             // Attempt to update the assignment in the data layer
             _dal.Assignment.Update(newAssignment);
+            AssignmentManager.Observers.NotifyItemUpdated(newAssignment.Id);  //stage 5
+            AssignmentManager.Observers.NotifyListUpdated();  //stage 5
         }
         catch (Exception ex)
         {
@@ -478,6 +486,8 @@ internal class CallImplementation : ICall
         {
             // Attempt to update the call in the data layer
             _dal.Call.Update(doCall);
+            CallManager.Observers.NotifyItemUpdated(doCall.Id);  //stage 5
+            CallManager.Observers.NotifyListUpdated();  //stage 5
         }
         catch (Exception ex)
         {
@@ -485,4 +495,15 @@ internal class CallImplementation : ICall
             throw new Exception($"Failed to update call with ID {call.Id}.", ex);
         }
     }
+
+    #region Stage 5
+    public void AddObserver(Action listObserver) =>
+        CallManager.Observers.AddListObserver(listObserver); //stage 5
+    public void AddObserver(int id, Action observer) =>
+        CallManager.Observers.AddObserver(id, observer); //stage 5
+    public void RemoveObserver(Action listObserver) =>
+        CallManager.Observers.RemoveListObserver(listObserver); //stage 5
+    public void RemoveObserver(int id, Action observer) =>
+        CallManager.Observers.RemoveObserver(id, observer); //stage 5
+    #endregion Stage 5
 }

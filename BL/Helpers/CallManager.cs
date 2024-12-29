@@ -7,6 +7,7 @@ namespace Helpers;
 
 internal class CallManager
 {
+    internal static ObserverManager Observers = new(); //stage 5 
     private static readonly DalApi.IDal _dal = DalApi.Factory.Get; //stage 4
 
     internal static BO.CallStatus GetCallStatus(int callId)
@@ -14,7 +15,7 @@ internal class CallManager
         // Fetch the call and its related data
         var call = _dal.Call.Read(callId);
         var assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
-        var systemClock = ClockManager.Now;
+        var systemClock = AdminManager.Now;
 
         if (call == null)
         {
@@ -146,6 +147,7 @@ internal class CallManager
                     AssignmentStatus = DO.AssignmentStatus.ExpiredCancellation
                 };
                 _dal.Assignment.Create(newAssignment);
+                AssignmentManager.Observers.NotifyListUpdated(); //stage 5                                                    
             }
             else
             {
@@ -162,6 +164,8 @@ internal class CallManager
                         AssignmentStatus = DO.AssignmentStatus.ExpiredCancellation
                     };
                     _dal.Assignment.Update(newAssignment);
+                    AssignmentManager.Observers.NotifyItemUpdated(newAssignment.Id);  //stage 5
+                    AssignmentManager.Observers.NotifyListUpdated();  //stage 5
                 }
             }
 
@@ -173,7 +177,7 @@ internal class CallManager
        TimeSpan riskRange = _dal.Config.RiskRange;
         var call = _dal.Call.Read(callId);
         var maxCompletionTime = call.MaxCompletionTime;
-        if (maxCompletionTime.HasValue && (maxCompletionTime.Value - ClockManager.Now).TotalDays <= riskRange.TotalDays)
+        if (maxCompletionTime.HasValue && (maxCompletionTime.Value - AdminManager.Now).TotalDays <= riskRange.TotalDays)
              return true;
         
         return false;

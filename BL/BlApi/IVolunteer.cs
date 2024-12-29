@@ -2,7 +2,7 @@
 
 namespace BlApi;
 
-public interface IVolunteer
+public interface IVolunteer : IObservable
 {
     Role SignIn(string name, string password);
 

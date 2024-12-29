@@ -6,7 +6,7 @@ namespace Helpers;
 internal class VolunteerManager
 {
     private static readonly DalApi.IDal _dal = DalApi.Factory.Get;
-
+    internal static ObserverManager Observers = new(); //stage 5 
 
 
 
