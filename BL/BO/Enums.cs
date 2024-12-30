@@ -59,4 +59,7 @@ public enum TimeUnit
     second,
     minute,
     hour,
+    day,
+    month,
+    year
 }

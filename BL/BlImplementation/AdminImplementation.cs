@@ -26,6 +26,15 @@ internal class AdminImplementation : IAdmin
             case BO.TimeUnit.hour:
                 AdminManager.UpdateClock(AdminManager.Now.AddHours(1));
                 break;
+            case BO.TimeUnit.day:
+                AdminManager.UpdateClock(AdminManager.Now.AddDays(1));
+                break;
+            case BO.TimeUnit.month:
+                AdminManager.UpdateClock(AdminManager.Now.AddMonths(1));
+                break;
+            case BO.TimeUnit.year:
+                AdminManager.UpdateClock(AdminManager.Now.AddYears(1));
+                break;
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(unit), "Unsupported time unit");
