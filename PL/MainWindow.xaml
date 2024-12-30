@@ -48,13 +48,15 @@
 
         <!-- Database Buttons -->
         <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-            <Button Content="Reset DB" Width="150" Margin="5" />
-            <Button Content="Init DB" Width="150" Margin="5" />
+            <!-- Button for Resetting the Database -->
+            <Button Content="Reset DB" Width="150" Margin="5" Click="btnResetDB_Click" />
+            <!-- Button for Initializing the Database -->
+            <Button Content="Init DB" Width="150" Margin="5" Click="btnInitializeDB_Click" />
         </StackPanel>
 
         <!-- Additional Buttons -->
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Volunteer list" Width="150" Margin="5" />
+            <Button Content="Volunteer list" Width="150" Margin="5" Click="btnVolunteerList_Click" />
         </StackPanel>
     </Grid>
 </Window>
