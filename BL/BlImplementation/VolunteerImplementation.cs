@@ -44,7 +44,7 @@ internal class VolunteerImplementation : IVolunteer
             };
 
             _dal.Volunteer.Create(updatedVolunteer);
-            VolunteerManager.Observers.NotifyListUpdated(); //stage 5                                                    
+            VolunteerManager.Observers.NotifyListUpdated(); //stage 5
         }
         catch (Exception ex)
         {
