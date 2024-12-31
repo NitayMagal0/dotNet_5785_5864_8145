@@ -121,23 +121,24 @@ internal class VolunteerImplementation : IVolunteer
 
 
     /// <summary>
-    /// Retrieves a list of volunteers based on their active status .
+    /// Retrieves a list of volunteers based on their active status and other criteria.
     /// </summary>
     /// <param name="isActive">Optional parameter to filter volunteers by their active status.</param>
-    /// <param name="VolunteerInList">Optional enumeration parameter to filter volunteers.</param>
+    /// <param name="filterCallType">Optional parameter to filter volunteers by call type.</param>
     /// <returns>A list of volunteers matching the specified criteria.</returns>
     /// <exception cref="Exception">Thrown when there is an error retrieving the volunteers list.</exception>
-    public IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive, Enum? VolunteerInList)
+    public IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive = null, BO.CallType? filterCallType = null)
     {
         try
         {
-            // Step 1: Retrieve all volunteers from the DAL and convert to BO
-            var volunteers = _dal.Volunteer.ReadAll().Select(VolunteerManager.ConvertVolunteerToBO).ToList();
-            // Step 2: Filter the volunteers based on the isActive parameter
-            var filteredVolunteers = volunteers.Where(v => isActive == null || v.IsActive == isActive).ToList();
+            // Retrieve and convert all volunteers from the DAL
+            var volunteers = _dal.Volunteer.ReadAll()
+                .Select(VolunteerManager.ConvertVolunteerToBO)
+                .Where(v => !isActive.HasValue || v.IsActive == isActive)
+                .ToList();
 
-            // Step 3: Convert the list of volunteers to a list of VolunteerInList objects
-            var volunteersInList = filteredVolunteers.Select(v => new VolunteerInList
+            // Map to VolunteerInList objects
+            var volunteersInList = volunteers.Select(v => new BO.VolunteerInList
             {
                 Id = v.Id,
                 FullName = v.FullName,
@@ -147,28 +148,76 @@ internal class VolunteerImplementation : IVolunteer
                 ExpiredCalls = v.ExpiredCalls,
                 CurrentCallId = VolunteerManager.GetCallInProgress(v.Id)?.CallId,
                 CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined
-            }).ToList();
+            });
 
-            // Step 4: Sort the list of volunteers based on the VolunteerInList parameter
-            if (VolunteerInList != null)
+            // Apply sorting
+            if (filterCallType.HasValue)
             {
-                volunteersInList = volunteersInList.OrderBy(v => v.CallType == (BO.CallType)VolunteerInList).ToList();
+                volunteersInList = volunteersInList
+                    .OrderByDescending(v => v.CallType == filterCallType)
+                    .ThenBy(v => v.Id);
             }
-            //if the parameter is null, sort by ID
             else
             {
-                volunteersInList = volunteersInList.OrderBy(v => v.Id).ToList();
+                volunteersInList = volunteersInList.OrderBy(v => v.Id);
             }
-            // Step 5: Return the list of volunteers
-            return volunteersInList;
 
+            return volunteersInList;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"ERROR: {ex.Message}");
-            throw new Exception($"ERROR: ", ex);
+            var errorMessage = $"An error occurred while retrieving the volunteers list: {ex.Message}";
+            Console.WriteLine(errorMessage);
+            throw new Exception(errorMessage, ex);
         }
     }
+
+
+
+    //-----------------------------------------------------------------------------------
+
+    /// <summary>
+    /// Retrieves a list of volunteers filtered by a specific call type.
+    /// </summary>
+    /// <param name="callType">The call type to filter volunteers by.</param>
+    /// <returns>A list of volunteers associated with the specified call type.</returns>
+    /// <exception cref="Exception">Thrown when there is an error retrieving the volunteers list.</exception>
+    public IEnumerable<BO.VolunteerInList> GetVolunteersByCallType(BO.CallType callType)
+    {
+        try
+        {
+            // Retrieve and convert all volunteers from the DAL
+            var volunteers = _dal.Volunteer.ReadAll()
+                .Select(VolunteerManager.ConvertVolunteerToBO)
+                .ToList();
+
+            // Map to VolunteerInList objects and filter by the specified call type
+            var volunteersInList = volunteers.Select(v => new BO.VolunteerInList
+                {
+                    Id = v.Id,
+                    FullName = v.FullName,
+                    IsActive = v.IsActive,
+                    HandledCalls = v.HandledCalls,
+                    CanceledCalls = v.CanceledCalls,
+                    ExpiredCalls = v.ExpiredCalls,
+                    CurrentCallId = VolunteerManager.GetCallInProgress(v.Id)?.CallId,
+                    CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined
+                })
+                .Where(v => v.CallType == callType)
+                .OrderBy(v => v.Id);
+
+            return volunteersInList;
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = $"An error occurred while retrieving the volunteers filtered by call type: {ex.Message}";
+            Console.WriteLine(errorMessage);
+            throw new Exception(errorMessage, ex);
+        }
+    }
+
+    //-----------------------------------------------------------------------------------
+
 
     /// <summary>
     /// Retrieve the role of a volunteer based on their name and password.

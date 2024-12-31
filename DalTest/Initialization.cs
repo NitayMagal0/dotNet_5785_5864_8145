@@ -14,32 +14,42 @@ public static class Initialization
     private static readonly Random s_rand = new();
 
     static List<int> VolunteerId = new List<int>();
+   
     /// <summary>
     /// The function connects the 50 calls to the 25 volunteers by assigning two calls to each volunteer
     /// </summary>
     private static void createAssignment()
     {
-        if (VolunteerId == null) return;
-        int i = 0;                               //The above variable is responsible for advancing the identification number of the calls
-        foreach (var id in VolunteerId)
+        if (VolunteerId == null || VolunteerId.Count == 0) return;
+
+        int callCounter = 1000; // Starting ID for calls
+
+        foreach (var volunteerId in VolunteerId)
         {
-            Call call = s_dal.Call.Read(1000 + i);
-            //Since there are 50 calls and only 25 volunteers this loop assigns each volunteer two calls
-            for (int j = 0; j < 2; j++, i++)
+            // Each volunteer gets exactly two calls assigned
+            for (int j = 0; j < 2; j++)
             {
+                // Create a new unique call ID for each call
+                var call = s_dal.Call.Read(callCounter++);
+
+                if (call == null)
+                {
+                    // Handle cases where the call does not exist in the data source
+                    throw new InvalidOperationException($"Call with ID {callCounter - 1} does not exist.");
+                }
+
+                // Create a new assignment for the current volunteer and call
                 s_dal.Assignment!.Create(new Assignment(
-                    0,
+                    0, 
                     call.Id,
-                    id,
+                    volunteerId,
                     call.OpeningTime,
                     call.MaxCompletionTime,
-                    AssignmentStatus.Completed
+                   AssignmentStatus.Completed
                 ));
             }
         }
     }
-
-
     /// <summary>
     /// The function generates 50 different calls
     /// </summary>

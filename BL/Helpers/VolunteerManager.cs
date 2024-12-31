@@ -90,7 +90,16 @@ internal class VolunteerManager
                 Role = MapRole(volunteer.Role),
                 IsActive = volunteer.IsActive,
                 MaxDistanceForCall = volunteer.MaxDistanceForCall,
-                DistanceType = MapDistanceType(volunteer.DistanceType)
+                DistanceType = MapDistanceType(volunteer.DistanceType), 
+                CallInProgress = GetCallInProgress(volunteer.Id),
+                HandledCalls = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id && a.AssignmentStatus.HasValue && a.AssignmentStatus.Value == DO.AssignmentStatus.Completed).Count(),
+                CanceledCalls = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id &&
+                                                             a.AssignmentStatus.HasValue &&
+                                                             (a.AssignmentStatus.Value == DO.AssignmentStatus.CancelledByUser ||
+                                                              a.AssignmentStatus.Value == DO.AssignmentStatus.CancelledByAdmin)).Count(),
+                ExpiredCalls = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id &&
+                                                            a.AssignmentStatus.HasValue &&
+                                                            a.AssignmentStatus.Value == DO.AssignmentStatus.ExpiredCancellation).Count()
             };
     }
     /// <summary>
@@ -270,7 +279,6 @@ internal class VolunteerManager
         return true;
     }
 
-
     /// <summary>
     /// Retrieves the call in progress for a volunteer by their ID.
     /// </summary>
@@ -278,19 +286,21 @@ internal class VolunteerManager
     /// <returns>A BO.CallInProgress object containing the call in progress details.</returns>
     /// <exception cref="Exception">Thrown when the volunteer does not have a call in progress.</exception>
     internal static BO.CallInProgress GetCallInProgress(int volunteerId)
-    {  
-        // Retrieve the volunteer details
-        var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(volunteerId));
+    {
+        // Retrieve the necessary volunteer details directly
+        var volunteer = _dal.Volunteer.Read(volunteerId);
+        if (volunteer == null)
+            throw new Exception("Volunteer not found");
+        BO.DistanceType distanceType = MapDistanceType(volunteer.DistanceType);
         // Retrieve the assignment for the volunteer, if any
-        var assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId && // Check if the volunteer of this assignment has the requested ID
-        _dal.Call.Read(a.CallId).MaxCompletionTime > DateTime.Now); // Check if the call is still in progress
- 
+        var assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
+            _dal.Call.Read(a.CallId).MaxCompletionTime > DateTime.Now);
+
         if (assignment != null)
         {
-            // Fill the call in progress details (we converted from DO to BO and DO doesn't have the field CallInProgress)
             try
             {
-                BO.CallInProgress newCallInProgress = new BO.CallInProgress
+                return new BO.CallInProgress
                 {
                     Id = assignment.Id,
                     CallId = assignment.CallId,
@@ -300,21 +310,22 @@ internal class VolunteerManager
                     OpeningTime = _dal.Call.Read(assignment.CallId).OpeningTime,
                     MaxCompletionTime = _dal.Call.Read(assignment.CallId).MaxCompletionTime,
                     AdmissionTime = assignment.AdmissionTime,
-                    DistanceFromVolunteer = Tools.CalculateAirDistance(((double)volunteer.Latitude, (double)volunteer.Longitude),
-                       (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude)),
+                    DistanceFromVolunteer = Tools.GetResultAsync(
+                        ((double)volunteer.Latitude, (double)volunteer.Longitude),
+                        (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude), distanceType
+                    ),
                     Status = CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress
                 };
-                return newCallInProgress;
             }
             catch (Exception ex)
             {
-
-                throw new Exception(ex.Message);
-            }  
+                throw new Exception($"Error creating CallInProgress: {ex.Message}");
+            }
         }
+
         throw new Exception("Volunteer doesn't have a call in progress");
-        
     }
+
 
     /// <summary>
     /// Encodes the given password to a Base64 string.

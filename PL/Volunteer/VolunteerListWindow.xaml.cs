@@ -36,7 +36,7 @@ public partial class VolunteerListWindow : Window
     {
         VolunteerList = (searchFilter == BO.CallType.Undefined)
             ? s_bl?.Volunteer.GetVolunteersList(null, null)
-            : s_bl?.Volunteer.GetVolunteersList(null, searchFilter);
+            : s_bl?.Volunteer.GetVolunteersByCallType(searchFilter);
     }
     private void volunteerListObserver()
     {

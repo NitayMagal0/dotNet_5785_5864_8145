@@ -157,6 +157,7 @@ internal class CallManager
                 {
                     var newAssignment = new Assignment
                     {
+                        Id = activeAssignment.Id,
                         CallId = activeAssignment.CallId,
                         VolunteerId = activeAssignment.VolunteerId,
                         AdmissionTime = activeAssignment.AdmissionTime,

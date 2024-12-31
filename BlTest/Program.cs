@@ -270,7 +270,7 @@ namespace BlTest
 
                             Console.Write("Enter sort field (CallType) or leave empty for no sorting: ");
                             string sortFieldInput = Console.ReadLine();
-                            Enum? sortField = string.IsNullOrEmpty(sortFieldInput) ? null : Enum.Parse<CallType>(sortFieldInput);
+                            CallType? sortField = string.IsNullOrEmpty(sortFieldInput) ? null : CallType.Parse<CallType>(sortFieldInput);
 
                             var volunteers = s_bl.Volunteer.GetVolunteersList(isActiveFilter, sortField);
                             foreach (var volunteer in volunteers)
