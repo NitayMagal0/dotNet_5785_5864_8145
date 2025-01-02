@@ -268,10 +268,6 @@ internal class VolunteerManager
         if (!password.Any(char.IsDigit))
             return false;
 
-        // Check for at least one special character
-        if (!password.Any(ch => "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~".Contains(ch)))
-            return false;
-
         // Check for whitespace
         if (password.Any(char.IsWhiteSpace))
             return false;
@@ -294,7 +290,7 @@ internal class VolunteerManager
         BO.DistanceType distanceType = MapDistanceType(volunteer.DistanceType);
         // Retrieve the assignment for the volunteer, if any
         var assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
-            _dal.Call.Read(a.CallId).MaxCompletionTime > DateTime.Now);
+                                                   _dal.Call.Read(a.CallId).MaxCompletionTime > AdminManager.Now);
 
         if (assignment != null)
         {
@@ -312,9 +308,12 @@ internal class VolunteerManager
                     AdmissionTime = assignment.AdmissionTime,
                     DistanceFromVolunteer = Tools.GetResultAsync(
                         ((double)volunteer.Latitude, (double)volunteer.Longitude),
-                        (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude), distanceType
+                        (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude),
+                        distanceType
                     ),
-                    Status = CallManager.IsCallInRiskRange(assignment.CallId) ? BO.CallStatus.OpenAtRisk : BO.CallStatus.InProgress
+                    Status = CallManager.IsCallInRiskRange(assignment.CallId)
+                        ? BO.CallStatus.OpenAtRisk
+                        : BO.CallStatus.InProgress
                 };
             }
             catch (Exception ex)
@@ -323,9 +322,11 @@ internal class VolunteerManager
             }
         }
 
-        throw new Exception("Volunteer doesn't have a call in progress");
+        else
+        {
+            return null;
+        }
     }
-
 
     /// <summary>
     /// Encodes the given password to a Base64 string.

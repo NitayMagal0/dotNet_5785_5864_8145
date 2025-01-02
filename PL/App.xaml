@@ -5,5 +5,10 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:CallsCollection x:Key="CallsCollectionKey" />
+        <local:RolesCollection x:Key="RolesCollectionKey" />
+        <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey" />
+        <local:IdToReadOnlyConverter x:Key="IdToReadOnlyConverter" />
+        <local:DistanceTypeToLabelConverter x:Key="DistanceTypeToLabelConverter" />
+        <local:NullToFalseConverter x:Key="NullToFalseConverter" />
     </Application.Resources>
 </Application>

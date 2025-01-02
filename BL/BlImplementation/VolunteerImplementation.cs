@@ -27,8 +27,6 @@ internal class VolunteerImplementation : IVolunteer
 
             throw new Exception(ex.Message);
         }
-        if (!VolunteerManager.IsValidVolunteer(volunteerToAdd))
-            throw new Exception("Invalid volunteer details");
         // Encode the password before adding the volunteer
         volunteerToAdd.Password = VolunteerManager.EncodePassword(volunteerToAdd.Password);
         // Convert the BO to DO and add the volunteer
@@ -48,7 +46,7 @@ internal class VolunteerImplementation : IVolunteer
         }
         catch (Exception ex)
         {
-            throw new Exception("Couldn't add the volunteer", ex);
+            throw new BlInvalidOperationException(ex.Message);
         }
     }
 

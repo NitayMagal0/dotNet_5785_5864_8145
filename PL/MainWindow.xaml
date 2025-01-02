@@ -5,10 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="640" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid Margin="10">
-        <!-- Define rows and columns for the main Grid -->
+        Title="System Management" Height="640" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Background="#F0F2F5">
+
+    <Window.Resources>
+        <!-- Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1976D2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#BDBDBD"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <!-- Label Style -->
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#424242"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="2*" />
@@ -20,43 +65,114 @@
         </Grid.ColumnDefinitions>
 
         <!-- System Clock Area -->
-        <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="2" Padding="10" Margin="5">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" 
+                Background="White"
+                BorderBrush="#E0E0E0" 
+                BorderThickness="1" 
+                CornerRadius="8"
+                Padding="20" 
+                Margin="0,0,0,20">
             <StackPanel>
-                <!-- Label to display the current system clock -->
-                <Label Content="{Binding CurrentTime}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Background="LightBlue" Padding="5" />
-                <!-- Buttons to advance the system clock -->
-                <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Center">
-                    <Button Content="Add One Minute" Width="200" Margin="5" Click="btnAddOneMinute_Click"/>
-                    <Button Content="Add One Hour" Width="200" Margin="5" Click="btnAddOneHour_Click"/>
-                    <Button Content="Add One Day" Width="200" Margin="5" Click="btnAddOneDay_Click"/>
-                    <Button Content="Add One Month" Width="200" Margin="5" Click="btnAddOneMonth_Click"/>
-                    <Button Content="Add One Year" Width="200" Margin="5" Click="btnAddOneYear_Click"/>
+                <Label Content="{Binding CurrentTime}" 
+                       FontSize="32" 
+                       FontWeight="Light"
+                       HorizontalAlignment="Center"
+                       Foreground="#1976D2"
+                       Background="Transparent"
+                       Padding="10"/>
+
+                <StackPanel Orientation="Vertical" 
+                          Margin="0,20,0,0" 
+                          HorizontalAlignment="Center">
+                    <Button Content="Add One Minute" Width="200" Margin="0,5" Click="btnAddOneMinute_Click"/>
+                    <Button Content="Add One Hour" Width="200" Margin="0,5" Click="btnAddOneHour_Click"/>
+                    <Button Content="Add One Day" Width="200" Margin="0,5" Click="btnAddOneDay_Click"/>
+                    <Button Content="Add One Month" Width="200" Margin="0,5" Click="btnAddOneMonth_Click"/>
+                    <Button Content="Add One Year" Width="200" Margin="0,5" Click="btnAddOneYear_Click"/>
                 </StackPanel>
             </StackPanel>
         </Border>
 
         <!-- Configuration Area -->
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
-            <!-- TextBox for max range -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
-                <Label Content="Max Range:" VerticalAlignment="Center" />
-                <TextBox Text="{Binding MaxRange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="5" x:Name="txtMaxRange"/>
-                <Button Content="Update" Width="100" Click="btnUpdateMaxRange_Click"/>
+        <Border Grid.Row="1" Grid.Column="0" 
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0,0,10,0">
+            <StackPanel>
+                <TextBlock Text="Configuration" 
+                          FontSize="20" 
+                          FontWeight="Medium" 
+                          Margin="0,0,0,20"
+                          Foreground="#424242"/>
+
+                <StackPanel Orientation="Horizontal" 
+                          VerticalAlignment="Center" 
+                          Margin="0,10">
+                    <Label Content="Max Range:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding MaxRange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             Width="80" 
+                             Margin="10,0" 
+                             x:Name="txtMaxRange"/>
+                    <Button Content="Update" 
+                           Width="100" 
+                           Click="btnUpdateMaxRange_Click"/>
+                </StackPanel>
+
+                <TextBlock Text="[Range for risky tasks]" 
+                          TextWrapping="Wrap" 
+                          Foreground="#9C27B0"
+                          FontStyle="Italic"
+                          Margin="0,10"/>
             </StackPanel>
-            <TextBlock Text="[Range for risky tasks]" TextWrapping="Wrap" Foreground="Purple" />
-        </StackPanel>
+        </Border>
 
-        <!-- Database Buttons -->
-        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-            <!-- Button for Resetting the Database -->
-            <Button Content="Reset DB" Width="150" Margin="5" Click="btnResetDB_Click" />
-            <!-- Button for Initializing the Database -->
-            <Button Content="Init DB" Width="150" Margin="5" Click="btnInitializeDB_Click" />
-        </StackPanel>
+        <!-- Database Controls -->
+        <Border Grid.Row="1" Grid.Column="1"
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20"
+                Margin="10,0,0,0">
+            <StackPanel>
+                <TextBlock Text="Database Management" 
+                          FontSize="20" 
+                          FontWeight="Medium" 
+                          Margin="0,0,0,20"
+                          Foreground="#424242"/>
 
-        <!-- Additional Buttons -->
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Volunteer list" Width="150" Margin="5" Click="btnVolunteerList_Click" />
-        </StackPanel>
+                <Button Content="Reset DB" 
+                        Width="150"
+                        Margin="0,5"
+                        Background="#F44336"
+                        Click="btnResetDB_Click"/>
+
+                <Button Content="Init DB" 
+                        Width="150"
+                        Margin="0,5"
+                        Background="#4CAF50"
+                        Click="btnInitializeDB_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Footer Buttons -->
+        <Border Grid.Row="2" Grid.ColumnSpan="2"
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0,20,0,0">
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                <Button Content="Volunteer list" 
+                        Width="150"
+                        Background="#673AB7"
+                        Click="btnVolunteerList_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
