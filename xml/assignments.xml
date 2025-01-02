@@ -1,303 +1,403 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfAssignment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Assignment>
     <Id>1000</Id>
     <CallId>1000</CallId>
-    <VolunteerId>255677502</VolunteerId>
-    <AdmissionTime>2024-08-02T00:00:00</AdmissionTime>
+    <VolunteerId>809570427</VolunteerId>
+    <AdmissionTime>2024-10-05T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1001</Id>
     <CallId>1001</CallId>
-    <VolunteerId>255677502</VolunteerId>
-    <AdmissionTime>2024-05-04T00:00:00</AdmissionTime>
+    <VolunteerId>809570427</VolunteerId>
+    <AdmissionTime>2024-03-15T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1002</Id>
     <CallId>1002</CallId>
-    <VolunteerId>445345713</VolunteerId>
-    <AdmissionTime>2024-05-03T00:00:00</AdmissionTime>
+    <VolunteerId>55900708</VolunteerId>
+    <AdmissionTime>2024-10-19T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1003</Id>
     <CallId>1003</CallId>
-    <VolunteerId>445345713</VolunteerId>
-    <AdmissionTime>2024-11-10T00:00:00</AdmissionTime>
+    <VolunteerId>55900708</VolunteerId>
+    <AdmissionTime>2024-08-20T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1004</Id>
     <CallId>1004</CallId>
-    <VolunteerId>563686831</VolunteerId>
-    <AdmissionTime>2024-05-17T00:00:00</AdmissionTime>
+    <VolunteerId>932879893</VolunteerId>
+    <AdmissionTime>2024-08-24T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1005</Id>
     <CallId>1005</CallId>
-    <VolunteerId>563686831</VolunteerId>
-    <AdmissionTime>2024-08-22T00:00:00</AdmissionTime>
+    <VolunteerId>932879893</VolunteerId>
+    <AdmissionTime>2024-01-11T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1006</Id>
     <CallId>1006</CallId>
-    <VolunteerId>575616610</VolunteerId>
-    <AdmissionTime>2024-03-10T00:00:00</AdmissionTime>
+    <VolunteerId>958143299</VolunteerId>
+    <AdmissionTime>2024-08-06T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1007</Id>
     <CallId>1007</CallId>
-    <VolunteerId>575616610</VolunteerId>
-    <AdmissionTime>2024-07-02T00:00:00</AdmissionTime>
+    <VolunteerId>958143299</VolunteerId>
+    <AdmissionTime>2024-04-19T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1008</Id>
     <CallId>1008</CallId>
-    <VolunteerId>26622977</VolunteerId>
-    <AdmissionTime>2024-09-12T00:00:00</AdmissionTime>
+    <VolunteerId>151998036</VolunteerId>
+    <AdmissionTime>2024-05-14T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1009</Id>
     <CallId>1009</CallId>
-    <VolunteerId>26622977</VolunteerId>
-    <AdmissionTime>2024-06-13T00:00:00</AdmissionTime>
+    <VolunteerId>151998036</VolunteerId>
+    <AdmissionTime>2024-04-08T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1010</Id>
     <CallId>1010</CallId>
-    <VolunteerId>726574536</VolunteerId>
-    <AdmissionTime>2024-04-04T00:00:00</AdmissionTime>
+    <VolunteerId>179514427</VolunteerId>
+    <AdmissionTime>2024-03-17T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1011</Id>
     <CallId>1011</CallId>
-    <VolunteerId>726574536</VolunteerId>
-    <AdmissionTime>2024-12-10T00:00:00</AdmissionTime>
+    <VolunteerId>179514427</VolunteerId>
+    <AdmissionTime>2024-11-29T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1012</Id>
     <CallId>1012</CallId>
-    <VolunteerId>382402709</VolunteerId>
-    <AdmissionTime>2024-11-14T00:00:00</AdmissionTime>
+    <VolunteerId>25925546</VolunteerId>
+    <AdmissionTime>2024-12-20T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1013</Id>
     <CallId>1013</CallId>
-    <VolunteerId>382402709</VolunteerId>
-    <AdmissionTime>2024-11-11T00:00:00</AdmissionTime>
+    <VolunteerId>25925546</VolunteerId>
+    <AdmissionTime>2024-03-05T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1014</Id>
     <CallId>1014</CallId>
-    <VolunteerId>37645231</VolunteerId>
-    <AdmissionTime>2024-12-09T00:00:00</AdmissionTime>
+    <VolunteerId>551236367</VolunteerId>
+    <AdmissionTime>2024-10-10T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1015</Id>
     <CallId>1015</CallId>
-    <VolunteerId>37645231</VolunteerId>
-    <AdmissionTime>2024-01-24T00:00:00</AdmissionTime>
+    <VolunteerId>551236367</VolunteerId>
+    <AdmissionTime>2024-06-29T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1016</Id>
     <CallId>1016</CallId>
-    <VolunteerId>438143695</VolunteerId>
-    <AdmissionTime>2024-09-15T00:00:00</AdmissionTime>
+    <VolunteerId>631617131</VolunteerId>
+    <AdmissionTime>2024-06-30T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1017</Id>
     <CallId>1017</CallId>
-    <VolunteerId>438143695</VolunteerId>
-    <AdmissionTime>2024-09-10T00:00:00</AdmissionTime>
+    <VolunteerId>631617131</VolunteerId>
+    <AdmissionTime>2024-02-11T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1018</Id>
     <CallId>1018</CallId>
-    <VolunteerId>275254514</VolunteerId>
-    <AdmissionTime>2024-06-13T00:00:00</AdmissionTime>
+    <VolunteerId>28715548</VolunteerId>
+    <AdmissionTime>2024-04-29T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1019</Id>
     <CallId>1019</CallId>
-    <VolunteerId>275254514</VolunteerId>
-    <AdmissionTime>2024-02-25T00:00:00</AdmissionTime>
+    <VolunteerId>28715548</VolunteerId>
+    <AdmissionTime>2024-08-22T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1020</Id>
     <CallId>1020</CallId>
-    <VolunteerId>126250620</VolunteerId>
-    <AdmissionTime>2024-07-22T00:00:00</AdmissionTime>
+    <VolunteerId>608887857</VolunteerId>
+    <AdmissionTime>2024-02-13T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1021</Id>
     <CallId>1021</CallId>
-    <VolunteerId>126250620</VolunteerId>
-    <AdmissionTime>2024-05-19T00:00:00</AdmissionTime>
+    <VolunteerId>608887857</VolunteerId>
+    <AdmissionTime>2024-11-21T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1022</Id>
     <CallId>1022</CallId>
-    <VolunteerId>235517299</VolunteerId>
-    <AdmissionTime>2024-02-17T00:00:00</AdmissionTime>
+    <VolunteerId>504601659</VolunteerId>
+    <AdmissionTime>2024-11-22T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1023</Id>
     <CallId>1023</CallId>
-    <VolunteerId>235517299</VolunteerId>
-    <AdmissionTime>2024-04-03T00:00:00</AdmissionTime>
+    <VolunteerId>504601659</VolunteerId>
+    <AdmissionTime>2024-06-27T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1024</Id>
     <CallId>1024</CallId>
-    <VolunteerId>250334091</VolunteerId>
-    <AdmissionTime>2024-09-20T00:00:00</AdmissionTime>
+    <VolunteerId>105242093</VolunteerId>
+    <AdmissionTime>2024-04-24T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1025</Id>
     <CallId>1025</CallId>
-    <VolunteerId>250334091</VolunteerId>
-    <AdmissionTime>2024-05-05T00:00:00</AdmissionTime>
+    <VolunteerId>105242093</VolunteerId>
+    <AdmissionTime>2024-10-18T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1026</Id>
     <CallId>1026</CallId>
-    <VolunteerId>456001304</VolunteerId>
-    <AdmissionTime>2024-06-16T00:00:00</AdmissionTime>
+    <VolunteerId>680542396</VolunteerId>
+    <AdmissionTime>2024-08-11T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1027</Id>
     <CallId>1027</CallId>
-    <VolunteerId>456001304</VolunteerId>
-    <AdmissionTime>2024-02-23T00:00:00</AdmissionTime>
+    <VolunteerId>680542396</VolunteerId>
+    <AdmissionTime>2024-03-09T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1028</Id>
     <CallId>1028</CallId>
-    <VolunteerId>599377322</VolunteerId>
-    <AdmissionTime>2024-02-19T00:00:00</AdmissionTime>
+    <VolunteerId>709606008</VolunteerId>
+    <AdmissionTime>2024-03-24T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1029</Id>
     <CallId>1029</CallId>
-    <VolunteerId>599377322</VolunteerId>
-    <AdmissionTime>2024-02-25T00:00:00</AdmissionTime>
+    <VolunteerId>709606008</VolunteerId>
+    <AdmissionTime>2024-11-28T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1030</Id>
     <CallId>1030</CallId>
-    <VolunteerId>348784273</VolunteerId>
-    <AdmissionTime>2024-09-18T00:00:00</AdmissionTime>
+    <VolunteerId>708416391</VolunteerId>
+    <AdmissionTime>2024-05-10T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1031</Id>
     <CallId>1031</CallId>
-    <VolunteerId>348784273</VolunteerId>
-    <AdmissionTime>2024-03-22T00:00:00</AdmissionTime>
+    <VolunteerId>708416391</VolunteerId>
+    <AdmissionTime>2024-04-17T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1032</Id>
     <CallId>1032</CallId>
-    <VolunteerId>793522590</VolunteerId>
-    <AdmissionTime>2024-10-17T00:00:00</AdmissionTime>
+    <VolunteerId>800024739</VolunteerId>
+    <AdmissionTime>2024-04-09T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1033</Id>
     <CallId>1033</CallId>
-    <VolunteerId>793522590</VolunteerId>
-    <AdmissionTime>2024-05-06T00:00:00</AdmissionTime>
+    <VolunteerId>800024739</VolunteerId>
+    <AdmissionTime>2024-01-14T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1034</Id>
     <CallId>1034</CallId>
-    <VolunteerId>837966498</VolunteerId>
-    <AdmissionTime>2024-12-17T00:00:00</AdmissionTime>
+    <VolunteerId>608562005</VolunteerId>
+    <AdmissionTime>2024-12-26T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1035</Id>
     <CallId>1035</CallId>
-    <VolunteerId>837966498</VolunteerId>
-    <AdmissionTime>2024-09-11T00:00:00</AdmissionTime>
+    <VolunteerId>608562005</VolunteerId>
+    <AdmissionTime>2024-09-30T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1036</Id>
     <CallId>1036</CallId>
-    <VolunteerId>492769294</VolunteerId>
-    <AdmissionTime>2024-03-28T00:00:00</AdmissionTime>
+    <VolunteerId>36716041</VolunteerId>
+    <AdmissionTime>2024-07-02T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1037</Id>
     <CallId>1037</CallId>
-    <VolunteerId>492769294</VolunteerId>
-    <AdmissionTime>2024-09-16T00:00:00</AdmissionTime>
+    <VolunteerId>36716041</VolunteerId>
+    <AdmissionTime>2024-08-20T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1038</Id>
     <CallId>1038</CallId>
-    <VolunteerId>868436072</VolunteerId>
-    <AdmissionTime>2024-12-06T00:00:00</AdmissionTime>
+    <VolunteerId>993753573</VolunteerId>
+    <AdmissionTime>2024-06-04T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1039</Id>
     <CallId>1039</CallId>
-    <VolunteerId>868436072</VolunteerId>
-    <AdmissionTime>2024-04-26T00:00:00</AdmissionTime>
+    <VolunteerId>993753573</VolunteerId>
+    <AdmissionTime>2024-07-20T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1040</Id>
     <CallId>1040</CallId>
-    <VolunteerId>225319763</VolunteerId>
-    <AdmissionTime>2024-08-17T00:00:00</AdmissionTime>
+    <VolunteerId>592490361</VolunteerId>
+    <AdmissionTime>2024-10-15T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1041</Id>
     <CallId>1041</CallId>
-    <VolunteerId>225319763</VolunteerId>
-    <AdmissionTime>2024-06-06T00:00:00</AdmissionTime>
+    <VolunteerId>592490361</VolunteerId>
+    <AdmissionTime>2024-11-06T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1042</Id>
     <CallId>1042</CallId>
-    <VolunteerId>869338962</VolunteerId>
-    <AdmissionTime>2024-08-11T00:00:00</AdmissionTime>
+    <VolunteerId>547733360</VolunteerId>
+    <AdmissionTime>2024-07-24T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1043</Id>
     <CallId>1043</CallId>
-    <VolunteerId>869338962</VolunteerId>
-    <AdmissionTime>2024-06-24T00:00:00</AdmissionTime>
+    <VolunteerId>547733360</VolunteerId>
+    <AdmissionTime>2024-11-16T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1044</Id>
     <CallId>1044</CallId>
-    <VolunteerId>97493530</VolunteerId>
-    <AdmissionTime>2024-12-02T00:00:00</AdmissionTime>
+    <VolunteerId>210033023</VolunteerId>
+    <AdmissionTime>2024-02-06T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1045</Id>
     <CallId>1045</CallId>
-    <VolunteerId>97493530</VolunteerId>
-    <AdmissionTime>2024-01-15T00:00:00</AdmissionTime>
+    <VolunteerId>210033023</VolunteerId>
+    <AdmissionTime>2024-01-20T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1046</Id>
     <CallId>1046</CallId>
-    <VolunteerId>934054925</VolunteerId>
-    <AdmissionTime>2024-03-08T00:00:00</AdmissionTime>
+    <VolunteerId>883382483</VolunteerId>
+    <AdmissionTime>2024-02-17T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1047</Id>
     <CallId>1047</CallId>
-    <VolunteerId>934054925</VolunteerId>
-    <AdmissionTime>2024-03-24T00:00:00</AdmissionTime>
+    <VolunteerId>883382483</VolunteerId>
+    <AdmissionTime>2024-05-20T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1048</Id>
     <CallId>1048</CallId>
-    <VolunteerId>428828222</VolunteerId>
-    <AdmissionTime>2024-07-05T00:00:00</AdmissionTime>
+    <VolunteerId>747171791</VolunteerId>
+    <AdmissionTime>2024-07-15T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
   <Assignment>
     <Id>1049</Id>
     <CallId>1049</CallId>
-    <VolunteerId>428828222</VolunteerId>
-    <AdmissionTime>2024-02-26T00:00:00</AdmissionTime>
+    <VolunteerId>747171791</VolunteerId>
+    <AdmissionTime>2024-06-04T00:00:00</AdmissionTime>
+    <ActualEndTime>2026-01-02T10:24:54</ActualEndTime>
+    <AssignmentStatus>ExpiredCancellation</AssignmentStatus>
   </Assignment>
 </ArrayOfAssignment>

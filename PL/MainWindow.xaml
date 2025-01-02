@@ -10,23 +10,47 @@
         Background="#F0F2F5">
 
     <Window.Resources>
-        <!-- Button Style -->
+        <!-- Enhanced Button Style -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#2196F3"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="15,8"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" 
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="shadowEffect" 
+                                                ShadowDepth="1" 
+                                                Direction="320" 
+                                                Color="Gray" 
+                                                Opacity="0.2" 
+                                                BlurRadius="3"/>
+                            </Border.Effect>
+                            <ContentPresenter x:Name="content" 
+                                            HorizontalAlignment="Center" 
                                             VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="border" 
+                                                      Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                      To="#1565C0" 
+                                                      Duration="0:0:0.1"
+                                                      AutoReverse="True"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -34,10 +58,17 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#1976D2"/>
                 </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
             </Style.Triggers>
         </Style>
 
-        <!-- TextBox Style -->
+        <!-- TextBox Style (unchanged) -->
         <Style TargetType="TextBox">
             <Setter Property="Padding" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
@@ -46,13 +77,14 @@
             <Setter Property="Background" Value="White"/>
         </Style>
 
-        <!-- Label Style -->
+        <!-- Label Style (unchanged) -->
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#424242"/>
         </Style>
     </Window.Resources>
 
+    <!-- Rest of the XAML remains exactly the same -->
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

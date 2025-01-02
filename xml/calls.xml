@@ -7,7 +7,7 @@
     <FullAddress>Rothschild St 22, Rishon LeTsiyon</FullAddress>
     <Latitude>31.96431541442871</Latitude>
     <Longitude>34.80449676513672</Longitude>
-    <OpeningTime>2024-08-02T00:00:00</OpeningTime>
+    <OpeningTime>2024-10-05T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -17,7 +17,7 @@
     <FullAddress>HaPalmach St 10, Rishon LeTsiyon</FullAddress>
     <Latitude>31.95551872253418</Latitude>
     <Longitude>34.81156921386719</Longitude>
-    <OpeningTime>2024-05-04T00:00:00</OpeningTime>
+    <OpeningTime>2024-03-15T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -27,7 +27,7 @@
     <FullAddress>Herzl St 56, Rishon LeTsiyon</FullAddress>
     <Latitude>31.96761703491211</Latitude>
     <Longitude>34.803466796875</Longitude>
-    <OpeningTime>2024-05-03T00:00:00</OpeningTime>
+    <OpeningTime>2024-10-19T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -37,7 +37,7 @@
     <FullAddress>HaPalmach St 10, Rishon LeTsiyon</FullAddress>
     <Latitude>31.9622745513916</Latitude>
     <Longitude>34.81025695800781</Longitude>
-    <OpeningTime>2024-11-10T00:00:00</OpeningTime>
+    <OpeningTime>2024-08-20T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -47,7 +47,7 @@
     <FullAddress>HaPalmach St 14, Rishon LeTsiyon</FullAddress>
     <Latitude>32.071571350097656</Latitude>
     <Longitude>34.780635833740234</Longitude>
-    <OpeningTime>2024-05-17T00:00:00</OpeningTime>
+    <OpeningTime>2024-08-24T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -57,7 +57,7 @@
     <FullAddress>HaAlon St 15, Rishon LeTsiyon</FullAddress>
     <Latitude>32.01815414428711</Latitude>
     <Longitude>34.775901794433594</Longitude>
-    <OpeningTime>2024-08-22T00:00:00</OpeningTime>
+    <OpeningTime>2024-01-11T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -67,7 +67,7 @@
     <FullAddress>Masada St 11, Rishon LeTsiyon</FullAddress>
     <Latitude>31.958988189697266</Latitude>
     <Longitude>34.89956283569336</Longitude>
-    <OpeningTime>2024-03-10T00:00:00</OpeningTime>
+    <OpeningTime>2024-08-06T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -77,7 +77,7 @@
     <FullAddress>Bialik St 14, Rishon LeTsiyon</FullAddress>
     <Latitude>31.965333938598633</Latitude>
     <Longitude>34.80202102661133</Longitude>
-    <OpeningTime>2024-07-02T00:00:00</OpeningTime>
+    <OpeningTime>2024-04-19T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -87,7 +87,7 @@
     <FullAddress>Weizmann St 17, Rishon LeTsiyon</FullAddress>
     <Latitude>31.97135353088379</Latitude>
     <Longitude>34.80434799194336</Longitude>
-    <OpeningTime>2024-09-12T00:00:00</OpeningTime>
+    <OpeningTime>2024-05-14T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -97,7 +97,7 @@
     <FullAddress>HaShikma St 24, Rishon LeTsiyon</FullAddress>
     <Latitude>31.963098526000977</Latitude>
     <Longitude>34.79912567138672</Longitude>
-    <OpeningTime>2024-06-13T00:00:00</OpeningTime>
+    <OpeningTime>2024-04-08T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -107,8 +107,8 @@
     <FullAddress>Bar Ilan St 6, Petah Tikva</FullAddress>
     <Latitude>32.08533477783203</Latitude>
     <Longitude>34.88628387451172</Longitude>
-    <OpeningTime>2024-04-04T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-22T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-03-17T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-23T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1011</Id>
@@ -117,8 +117,8 @@
     <FullAddress>Kaplan St 1, Petah Tikva</FullAddress>
     <Latitude>32.09293746948242</Latitude>
     <Longitude>34.90143585205078</Longitude>
-    <OpeningTime>2024-12-10T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-24T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-11-29T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-31T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1012</Id>
@@ -127,8 +127,8 @@
     <FullAddress>HaHistadrut St 40, Petah Tikva</FullAddress>
     <Latitude>32.09211349487305</Latitude>
     <Longitude>34.860923767089844</Longitude>
-    <OpeningTime>2024-11-14T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-19T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-12-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-15T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1013</Id>
@@ -137,8 +137,8 @@
     <FullAddress>Kaplan St 3, Petah Tikva</FullAddress>
     <Latitude>32.0860481262207</Latitude>
     <Longitude>34.8867301940918</Longitude>
-    <OpeningTime>2024-11-11T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-11T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-03-05T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-05T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1014</Id>
@@ -147,8 +147,8 @@
     <FullAddress>Emek Dotan St 5, Petah Tikva</FullAddress>
     <Latitude>32.09049987792969</Latitude>
     <Longitude>34.86908721923828</Longitude>
-    <OpeningTime>2024-12-09T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-28T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-10-10T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-22T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1015</Id>
@@ -157,8 +157,8 @@
     <FullAddress>Hadar St 7, Petah Tikva</FullAddress>
     <Latitude>32.091793060302734</Latitude>
     <Longitude>34.90232467651367</Longitude>
-    <OpeningTime>2024-01-24T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-18T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-06-29T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-22T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1016</Id>
@@ -167,8 +167,8 @@
     <FullAddress>HaRav Kook St 5, Petah Tikva</FullAddress>
     <Latitude>32.1595344543457</Latitude>
     <Longitude>34.972782135009766</Longitude>
-    <OpeningTime>2024-09-15T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-24T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-06-30T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-05T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1017</Id>
@@ -177,8 +177,8 @@
     <FullAddress>Weizmann St 12, Petah Tikva</FullAddress>
     <Latitude>32.082496643066406</Latitude>
     <Longitude>34.88218688964844</Longitude>
-    <OpeningTime>2024-09-10T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-03-01T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-02-11T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-25T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1018</Id>
@@ -187,8 +187,8 @@
     <FullAddress>Em HaMoshavot St 10, Petah Tikva</FullAddress>
     <Latitude>32.080562591552734</Latitude>
     <Longitude>34.873104095458984</Longitude>
-    <OpeningTime>2024-06-13T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-17T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-04-29T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-26T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1019</Id>
@@ -197,8 +197,8 @@
     <FullAddress>Weizmann St 17, Petah Tikva</FullAddress>
     <Latitude>32.10280227661133</Latitude>
     <Longitude>34.86481857299805</Longitude>
-    <OpeningTime>2024-02-25T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-22T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-08-22T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-05T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1020</Id>
@@ -207,8 +207,8 @@
     <FullAddress>HaNasi St 2, Be'er Sheva</FullAddress>
     <Latitude>31.25210189819336</Latitude>
     <Longitude>34.78676986694336</Longitude>
-    <OpeningTime>2024-07-22T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-09T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-02-13T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-10T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1021</Id>
@@ -217,8 +217,8 @@
     <FullAddress>Rothschild St 6, Be'er Sheva</FullAddress>
     <Latitude>31.25210189819336</Latitude>
     <Longitude>34.78676986694336</Longitude>
-    <OpeningTime>2024-05-19T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-17T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-11-21T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-12T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1022</Id>
@@ -227,8 +227,8 @@
     <FullAddress>Eli Cohen St 12, Be'er Sheva</FullAddress>
     <Latitude>31.241825103759766</Latitude>
     <Longitude>34.80221176147461</Longitude>
-    <OpeningTime>2024-02-17T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-01T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-11-22T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-22T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1023</Id>
@@ -237,8 +237,8 @@
     <FullAddress>Ben Gurion Blvd 3, Be'er Sheva</FullAddress>
     <Latitude>31.247270584106445</Latitude>
     <Longitude>34.80614471435547</Longitude>
-    <OpeningTime>2024-04-03T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-26T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-06-27T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-21T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1024</Id>
@@ -247,8 +247,8 @@
     <FullAddress>Shazar St 20, Be'er Sheva</FullAddress>
     <Latitude>31.261743545532227</Latitude>
     <Longitude>34.80076217651367</Longitude>
-    <OpeningTime>2024-09-20T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-25T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-04-24T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-26T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1025</Id>
@@ -257,8 +257,8 @@
     <FullAddress>Avraham Avinu St 14, Be'er Sheva</FullAddress>
     <Latitude>31.25210189819336</Latitude>
     <Longitude>34.78676986694336</Longitude>
-    <OpeningTime>2024-05-05T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-21T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-10-18T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1026</Id>
@@ -267,7 +267,7 @@
     <FullAddress>Avraham Avinu St 17, Be'er Sheva</FullAddress>
     <Latitude>31.264108657836914</Latitude>
     <Longitude>34.79383850097656</Longitude>
-    <OpeningTime>2024-06-16T00:00:00</OpeningTime>
+    <OpeningTime>2024-08-11T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-01-24T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -277,8 +277,8 @@
     <FullAddress>HaAtzmaut St 18, Be'er Sheva</FullAddress>
     <Latitude>31.269819259643555</Latitude>
     <Longitude>34.79815673828125</Longitude>
-    <OpeningTime>2024-02-23T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-25T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-03-09T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-17T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1028</Id>
@@ -287,8 +287,8 @@
     <FullAddress>HaPalmach St 5, Be'er Sheva</FullAddress>
     <Latitude>31.25210189819336</Latitude>
     <Longitude>34.78676986694336</Longitude>
-    <OpeningTime>2024-02-19T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-20T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-03-24T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-10T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1029</Id>
@@ -297,8 +297,8 @@
     <FullAddress>Eli Cohen St 11, Be'er Sheva</FullAddress>
     <Latitude>31.237049102783203</Latitude>
     <Longitude>34.791404724121094</Longitude>
-    <OpeningTime>2024-02-25T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-12T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-11-28T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-24T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1030</Id>
@@ -307,8 +307,8 @@
     <FullAddress>Sokolov St 22, Holon</FullAddress>
     <Latitude>32.022891998291016</Latitude>
     <Longitude>34.772220611572266</Longitude>
-    <OpeningTime>2024-09-18T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-20T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-05-10T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-25T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1031</Id>
@@ -317,8 +317,8 @@
     <FullAddress>Weizmann St 16, Holon</FullAddress>
     <Latitude>32.06208419799805</Latitude>
     <Longitude>34.770301818847656</Longitude>
-    <OpeningTime>2024-03-22T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-28T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-04-17T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-09T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1032</Id>
@@ -327,8 +327,8 @@
     <FullAddress>HaRav Kook St 10, Holon</FullAddress>
     <Latitude>32.02105712890625</Latitude>
     <Longitude>34.77957534790039</Longitude>
-    <OpeningTime>2024-10-17T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-19T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-04-09T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-10T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1033</Id>
@@ -337,8 +337,8 @@
     <FullAddress>Dov Hoz St 7, Holon</FullAddress>
     <Latitude>32.01583480834961</Latitude>
     <Longitude>34.787384033203125</Longitude>
-    <OpeningTime>2024-05-06T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-05T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-01-14T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-28T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1034</Id>
@@ -347,8 +347,8 @@
     <FullAddress>Weizmann St 16, Holon</FullAddress>
     <Latitude>32.020668029785156</Latitude>
     <Longitude>34.75385284423828</Longitude>
-    <OpeningTime>2024-12-17T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-11T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-12-26T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-13T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1035</Id>
@@ -357,8 +357,8 @@
     <FullAddress>Bialik St 3, Holon</FullAddress>
     <Latitude>32.02156066894531</Latitude>
     <Longitude>34.772457122802734</Longitude>
-    <OpeningTime>2024-09-11T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-03-02T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-09-30T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-09T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1036</Id>
@@ -367,8 +367,8 @@
     <FullAddress>Pinsker St 6, Holon</FullAddress>
     <Latitude>32.020530700683594</Latitude>
     <Longitude>34.77775573730469</Longitude>
-    <OpeningTime>2024-03-28T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-07-02T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-04T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1037</Id>
@@ -377,8 +377,8 @@
     <FullAddress>Shenkar St 19, Holon</FullAddress>
     <Latitude>32.013038635253906</Latitude>
     <Longitude>34.787322998046875</Longitude>
-    <OpeningTime>2024-09-16T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-25T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-08-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-18T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1038</Id>
@@ -387,8 +387,8 @@
     <FullAddress>Weizmann St 16, Holon</FullAddress>
     <Latitude>32.02601623535156</Latitude>
     <Longitude>34.776893615722656</Longitude>
-    <OpeningTime>2024-12-06T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-28T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-06-04T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-10T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1039</Id>
@@ -397,8 +397,8 @@
     <FullAddress>Weizmann St 16, Holon</FullAddress>
     <Latitude>32.07512664794922</Latitude>
     <Longitude>34.81561279296875</Longitude>
-    <OpeningTime>2024-04-26T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-24T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-07-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-03-01T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1040</Id>
@@ -407,7 +407,7 @@
     <FullAddress>HaYarden St 5, Netanya</FullAddress>
     <Latitude>32.32768630981445</Latitude>
     <Longitude>34.86028289794922</Longitude>
-    <OpeningTime>2024-08-17T00:00:00</OpeningTime>
+    <OpeningTime>2024-10-15T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-02-07T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
@@ -417,8 +417,8 @@
     <FullAddress>Bialik St 18, Netanya</FullAddress>
     <Latitude>32.31558609008789</Latitude>
     <Longitude>34.8482551574707</Longitude>
-    <OpeningTime>2024-06-06T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-22T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-11-06T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-25T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1042</Id>
@@ -427,8 +427,8 @@
     <FullAddress>Ussishkin St 14, Netanya</FullAddress>
     <Latitude>32.32145690917969</Latitude>
     <Longitude>34.85319519042969</Longitude>
-    <OpeningTime>2024-08-11T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-24T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-07-24T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-14T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1043</Id>
@@ -437,8 +437,8 @@
     <FullAddress>Ussishkin St 11, Netanya</FullAddress>
     <Latitude>32.33151626586914</Latitude>
     <Longitude>34.85364532470703</Longitude>
-    <OpeningTime>2024-06-24T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-03-02T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-11-16T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-31T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1044</Id>
@@ -447,8 +447,8 @@
     <FullAddress>Sokolov St 4, Netanya</FullAddress>
     <Latitude>32.3319206237793</Latitude>
     <Longitude>34.85157012939453</Longitude>
-    <OpeningTime>2024-12-02T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-03T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-02-06T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-07T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1045</Id>
@@ -457,8 +457,8 @@
     <FullAddress>Ussishkin St 15, Netanya</FullAddress>
     <Latitude>32.28440475463867</Latitude>
     <Longitude>34.85732650756836</Longitude>
-    <OpeningTime>2024-01-15T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-21T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-01-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-06T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1046</Id>
@@ -467,8 +467,8 @@
     <FullAddress>Eli Cohen St 8, Netanya</FullAddress>
     <Latitude>32.341957092285156</Latitude>
     <Longitude>34.85799026489258</Longitude>
-    <OpeningTime>2024-03-08T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-01T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-02-17T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-19T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1047</Id>
@@ -477,8 +477,8 @@
     <FullAddress>Ussishkin St 15, Netanya</FullAddress>
     <Latitude>32.328086853027344</Latitude>
     <Longitude>34.85166549682617</Longitude>
-    <OpeningTime>2024-03-24T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-18T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-05-20T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-02T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1048</Id>
@@ -487,8 +487,8 @@
     <FullAddress>Eli Cohen St 8, Netanya</FullAddress>
     <Latitude>32.32145690917969</Latitude>
     <Longitude>34.85319519042969</Longitude>
-    <OpeningTime>2024-07-05T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-01-30T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-07-15T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-17T00:00:00+02:00</MaxCompletionTime>
   </Call>
   <Call>
     <Id>1049</Id>
@@ -497,7 +497,7 @@
     <FullAddress>Bialik St 18, Netanya</FullAddress>
     <Latitude>32.32685852050781</Latitude>
     <Longitude>34.864376068115234</Longitude>
-    <OpeningTime>2024-02-26T00:00:00</OpeningTime>
-    <MaxCompletionTime>2025-02-19T00:00:00+02:00</MaxCompletionTime>
+    <OpeningTime>2024-06-04T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-01-30T00:00:00+02:00</MaxCompletionTime>
   </Call>
 </Calls>
