@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Volunteer>
-    <Id>809570427</Id>
+    <Id>475553798</Id>
     <FullName>Amit Leeeeevi</FullName>
-    <MobilePhone>0500119394</MobilePhone>
+    <MobilePhone>0539419719</MobilePhone>
     <Email>amitlevi@gmail.com</Email>
-    <Password>OGMmQHs2fElmKW4=</Password>
+    <Password>blN9LkRScV8jU1tSMC1tLg==</Password>
     <FullAddress>Herzl St 23, Tel Aviv</FullAddress>
     <Latitude>32.06089401245117</Latitude>
     <Longitude>34.77052688598633</Longitude>
@@ -15,11 +15,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>55900708</Id>
+    <Id>124217944</Id>
     <FullName>Noa Cohen</FullName>
-    <MobilePhone>0538784547</MobilePhone>
+    <MobilePhone>0527153232</MobilePhone>
     <Email>noacohen@gmail.com</Email>
-    <Password>bk1dZzRFLnw5</Password>
+    <Password>eUZMJHRdOmMyUQ==</Password>
     <FullAddress>Dizengoff St 99, Tel Aviv</FullAddress>
     <Latitude>32.07941818237305</Latitude>
     <Longitude>34.773719787597656</Longitude>
@@ -29,11 +29,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>932879893</Id>
+    <Id>992006320</Id>
     <FullName>Yossi Ben-David</FullName>
-    <MobilePhone>0548885846</MobilePhone>
+    <MobilePhone>0525281770</MobilePhone>
     <Email>yossiben-david@gmail.com</Email>
-    <Password>PCtJayxQM3c=</Password>
+    <Password>NT5iT3B2XTtkQGNDRjR9</Password>
     <FullAddress>Allenby St 47, Tel Aviv</FullAddress>
     <Latitude>32.070308685302734</Latitude>
     <Longitude>34.77039337158203</Longitude>
@@ -43,11 +43,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>958143299</Id>
+    <Id>201856440</Id>
     <FullName>Tamar Shapiro</FullName>
-    <MobilePhone>0538635896</MobilePhone>
+    <MobilePhone>0542214539</MobilePhone>
     <Email>tamarshapiro@gmail.com</Email>
-    <Password>M19iVzI+Ujhbc0s=</Password>
+    <Password>LCk5XSkxZyNZWmspdVM=</Password>
     <FullAddress>Rothschild Blvd 35, Tel Aviv</FullAddress>
     <Latitude>32.06388473510742</Latitude>
     <Longitude>34.77354049682617</Longitude>
@@ -57,11 +57,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>151998036</Id>
+    <Id>247289184</Id>
     <FullName>Eitan Goldstein</FullName>
-    <MobilePhone>0526948452</MobilePhone>
+    <MobilePhone>0548531132</MobilePhone>
     <Email>eitangoldstein@gmail.com</Email>
-    <Password>O3c3X1hjVndiUzZZ</Password>
+    <Password>MVdkKUp2ZGcpPmRbNw==</Password>
     <FullAddress>King George St 21, Tel Aviv</FullAddress>
     <Latitude>32.07117462158203</Latitude>
     <Longitude>34.77227020263672</Longitude>
@@ -71,11 +71,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>179514427</Id>
+    <Id>143955664</Id>
     <FullName>Lior Katz</FullName>
-    <MobilePhone>0537399684</MobilePhone>
+    <MobilePhone>0547123589</MobilePhone>
     <Email>liorkatz@gmail.com</Email>
-    <Password>M0AlUjlzVCM=</Password>
+    <Password>dWF0b3xzVXQ4NQ==</Password>
     <FullAddress>Ben Yehuda St 102, Tel Aviv</FullAddress>
     <Latitude>32.08261489868164</Latitude>
     <Longitude>34.7714958190918</Longitude>
@@ -85,11 +85,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>25925546</Id>
+    <Id>655231280</Id>
     <FullName>Rivka Avraham</FullName>
-    <MobilePhone>0537558555</MobilePhone>
+    <MobilePhone>0538943860</MobilePhone>
     <Email>rivkaavraham@gmail.com</Email>
-    <Password>bFJTQXxZNTBj</Password>
+    <Password>YihaNUk3SCM=</Password>
     <FullAddress>Ibn Gabirol St 58, Tel Aviv</FullAddress>
     <Latitude>32.07890319824219</Latitude>
     <Longitude>34.78156661987305</Longitude>
@@ -99,11 +99,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>551236367</Id>
+    <Id>656622347</Id>
     <FullName>Shira Mizrahi</FullName>
-    <MobilePhone>0537713158</MobilePhone>
+    <MobilePhone>0539431502</MobilePhone>
     <Email>shiramizrahi@gmail.com</Email>
-    <Password>YiZ5IVdrTF9HNjtFbg==</Password>
+    <Password>Um9NK25mODBd</Password>
     <FullAddress>Florentin St 5, Tel Aviv</FullAddress>
     <Latitude>32.05628967285156</Latitude>
     <Longitude>34.76778793334961</Longitude>
@@ -113,11 +113,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>631617131</Id>
+    <Id>672906112</Id>
     <FullName>Dan Alon</FullName>
-    <MobilePhone>0507474785</MobilePhone>
+    <MobilePhone>0520844062</MobilePhone>
     <Email>danalon@gmail.com</Email>
-    <Password>JFEyLTttV2pdRmRxcw==</Password>
+    <Password>KDl8MUooUWNjZWJdcw==</Password>
     <FullAddress>Bugrashov St 15, Tel Aviv</FullAddress>
     <Latitude>32.07735061645508</Latitude>
     <Longitude>34.769161224365234</Longitude>
@@ -127,11 +127,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>28715548</Id>
+    <Id>109734756</Id>
     <FullName>Yael Rosenberg</FullName>
-    <MobilePhone>0529396863</MobilePhone>
+    <MobilePhone>0537362691</MobilePhone>
     <Email>yaelrosenberg@gmail.com</Email>
-    <Password>JUp6eU5tSVY7MStD</Password>
+    <Password>U01SK2NobkguUXI5QDE5Sg==</Password>
     <FullAddress>Arlozorov St 25, Tel Aviv</FullAddress>
     <Latitude>32.087039947509766</Latitude>
     <Longitude>34.775325775146484</Longitude>
@@ -141,11 +141,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>608887857</Id>
+    <Id>243051109</Id>
     <FullName>Ariel Bar-Zvi</FullName>
-    <MobilePhone>0546213892</MobilePhone>
+    <MobilePhone>0532329866</MobilePhone>
     <Email>arielbar-zvi@gmail.com</Email>
-    <Password>KUoqRGhoNCQ4OVM=</Password>
+    <Password>Q149dEhwMnhIOQ==</Password>
     <FullAddress>Jaffa St 55, Jerusalem</FullAddress>
     <Latitude>31.78321647644043</Latitude>
     <Longitude>35.217655181884766</Longitude>
@@ -155,11 +155,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>504601659</Id>
+    <Id>40191504</Id>
     <FullName>Maya Feldman</FullName>
-    <MobilePhone>0503971809</MobilePhone>
+    <MobilePhone>0506866962</MobilePhone>
     <Email>mayafeldman@gmail.com</Email>
-    <Password>VVQpRTFhTDBhXSZn</Password>
+    <Password>QWExa1NKJHw=</Password>
     <FullAddress>King David St 11, Jerusalem</FullAddress>
     <Latitude>31.776634216308594</Latitude>
     <Longitude>35.222293853759766</Longitude>
@@ -169,11 +169,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>105242093</Id>
+    <Id>381549245</Id>
     <FullName>David Peretz</FullName>
-    <MobilePhone>0547381072</MobilePhone>
+    <MobilePhone>0505661862</MobilePhone>
     <Email>davidperetz@gmail.com</Email>
-    <Password>X1decS03ZURDd3Rm</Password>
+    <Password>Mk0+Vk5CPmdwZTRvXw==</Password>
     <FullAddress>Ben Yehuda St 30, Jerusalem</FullAddress>
     <Latitude>31.78111457824707</Latitude>
     <Longitude>35.21595001220703</Longitude>
@@ -183,11 +183,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>680542396</Id>
+    <Id>477939052</Id>
     <FullName>Orly Harel</FullName>
-    <MobilePhone>0520085429</MobilePhone>
+    <MobilePhone>0501033171</MobilePhone>
     <Email>orlyharel@gmail.com</Email>
-    <Password>MFBbbns5VEk0Pns=</Password>
+    <Password>ZCN8ZV5fOC1VOkY2bn0=</Password>
     <FullAddress>Emek Refaim St 12, Jerusalem</FullAddress>
     <Latitude>31.765735626220703</Latitude>
     <Longitude>35.221710205078125</Longitude>
@@ -197,11 +197,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>709606008</Id>
+    <Id>988121042</Id>
     <FullName>Yonatan Stein</FullName>
-    <MobilePhone>0507716797</MobilePhone>
+    <MobilePhone>0506975142</MobilePhone>
     <Email>yonatanstein@gmail.com</Email>
-    <Password>cCxtZlhuRSRdNEs=</Password>
+    <Password>N15FLE9jKEcwenQ=</Password>
     <FullAddress>Yafo St 40, Jerusalem</FullAddress>
     <Latitude>31.781888961791992</Latitude>
     <Longitude>35.220115661621094</Longitude>
@@ -211,11 +211,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>708416391</Id>
+    <Id>617598339</Id>
     <FullName>Alma Sela</FullName>
-    <MobilePhone>0548905569</MobilePhone>
+    <MobilePhone>0538367483</MobilePhone>
     <Email>almasela@gmail.com</Email>
-    <Password>bzEyREB9bnh1d0xbNEJn</Password>
+    <Password>TGs4clB0OmR2</Password>
     <FullAddress>HaPalmach St 20, Jerusalem</FullAddress>
     <Latitude>31.767562866210938</Latitude>
     <Longitude>35.21141815185547</Longitude>
@@ -225,11 +225,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>800024739</Id>
+    <Id>439939844</Id>
     <FullName>Gal Barak</FullName>
-    <MobilePhone>0523529229</MobilePhone>
+    <MobilePhone>0507666525</MobilePhone>
     <Email>galbarak@gmail.com</Email>
-    <Password>WEROKlg8NHM2</Password>
+    <Password>TjN0OGRIWXAjJg==</Password>
     <FullAddress>Derech Hebron St 78, Jerusalem</FullAddress>
     <Latitude>31.755342483520508</Latitude>
     <Longitude>35.22172546386719</Longitude>
@@ -239,11 +239,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>608562005</Id>
+    <Id>506025246</Id>
     <FullName>Michal Shaked</FullName>
-    <MobilePhone>0524342522</MobilePhone>
+    <MobilePhone>0544931621</MobilePhone>
     <Email>michalshaked@gmail.com</Email>
-    <Password>KG5CIVZMOU0=</Password>
+    <Password>ZWtBOTc3dG5AWUhDTCRVbw==</Password>
     <FullAddress>Keren Hayesod St 6, Jerusalem</FullAddress>
     <Latitude>31.774019241333008</Latitude>
     <Longitude>35.218936920166016</Longitude>
@@ -253,11 +253,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>36716041</Id>
+    <Id>598602472</Id>
     <FullName>Itai Blum</FullName>
-    <MobilePhone>0543341622</MobilePhone>
+    <MobilePhone>0503273835</MobilePhone>
     <Email>itaiblum@gmail.com</Email>
-    <Password>bTZVaT1OfEA/Mw==</Password>
+    <Password>Tlh3QDg8c1lO</Password>
     <FullAddress>HaNevi'im St 39, Jerusalem</FullAddress>
     <Latitude>31.783843994140625</Latitude>
     <Longitude>35.22051239013672</Longitude>
@@ -267,11 +267,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>993753573</Id>
+    <Id>739947075</Id>
     <FullName>Hila Golan</FullName>
-    <MobilePhone>0525528880</MobilePhone>
+    <MobilePhone>0507661311</MobilePhone>
     <Email>hilagolan@gmail.com</Email>
-    <Password>e0tZMU58PC15bA==</Password>
+    <Password>JWhXRTchUWkmd29XRz96RQ==</Password>
     <FullAddress>Agron St 8, Jerusalem</FullAddress>
     <Latitude>31.7755126953125</Latitude>
     <Longitude>35.21841049194336</Longitude>
@@ -281,11 +281,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>592490361</Id>
+    <Id>59778894</Id>
     <FullName>Ronen Neuman</FullName>
-    <MobilePhone>0545997089</MobilePhone>
+    <MobilePhone>0541567582</MobilePhone>
     <Email>ronenneuman@gmail.com</Email>
-    <Password>ciQsMkJMM0dLaCNU</Password>
+    <Password>QjsqXTIuVmJ5ZHMr</Password>
     <FullAddress>HaNassi Blvd 100, Haifa</FullAddress>
     <Latitude>32.808067321777344</Latitude>
     <Longitude>34.98585891723633</Longitude>
@@ -295,11 +295,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>547733360</Id>
+    <Id>930314273</Id>
     <FullName>Oren Eliav</FullName>
-    <MobilePhone>0520039058</MobilePhone>
+    <MobilePhone>0549735499</MobilePhone>
     <Email>oreneliav@gmail.com</Email>
-    <Password>LHkwOSY3bmpicGpUTXQqUA==</Password>
+    <Password>Ki4lQXc8QFBbSjBlMzV3</Password>
     <FullAddress>Ben Gurion Blvd 44, Haifa</FullAddress>
     <Latitude>32.81882095336914</Latitude>
     <Longitude>34.98971176147461</Longitude>
@@ -309,11 +309,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>210033023</Id>
+    <Id>927014837</Id>
     <FullName>Nadav Segal</FullName>
-    <MobilePhone>0520641085</MobilePhone>
+    <MobilePhone>0540661659</MobilePhone>
     <Email>nadavsegal@gmail.com</Email>
-    <Password>Xi52fVU7WHU1bUI=</Password>
+    <Password>Jl02QTplU0VqTzE=</Password>
     <FullAddress>Herzl St 25, Haifa</FullAddress>
     <Latitude>32.811397552490234</Latitude>
     <Longitude>34.99793243408203</Longitude>
@@ -323,11 +323,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>883382483</Id>
+    <Id>719553281</Id>
     <FullName>Tali Ohayon</FullName>
-    <MobilePhone>0502651679</MobilePhone>
+    <MobilePhone>0503852114</MobilePhone>
     <Email>taliohayon@gmail.com</Email>
-    <Password>MHhQLForcjEpLVk=</Password>
+    <Password>MCUqWCt5ZlBN</Password>
     <FullAddress>Hatzionut Blvd 15, Haifa</FullAddress>
     <Latitude>32.81768798828125</Latitude>
     <Longitude>34.993221282958984</Longitude>
@@ -337,11 +337,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>747171791</Id>
+    <Id>886838135</Id>
     <FullName>Elior Friedman</FullName>
-    <MobilePhone>0548300738</MobilePhone>
+    <MobilePhone>0536877126</MobilePhone>
     <Email>eliorfriedman@gmail.com</Email>
-    <Password>ZUU3MDZAaXJKUlAqZlFH</Password>
+    <Password>M283cj51V0hDOVdzLA==</Password>
     <FullAddress>Shivat Zion St 13, Haifa</FullAddress>
     <Latitude>32.79035568237305</Latitude>
     <Longitude>35.01506042480469</Longitude>
@@ -352,7 +352,7 @@
   </Volunteer>
   <Volunteer>
     <Id>215348145</Id>
-    <FullName>wwww</FullName>
+    <FullName>Oded</FullName>
     <MobilePhone>0549699198</MobilePhone>
     <Email>oded@gmail.com</Email>
     <Password>NjkwMzA5MjJvTw==</Password>
@@ -361,7 +361,7 @@
     <Longitude>35.0258622</Longitude>
     <Role>Manager</Role>
     <IsActive>true</IsActive>
-    <MaxDistanceForCall>35</MaxDistanceForCall>
-    <DistanceType>AirDistance</DistanceType>
+    <MaxDistanceForCall>25</MaxDistanceForCall>
+    <DistanceType>WalkingDistance</DistanceType>
   </Volunteer>
 </ArrayOfVolunteer>
