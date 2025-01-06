@@ -16,10 +16,10 @@
   </Volunteer>
   <Volunteer>
     <Id>124217944</Id>
-    <FullName>Noa Cohen</FullName>
+    <FullName>Vol</FullName>
     <MobilePhone>0527153232</MobilePhone>
     <Email>noacohen@gmail.com</Email>
-    <Password>eUZMJHRdOmMyUQ==</Password>
+    <Password>MTIzNA==</Password>
     <FullAddress>Dizengoff St 99, Tel Aviv</FullAddress>
     <Latitude>32.07941818237305</Latitude>
     <Longitude>34.773719787597656</Longitude>
@@ -30,14 +30,14 @@
   </Volunteer>
   <Volunteer>
     <Id>992006320</Id>
-    <FullName>Yossi Ben-David</FullName>
+    <FullName>Man</FullName>
     <MobilePhone>0525281770</MobilePhone>
     <Email>yossiben-david@gmail.com</Email>
-    <Password>NT5iT3B2XTtkQGNDRjR9</Password>
+    <Password>MTIzNA==</Password>
     <FullAddress>Allenby St 47, Tel Aviv</FullAddress>
     <Latitude>32.070308685302734</Latitude>
     <Longitude>34.77039337158203</Longitude>
-    <Role>Volunteer</Role>
+    <Role>Manager</Role>
     <IsActive>true</IsActive>
     <MaxDistanceForCall xsi:nil="true" />
     <DistanceType>AirDistance</DistanceType>

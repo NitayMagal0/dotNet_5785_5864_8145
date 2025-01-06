@@ -13,15 +13,11 @@
         AllowsTransparency="True"
         MouseDown="Window_MouseDown">
 
-  
-
     <Border CornerRadius="12">
-
         <Border.Background>
-            <ImageBrush ImageSource="/Images/back-image.jpg" Stretch="None"/>
+            <ImageBrush ImageSource="/Images/back-image.jpg"
+                        Stretch="None"/>
         </Border.Background>
-
-
 
         <Border CornerRadius="10"                    
             BorderThickness="2"
@@ -43,7 +39,6 @@
             </Border.Background>
 
             <Grid>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition/>
@@ -154,7 +149,7 @@
                                FontFamily="Montserrat"                             
                                Margin="0,35,0,0"/>
 
-                    <TextBox x:Name="txtUser"
+                    <TextBox x:Name="txtUserName"
                              FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"                            
@@ -167,8 +162,11 @@
                              Margin="0,5,0,0"
                              Padding="20,0,0,0">
 
-                       
-                        
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/user-icon.png"
+                                        Stretch="None"
+                                        AlignmentX="Left"/>
+                        </TextBox.Background>
                     </TextBox>
 
                     <TextBlock Text="Password"
@@ -178,7 +176,7 @@
                                FontFamily="Montserrat"                             
                                Margin="0,15,0,0"/>
 
-                    <PasswordBox x:Name="txtPass"
+                    <PasswordBox x:Name="txtPassword"
                              FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"                            
@@ -191,7 +189,11 @@
                              Margin="0,5,0,0"
                              Padding="20,0,0,0">
 
-                       
+                        <PasswordBox.Background>
+                            <ImageBrush ImageSource="/Images/key-icon.png"
+                                        Stretch="None"
+                                        AlignmentX="Left"/>
+                        </PasswordBox.Background>
                     </PasswordBox>
 
                     <Button x:Name="btnLogin"                          
@@ -232,19 +234,7 @@
                                 HorizontalAlignment="Center"
                                 Margin="0,15,0,0">
 
-                        <TextBlock Text="Forgot Password?"
-                               Foreground="DarkGray"
-                               FontSize="12"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"/>
-
-                        <TextBlock Text="Reset"
-                               Foreground="White"
-                               FontSize="12"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"
-                               Cursor="Hand"
-                               Margin="8,0,0,0"/>
+                        
 
                     </StackPanel>
 

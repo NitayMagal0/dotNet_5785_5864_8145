@@ -146,7 +146,8 @@
                          Style="{StaticResource ComboBoxStyle}"
                          ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"
                          SelectedValue="{Binding CurrentVolunteer.Role, Mode=TwoWay}"
-                         SelectedValuePath="."/>
+                         SelectedValuePath="."
+                         IsEnabled="{Binding IsManager, Mode=OneWay}"/>
 
                 <!-- Is Active -->
                 <Label Grid.Row="7" Grid.Column="0" Content="Is Active:" Style="{StaticResource LabelStyle}"/>

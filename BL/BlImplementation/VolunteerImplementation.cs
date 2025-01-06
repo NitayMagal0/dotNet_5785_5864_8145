@@ -116,7 +116,15 @@ internal class VolunteerImplementation : IVolunteer
             throw new Exception($"ERROR: ", ex);
         }
     }
-
+    /// <summary>
+    /// Retrieves the ID of a volunteer by their name.
+    /// </summary>
+    /// <param name="name">The name of the volunteer.</param>
+    /// <returns>The ID of the volunteer.</returns>
+    public int GetIdByName(string name)
+    {
+        return VolunteerManager.ConvertVolunteerToBO(DalApi.Factory.Get.Volunteer.ReadAll().FirstOrDefault(v => v.FullName == name)).Id;
+    }
 
     /// <summary>
     /// Retrieves a list of volunteers based on their active status and other criteria.

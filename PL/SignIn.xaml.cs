@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
 
 namespace PL
 {
@@ -19,6 +20,8 @@ namespace PL
     /// </summary>
     public partial class SignIn : Window
     {
+
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public SignIn()
         {
             InitializeComponent();
@@ -38,9 +41,34 @@ namespace PL
         {
             Application.Current.Shutdown();
         }
+
+   
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                string password = txtPassword.Password; // Retrieve the password as a string
+                Role role = s_bl.Volunteer.SignIn(txtUserName.Text, password);
+                
+                if(role==BO.Role.Volunteer)
+                {
+                    int volunteerID = s_bl.Volunteer.GetIdByName(txtUserName.Text);
+                    Volunteer.VolunteerWindow volunteerWindow = new Volunteer.VolunteerWindow(volunteerID);
+                    volunteerWindow.Show();
+                    //this.Close();
+                }
+                else if (role == BO.Role.Manager)
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    //this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately
+                MessageBox.Show("Login failed: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
     }
