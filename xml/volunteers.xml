@@ -15,11 +15,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>124217944</Id>
+    <Id>1</Id>
     <FullName>Vol</FullName>
     <MobilePhone>0527153232</MobilePhone>
     <Email>noacohen@gmail.com</Email>
-    <Password>MTIzNA==</Password>
+    <Password>MQ==</Password>
     <FullAddress>Dizengoff St 99, Tel Aviv</FullAddress>
     <Latitude>32.07941818237305</Latitude>
     <Longitude>34.773719787597656</Longitude>
@@ -29,11 +29,11 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>992006320</Id>
+    <Id>2</Id>
     <FullName>Man</FullName>
     <MobilePhone>0525281770</MobilePhone>
     <Email>yossiben-david@gmail.com</Email>
-    <Password>MTIzNA==</Password>
+    <Password>Mg==</Password>
     <FullAddress>Allenby St 47, Tel Aviv</FullAddress>
     <Latitude>32.070308685302734</Latitude>
     <Longitude>34.77039337158203</Longitude>
@@ -362,6 +362,20 @@
     <Role>Manager</Role>
     <IsActive>true</IsActive>
     <MaxDistanceForCall>25</MaxDistanceForCall>
+    <DistanceType>WalkingDistance</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>214895013</Id>
+    <FullName>yair</FullName>
+    <MobilePhone>0505799215</MobilePhone>
+    <Email>yairch2004@gmail.com</Email>
+    <Password>ITEyMzJyaWFZ</Password>
+    <FullAddress>machon lev</FullAddress>
+    <Latitude>31.765442</Latitude>
+    <Longitude>35.1910369</Longitude>
+    <Role>Manager</Role>
+    <IsActive>true</IsActive>
+    <MaxDistanceForCall>30000</MaxDistanceForCall>
     <DistanceType>WalkingDistance</DistanceType>
   </Volunteer>
 </ArrayOfVolunteer>

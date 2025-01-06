@@ -4,7 +4,7 @@ namespace BlApi;
 
 public interface IVolunteer : IObservable
 {
-    Role SignIn(string name, string password);
+    Role SignIn(int id, string password);
     public IEnumerable<BO.VolunteerInList> GetVolunteersByCallType(BO.CallType callType);
 
     IEnumerable<BO.VolunteerInList> GetVolunteersList(bool? isActive, BO.CallType? VolunteerInList);//need to check about the enum
@@ -13,6 +13,7 @@ public interface IVolunteer : IObservable
     void DeleteVolunteer(int id);
     void AddVolunteer(BO.Volunteer vol);
     int GetIdByName(string name);
+    public string GetNameById(int id);
 
 }
 

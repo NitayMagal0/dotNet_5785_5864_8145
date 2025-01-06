@@ -145,11 +145,15 @@ namespace BlTest
                         case 1:
                             // Sign In
                             Console.Write("Enter volunteer name: ");
-                            string name = Console.ReadLine();
-                            Console.Write("Enter password: ");
-                            string password = Console.ReadLine();
-                            var role = s_bl.Volunteer.SignIn(name, password);
-                            Console.WriteLine($"Signed in as {role}");
+                            
+                            if (int.TryParse(Console.ReadLine(), out int signInId))
+                            {
+                                Console.Write("Enter password: ");
+                                string password = Console.ReadLine();
+                                var role = s_bl.Volunteer.SignIn(signInId, password);
+                                Console.WriteLine($"Signed in as {role}");
+                            }
+                            
                             break;
                         case 2:
                             // Add Volunteer

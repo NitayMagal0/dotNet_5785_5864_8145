@@ -50,6 +50,11 @@ internal class VolunteerImplementation : IVolunteer
         }
     }
 
+
+    public string GetNameById(int id)
+    {
+        return VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id)).FullName;
+    }
     /// <summary>
     /// Deletes a volunteer from the system.
     /// </summary>
@@ -232,10 +237,10 @@ internal class VolunteerImplementation : IVolunteer
     /// <param name="password">Password of the volunteer</param>
     /// <returns>The Role of the volunteer</returns>
     /// <exception cref="Exception">If there is no volunteer with this name of if the password is incorrect</exception>
-    public BO.Role SignIn(string name, string password)
+    public BO.Role SignIn(int id, string password)
     {
         var volunteers = _dal.Volunteer.ReadAll().ToList();
-        var volunteer = volunteers.FirstOrDefault(v => v.FullName == name);
+        var volunteer = volunteers.FirstOrDefault(v => v.Id == id);
         if (volunteer == null)
             throw new Exception("Volunteer doesn't exist");
         if (VolunteerManager.DecodePassword(volunteer.Password) != password)

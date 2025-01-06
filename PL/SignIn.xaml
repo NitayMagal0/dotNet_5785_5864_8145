@@ -142,14 +142,15 @@
                                FontFamily="Montserrat"
                                HorizontalAlignment="Center"/>
 
-                    <TextBlock Text="Username"
+                    <TextBlock Text="ID"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
                                FontFamily="Montserrat"                             
                                Margin="0,35,0,0"/>
 
-                    <TextBox x:Name="txtUserName"
+                    <TextBox x:Name="txtUserID"
+                             Text="{Binding UserID, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"                            
@@ -196,14 +197,17 @@
                         </PasswordBox.Background>
                     </PasswordBox>
 
-                    <Button x:Name="btnLogin"                          
-        BorderThickness="0"
-        Foreground="White"
-        FontSize="12"
-        FontFamily="Montserrat"
-        Cursor="Hand"                           
-        Margin="0,50,0,0"
-        Click="btnLogin_Click">
+                    <Button  
+                        Content="{Binding ButtonText}"
+
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"                           
+                        Margin="0,50,0,0"
+                        Click="btnLogin_Click">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#462AD8"/>
@@ -220,7 +224,7 @@
                                 <Border Width="150" Height="40"
                     CornerRadius="20"
                     Background="{TemplateBinding Background}">
-                                    <TextBlock Text="LOG IN" 
+                                    <TextBlock Text="{Binding ButtonText}" 
                            Foreground="White" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center"/>

@@ -1,0 +1,117 @@
+﻿<Window x:Class="PL.Manager.ManagerChoice"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Manager"
+        mc:Ignorable="d"
+        Title="ManagerChoice" Height="250" Width="350"
+        WindowStartupLocation="CenterScreen">
+
+
+    <!-- Main Window content -->
+    <Grid>
+        <!-- Define two columns for the left and right sections -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <!-- First Grid (50%) -->
+            <ColumnDefinition Width="*" />
+            <!-- Second Grid (50%) -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Grid -->
+        <Grid Grid.Column="0">
+            <Button                          
+                    BorderThickness="0"
+                    Foreground="White"
+                    FontSize="12"
+                    FontFamily="Montserrat"
+                    Cursor="Hand" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,70,0,0"
+                    Click="btnMainManagementWindow_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="145" Height="70"
+                                CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <TextBlock Text="Main Management Screen" 
+                                       Foreground="White" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"
+                                       IsHitTestVisible="False"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- Right Grid -->
+        <Grid Grid.Column="1">
+            <Button                           
+                    BorderThickness="0"
+                    Foreground="White"
+                    FontSize="12"
+                    FontFamily="Montserrat"
+                    Cursor="Hand" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,70,0,0"
+                    Click="btnVolunteerWindow_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="145" Height="70"
+                                CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <TextBlock Text="Volunteer Window" 
+                                       Foreground="White" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"
+                                       IsHitTestVisible="False"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- Welcome Text at the top-right of the window -->
+        <TextBlock Text="{Binding WelcomeMessage}"
+                   
+                   FontSize="14" 
+                   FontWeight="Bold" 
+                   Foreground="Black"
+                   Margin="20,10,167,184" Grid.ColumnSpan="2" />
+        <!-- Adjust the Margin to fine-tune the positioning -->
+        <!-- Welcome Text at the top-right of the window -->
+        <TextBlock Text="Choose Where To Go"
+            VerticalAlignment="Top" 
+            HorizontalAlignment="Left" 
+            FontSize="14" 
+            FontWeight="Bold" 
+            Foreground="Black"
+            Margin="107,70,0,0" Grid.ColumnSpan="2" />
+        
+    </Grid>
+
+</Window>

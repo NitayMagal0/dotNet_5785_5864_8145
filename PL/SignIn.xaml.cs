@@ -1,30 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;  // Add this namespace for INotifyPropertyChanged
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BO;
 
 namespace PL
 {
-    /// <summary>
-    /// Interaction logic for SignIn.xaml
-    /// </summary>
-    public partial class SignIn : Window
+    public partial class SignIn : Window, INotifyPropertyChanged
     {
-
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Identifies the ButtonText dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ButtonTextProperty =
+            DependencyProperty.Register("ButtonText", typeof(string), typeof(SignIn), new PropertyMetadata("Sign In"));
+
+        /// <summary>
+        /// Gets or sets the text for the button.
+        /// </summary>
+        public string ButtonText
+        {
+            get { return (string)GetValue(ButtonTextProperty); }
+            set
+            {
+                SetValue(ButtonTextProperty, value);
+                OnPropertyChanged(nameof(ButtonText));  // Notify the UI about the change
+            }
+        }
+        private string _userID;
+        public string UserID
+        {
+            get => _userID;
+            set
+            {
+                if (_userID != value)
+                {
+                    _userID = value;
+                    OnPropertyChanged(nameof(UserID));
+                }
+            }
+        }
         public SignIn()
         {
             InitializeComponent();
+            
+            DataContext = this;  // Set the DataContext to this instance of SignIn
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -32,6 +60,7 @@ namespace PL
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
+
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -42,34 +71,34 @@ namespace PL
             Application.Current.Shutdown();
         }
 
-   
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string password = txtPassword.Password; // Retrieve the password as a string
-                Role role = s_bl.Volunteer.SignIn(txtUserName.Text, password);
-                
-                if(role==BO.Role.Volunteer)
+                string password = txtPassword.Password;
+                int id;
+                if (!int.TryParse(_userID, out id))
                 {
-                    int volunteerID = s_bl.Volunteer.GetIdByName(txtUserName.Text);
-                    Volunteer.VolunteerWindow volunteerWindow = new Volunteer.VolunteerWindow(volunteerID);
+                    throw new Exception("Invalid User ID");
+                }
+
+                Role role = s_bl.Volunteer.SignIn(id, password);
+
+                if (role == BO.Role.Volunteer)
+                {
+                    Volunteer.VolunteerWindow volunteerWindow = new Volunteer.VolunteerWindow(id);
                     volunteerWindow.Show();
-                    //this.Close();
                 }
                 else if (role == BO.Role.Manager)
                 {
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-                    //this.Close();
+                    Manager.ManagerChoice managerChoice = new Manager.ManagerChoice(id);
+                    managerChoice.Show();
                 }
             }
             catch (Exception ex)
             {
-                // Handle the exception appropriately
                 MessageBox.Show("Login failed: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 }
