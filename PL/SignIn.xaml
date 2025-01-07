@@ -15,8 +15,8 @@
 
     <Border CornerRadius="12">
         <Border.Background>
-            <ImageBrush ImageSource="/Images/back-image.jpg"
-                        Stretch="None"/>
+            <ImageBrush ImageSource="/Images/background.jpg"
+                        Stretch="Fill"/>
         </Border.Background>
 
         <Border CornerRadius="10"                    
