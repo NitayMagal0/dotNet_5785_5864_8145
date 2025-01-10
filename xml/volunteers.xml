@@ -16,7 +16,7 @@
   </Volunteer>
   <Volunteer>
     <Id>1</Id>
-    <FullName>Vol</FullName>
+    <FullName>Noa Cohen</FullName>
     <MobilePhone>0527153232</MobilePhone>
     <Email>noacohen@gmail.com</Email>
     <Password>MQ==</Password>
@@ -30,7 +30,7 @@
   </Volunteer>
   <Volunteer>
     <Id>2</Id>
-    <FullName>Man</FullName>
+    <FullName>Yossi Ben David</FullName>
     <MobilePhone>0525281770</MobilePhone>
     <Email>yossiben-david@gmail.com</Email>
     <Password>Mg==</Password>

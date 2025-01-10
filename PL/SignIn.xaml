@@ -135,12 +135,21 @@
                             Orientation="Vertical"
                             Margin="0,35,0,0">
 
-                    <TextBlock Text="Project"
+                    <TextBlock Text="Volunteers Project"
                                Foreground="White"
                                FontSize="25"
                                FontWeight="Medium"
                                FontFamily="Montserrat"
                                HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="“Volunteers don’t get paid, not because they’re worthless, but because they’re priceless.”"
+            Foreground="LightGray"
+            FontSize="12"
+            FontWeight="Medium"
+            FontFamily="Montserrat"
+            TextWrapping="Wrap"
+            TextAlignment="Center"
+            Margin="0,5,0,0"/>
 
                     <TextBlock Text="ID"
                                Foreground="DarkGray"

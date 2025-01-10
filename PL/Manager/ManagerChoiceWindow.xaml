@@ -101,7 +101,7 @@
                    FontSize="14" 
                    FontWeight="Bold" 
                    Foreground="Black"
-                   Margin="20,10,167,184" Grid.ColumnSpan="2" />
+                   Margin="20,10,20,184" Grid.ColumnSpan="2" />
         <!-- Adjust the Margin to fine-tune the positioning -->
         <!-- Welcome Text at the top-right of the window -->
         <TextBlock Text="Choose Where To Go"
