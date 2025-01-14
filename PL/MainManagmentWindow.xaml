@@ -96,34 +96,49 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
+
+
         <!-- System Clock Area -->
         <Border Grid.Row="0" Grid.ColumnSpan="2" 
-                Background="White"
-                BorderBrush="#E0E0E0" 
-                BorderThickness="1" 
-                CornerRadius="8"
-                Padding="20" 
-                Margin="0,0,0,20">
-            <StackPanel>
-                <Label Content="{Binding CurrentTime}" 
-                       FontSize="32" 
-                       FontWeight="Light"
-                       HorizontalAlignment="Center"
-                       Foreground="#1976D2"
-                       Background="Transparent"
-                       Padding="10"/>
+        Background="White"
+        BorderBrush="#E0E0E0" 
+        BorderThickness="1" 
+        CornerRadius="8"
+        Padding="20" 
+        Margin="0,0,0,20">
 
-                <StackPanel Orientation="Vertical" 
-                          Margin="0,20,0,0" 
-                          HorizontalAlignment="Center">
-                    <Button Content="Add One Minute" Width="200" Margin="0,5" Click="btnAddOneMinute_Click"/>
-                    <Button Content="Add One Hour" Width="200" Margin="0,5" Click="btnAddOneHour_Click"/>
-                    <Button Content="Add One Day" Width="200" Margin="0,5" Click="btnAddOneDay_Click"/>
-                    <Button Content="Add One Month" Width="200" Margin="0,5" Click="btnAddOneMonth_Click"/>
-                    <Button Content="Add One Year" Width="200" Margin="0,5" Click="btnAddOneYear_Click"/>
+            <!-- Use Grid to overlap elements -->
+            <Grid>
+                <!-- Image positioned absolutely -->
+                <Image Source="Images/Logo.png"
+               Width="88" Height="93"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Margin="10"/>
+
+                <!-- StackPanel for the rest of the content -->
+                <StackPanel>
+                    <Label Content="{Binding CurrentTime}" 
+                   FontSize="32" 
+                   FontWeight="Light"
+                   HorizontalAlignment="Center"
+                   Foreground="#1976D2"
+                   Background="Transparent"
+                   Padding="10"/>
+
+                    <StackPanel Orientation="Vertical" 
+                        Margin="0,20,0,0" 
+                        HorizontalAlignment="Center">
+                        <Button Content="Add One Minute" Width="200" Margin="0,5" Click="btnAddOneMinute_Click"/>
+                        <Button Content="Add One Hour" Width="200" Margin="0,5" Click="btnAddOneHour_Click"/>
+                        <Button Content="Add One Day" Width="200" Margin="0,5" Click="btnAddOneDay_Click"/>
+                        <Button Content="Add One Month" Width="200" Margin="0,5" Click="btnAddOneMonth_Click"/>
+                        <Button Content="Add One Year" Width="200" Margin="0,5" Click="btnAddOneYear_Click"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </Border>
+
 
         <!-- Configuration Area -->
         <Border Grid.Row="1" Grid.Column="0" 
@@ -198,17 +213,26 @@
                 CornerRadius="8"
                 Padding="20"
                 Margin="0,20,0,0">
-            <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Center">
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="40"/>
+                    <!-- Space between buttons -->
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
                 <Button Content="Manage Volunteers" 
-                        Width="150"
-                        Background="#673AB7"
-                        Click="btnVolunteerList_Click"/>
+            Width="150" Height="30"
+            Background="#673AB7"
+            Grid.Column="0"
+            Click="btnVolunteerList_Click"/>
                 <Button Content="Manage Calls" 
-                        Width="150"
-                        Background="#673AB7"
-                        Click="btnVolunteerList_Click"/>    
-            </StackPanel>
+            Width="150"
+            Background="#673AB7"
+            Grid.Column="2"
+            Click="btnManageCalls_Click"/>
+            </Grid>
+
         </Border>
     </Grid>
 </Window>

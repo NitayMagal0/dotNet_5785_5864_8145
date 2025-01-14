@@ -43,7 +43,7 @@
                 </Button.Style>
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Width="145" Height="70"
+                        <Border Width="155" Height="70"
                                 CornerRadius="20"
                                 Background="{TemplateBinding Background}">
                             <TextBlock Text="Main Management Screen" 
@@ -81,7 +81,7 @@
                 </Button.Style>
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Width="145" Height="70"
+                        <Border Width="155" Height="70"
                                 CornerRadius="20"
                                 Background="{TemplateBinding Background}">
                             <TextBlock Text="Volunteer Window" 

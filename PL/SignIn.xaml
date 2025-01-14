@@ -135,6 +135,9 @@
                             Orientation="Vertical"
                             Margin="0,35,0,0">
 
+                    <Image Source="Images/Logo.png"
+                     Width="149" Height="122"/>
+
                     <TextBlock Text="Volunteers Project"
                                Foreground="White"
                                FontSize="25"
@@ -247,7 +250,7 @@
                                 HorizontalAlignment="Center"
                                 Margin="0,15,0,0">
 
-                        
+
 
                     </StackPanel>
 

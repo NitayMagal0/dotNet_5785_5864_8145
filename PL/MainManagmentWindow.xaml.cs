@@ -177,6 +177,11 @@ public partial class MainWindow : Window
         new Volunteer.VolunteerListWindow().Show();
     }
 
+    private void btnManageCalls_Click(object sender, RoutedEventArgs e)
+    {
+        // Open the manage calls screen
+       new Manager.ManageCalls().Show();
+    }
     /// <summary>
     /// Click event handler for the Reset Database button.
     /// </summary>
@@ -204,6 +209,7 @@ public partial class MainWindow : Window
             PerformDatabaseOperation(() => s_bl.Admin.InitializeDB(), "Database initialized successfully.");
         }
     }
+
 
     /// <summary>
     /// Performs a database operation and provides feedback to the user.
