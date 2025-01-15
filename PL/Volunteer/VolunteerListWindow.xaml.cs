@@ -131,7 +131,7 @@ public partial class VolunteerListWindow : Window
     /// <param name="e">Event data for the event.</param>
     private void DeleteVolunteerButton_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button button && button.DataContext is BO.VolunteerInList volunteer)
+        if ((e.OriginalSource as Button)?.CommandParameter is BO.VolunteerInList volunteer)
         {
             var result = MessageBox.Show($"Are you sure you want to delete {volunteer.FullName}?",
                 "Confirm Delete",
@@ -158,5 +158,6 @@ public partial class VolunteerListWindow : Window
             }
         }
     }
+
 }
 

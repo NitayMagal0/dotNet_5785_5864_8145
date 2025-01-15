@@ -43,20 +43,6 @@
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>201856440</Id>
-    <FullName>Tamar Shapiro</FullName>
-    <MobilePhone>0542214539</MobilePhone>
-    <Email>tamarshapiro@gmail.com</Email>
-    <Password>LCk5XSkxZyNZWmspdVM=</Password>
-    <FullAddress>Rothschild Blvd 35, Tel Aviv</FullAddress>
-    <Latitude>32.06388473510742</Latitude>
-    <Longitude>34.77354049682617</Longitude>
-    <Role>Volunteer</Role>
-    <IsActive>true</IsActive>
-    <MaxDistanceForCall xsi:nil="true" />
-    <DistanceType>AirDistance</DistanceType>
-  </Volunteer>
-  <Volunteer>
     <Id>247289184</Id>
     <FullName>Eitan Goldstein</FullName>
     <MobilePhone>0548531132</MobilePhone>
