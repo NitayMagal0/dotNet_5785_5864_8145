@@ -146,7 +146,7 @@
                          Text="{Binding CurrentCall.AssignmentsCount, Mode=TwoWay}"/>
 
                 <!-- Action Button -->
-                <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
+              <!--  <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
                         Margin="0,30,0,0"
                         Height="45" 
                         Width="200"
@@ -182,7 +182,7 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                </Button>
+                </Button> -->
             </Grid>
         </Grid>
     </Border>
