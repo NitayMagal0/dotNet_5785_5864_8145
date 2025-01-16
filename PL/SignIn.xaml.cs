@@ -86,8 +86,8 @@ namespace PL
 
                 if (role == BO.Role.Volunteer)
                 {
-                    Volunteer.VolunteerWindow volunteerWindow = new Volunteer.VolunteerWindow(id);
-                    volunteerWindow.Show();
+                    Volunteer.VolunteerUpdateWindow volunteerMainWindow = new Volunteer.VolunteerUpdateWindow(id);
+                    volunteerMainWindow.Show();
                 }
                 else if (role == BO.Role.Manager)
                 {

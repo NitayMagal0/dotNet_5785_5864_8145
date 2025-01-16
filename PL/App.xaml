@@ -10,5 +10,6 @@
         <local:IdToReadOnlyConverter x:Key="IdToReadOnlyConverter" />
         <local:DistanceTypeToLabelConverter x:Key="DistanceTypeToLabelConverter" />
         <local:NullToFalseConverter x:Key="NullToFalseConverter" />
+        <local:BooleanToVisibilityInverseConverter x:Key="BooleanToVisibilityInverseConverter" />
     </Application.Resources>
 </Application>
