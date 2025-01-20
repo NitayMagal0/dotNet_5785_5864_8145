@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Volunteer>
     <Id>475553798</Id>
@@ -143,12 +143,12 @@
   <Volunteer>
     <Id>40191504</Id>
     <FullName>Maya Feldman</FullName>
-    <MobilePhone>0506866962</MobilePhone>
+    <MobilePhone>0549699198</MobilePhone>
     <Email>mayafeldman@gmail.com</Email>
     <Password>QWExa1NKJHw=</Password>
     <FullAddress>King David St 11, Jerusalem</FullAddress>
-    <Latitude>31.776634216308594</Latitude>
-    <Longitude>35.222293853759766</Longitude>
+    <Latitude>31.7705875</Latitude>
+    <Longitude>35.2235631</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
     <MaxDistanceForCall xsi:nil="true" />
@@ -268,16 +268,15 @@
   </Volunteer>
   <Volunteer>
     <Id>59778894</Id>
-    <FullName>Ronen Neuman</FullName>
+    <FullName>Ronen </FullName>
     <MobilePhone>0541567582</MobilePhone>
     <Email>ronenneuman@gmail.com</Email>
-    <Password>QjsqXTIuVmJ5ZHMr</Password>
+    <Password>T2RlZDIyOTA=</Password>
     <FullAddress>HaNassi Blvd 100, Haifa</FullAddress>
-    <Latitude>32.808067321777344</Latitude>
-    <Longitude>34.98585891723633</Longitude>
+    <Latitude>32.814272</Latitude>
+    <Longitude>34.979595</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
-    <MaxDistanceForCall xsi:nil="true" />
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
@@ -348,20 +347,6 @@
     <Role>Manager</Role>
     <IsActive>true</IsActive>
     <MaxDistanceForCall>25</MaxDistanceForCall>
-    <DistanceType>WalkingDistance</DistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>214895013</Id>
-    <FullName>yair</FullName>
-    <MobilePhone>0505799215</MobilePhone>
-    <Email>yairch2004@gmail.com</Email>
-    <Password>ITEyMzJyaWFZ</Password>
-    <FullAddress>machon lev</FullAddress>
-    <Latitude>31.765442</Latitude>
-    <Longitude>35.1910369</Longitude>
-    <Role>Manager</Role>
-    <IsActive>true</IsActive>
-    <MaxDistanceForCall>30000</MaxDistanceForCall>
     <DistanceType>WalkingDistance</DistanceType>
   </Volunteer>
 </ArrayOfVolunteer>

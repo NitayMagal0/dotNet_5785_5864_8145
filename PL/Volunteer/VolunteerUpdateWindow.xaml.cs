@@ -170,33 +170,5 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
-    private void EndCall_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            // Logic for ending a call
-            // Example placeholder code:
-            MessageBox.Show("End Call logic not implemented.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
-
-    private void CancelCall_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            // Logic for canceling a call
-            // Example placeholder code:
-            MessageBox.Show("Cancel Call logic not implemented.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
 }
 

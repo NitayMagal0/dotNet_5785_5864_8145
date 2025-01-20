@@ -9,8 +9,9 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         WindowStartupLocation="CenterScreen"
         Background="#F5F5F5">
-        
+
     <Window.Resources>
+        <!-- Existing styles -->
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="Foreground" Value="#2C3E50"/>
             <Setter Property="FontSize" Value="14"/>
@@ -52,6 +53,9 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="10,0"/>
         </Style>
+
+        <!-- Collection to Visibility Converter -->
+        <BooleanToVisibilityConverter x:Key="CollectionToVisibilityConverter" />
     </Window.Resources>
 
     <Border Background="White" 
@@ -70,6 +74,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Header -->
@@ -222,7 +227,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Select Call Button -->
-                    <Button Grid.Column="0" Content="Select Call" 
+                    <Button Grid.Column="1" Content="Select Call" 
                             Height="35" 
                             Margin="5" 
                             Background="#3498DB" 
@@ -231,30 +236,44 @@
                             Click="SelectCall_Click"/>
 
                     <!-- Call History Button -->
-                    <Button Grid.Column="1" Content="Call History" 
+                    <Button Grid.Column="2" Content="Call History" 
                             Height="35" 
                             Margin="5" 
                             Background="#3498DB" 
                             Foreground="White" 
                             Click="CallHistory_Click"/>
-
-                    <!-- End Call Button -->
-                    <Button Grid.Column="2" Content="End Call" 
-                            Height="35" 
-                            Margin="5" 
-                            Background="#3498DB" 
-                            Foreground="White" 
-                            Click="EndCall_Click"/>
-
-                    <!-- Cancel Call Button -->
-                    <Button Grid.Column="3" Content="Cancel Call" 
-                            Height="35" 
-                            Margin="5" 
-                            Background="#3498DB" 
-                            Foreground="White" 
-                            Click="CancelCall_Click"/>
                 </Grid>
             </Grid>
+
+            <!-- Calls DataGrid -->
+            <DataGrid Grid.Row="2" Margin="0,20,0,0" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding Calls}" 
+                      Visibility="{Binding Calls.Count, Converter={StaticResource CollectionToVisibilityConverter}}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Call Type" Binding="{Binding CallType}" />
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                    <DataGridTextColumn Header="Full Address" Binding="{Binding FullAddress}" />
+                    <DataGridTextColumn Header="Opening Time" Binding="{Binding OpeningTime}" />
+                    <DataGridTextColumn Header="Max Completion Time" Binding="{Binding MaxCompletionTime}" />
+                    <DataGridTextColumn Header="Admission Time" Binding="{Binding AdmissionTime}" />
+                    <DataGridTextColumn Header="Distance" Binding="{Binding DistanceFromVolunteer}" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                    <DataGridTemplateColumn Header="Actions">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="End Call" Margin="5,0,5,0" 
+                                            Command="{Binding DataContext.EndCallCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Cancel Call" Margin="5,0,5,0" 
+                                            Command="{Binding DataContext.CancelCallCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Border>
 </Window>

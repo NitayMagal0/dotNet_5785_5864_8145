@@ -151,7 +151,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Add Call" 
+        <Button Content="Add Volunteer" 
                 Grid.Row="2" 
                 Click="AddButton_Click" 
                 Style="{StaticResource MainButtonStyle}"
