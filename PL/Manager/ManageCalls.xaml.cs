@@ -50,7 +50,7 @@ namespace PL.Manager
         /// <summary>
         /// Gets or sets the search filter for calls.
         /// </summary>
-        public BO.CallType searchFilter { get; set; } = BO.CallType.Undefined;
+        public BO.CallStatus searchFilter { get; set; } = BO.CallStatus.Open;
 
         /// <summary>
         /// Event handler for SelectionChanged event of the ComboBox.
@@ -65,9 +65,9 @@ namespace PL.Manager
         /// </summary>
         private void QueryCallList()
         {
-            CallInList = (searchFilter == BO.CallType.Undefined)
+            CallInList = (searchFilter == BO.CallStatus.Open)
                 ? s_bl?.Call.GetFilteredAndSortedCalls(null,null,null)
-                : s_bl?.Call.GetFilteredAndSortedCalls(null,null,searchFilter);
+                : s_bl?.Call.GetFilteredAndSortedCalls(null, searchFilter, searchFilter);
         }
 
         /// <summary>

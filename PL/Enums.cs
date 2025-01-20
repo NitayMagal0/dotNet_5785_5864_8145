@@ -18,6 +18,25 @@ internal class CallsCollection : IEnumerable
     /// <returns>An enumerator for the CallType collection.</returns>
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
+
+/// <summary>
+/// Collection class for CallStatus enums.
+/// </summary>
+internal class CallStatusCollection : IEnumerable
+{
+    /// <summary>
+    /// Static readonly collection of CallStatus enums.
+    /// </summary>
+    static readonly IEnumerable<BO.CallStatus> s_enums =
+        (Enum.GetValues(typeof(BO.CallStatus)) as IEnumerable<BO.CallStatus>)!;
+
+    /// <summary>
+    /// Returns an enumerator that iterates through the CallStatus collection.
+    /// </summary>
+    /// <returns>An enumerator for the CallStatus collection.</returns>
+    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+}
+
 /// <summary>
 /// Collection class for Role enums.
 /// </summary>

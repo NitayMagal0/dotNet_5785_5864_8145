@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="System Management" Height="640" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Title="System Management" Height="850" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Background="#F0F2F5">
 
@@ -89,6 +90,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -205,8 +207,54 @@
             </StackPanel>
         </Border>
 
-        <!-- Footer Buttons -->
-        <Border Grid.Row="2" Grid.ColumnSpan="2"
+        <!-- Simulator Controls -->
+        <Border Grid.Row="2" Grid.Column="1"
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20"
+                Margin="10,20,0,0"
+                Height="230">
+
+            <TextBlock Text="Simulator Controls" 
+            FontSize="20" 
+            FontWeight="Medium" 
+            Margin="0,0,0,20"
+            Foreground="#424242"/>
+        </Border>
+
+        <!-- Calls Amounts -->
+        <Border Grid.Row="2" Grid.Column="0"
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0,20,10,0"
+                Height="230">
+            <Grid>
+                <TextBlock Text="Call Amount By Status" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" 
+                           FontSize="20"
+                           FontWeight="Medium"
+                           Foreground="#424242"
+                           Margin="10,0,0,0"/>
+                <DataGrid AutoGenerateColumns="False" Margin="14,32,25,4">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Call Status" Binding="{Binding Source={StaticResource CallStatusCollectionKey}}"
+                                            Width="*"/>
+                        <DataGridTextColumn Header="Amount" Binding="{Binding Column2}"
+                                            Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+
+        <!-- Volunteers and Calls Buttons -->
+        <Border Grid.Row="3" Grid.ColumnSpan="2"
                 Background="White"
                 BorderBrush="#E0E0E0"
                 BorderThickness="1"

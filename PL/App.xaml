@@ -5,6 +5,7 @@
              StartupUri="SignIn.xaml">
     <Application.Resources>
         <local:CallsCollection x:Key="CallsCollectionKey" />
+        <local:CallStatusCollection x:Key="CallStatusCollectionKey" />
         <local:RolesCollection x:Key="RolesCollectionKey" />
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey" />
         <local:IdToReadOnlyConverter x:Key="IdToReadOnlyConverter" />
