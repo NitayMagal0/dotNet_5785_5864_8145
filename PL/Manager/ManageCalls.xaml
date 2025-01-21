@@ -112,6 +112,7 @@
                           Padding="10,5"
                           VerticalContentAlignment="Center"
                           SelectionChanged="ComboBox_SelectionChanged"/>
+                
             </Grid>
         </Border>
 

@@ -66,7 +66,9 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     {
         if (CurrentVolunteer != null)
         {
-            var assignments = s_bl.Call.GetFilteredAndSortedCalls(null, CurrentVolunteer.Id, null);
+            //i changed the getFilteredAndSortedCalls so this line will not work
+            //var assignments = s_bl.Call.GetFilteredAndSortedCalls(null, CurrentVolunteer.Id, null);
+            var assignments = s_bl.Call.GetFilteredAndSortedCalls(null, null, null);
         }
     }
 

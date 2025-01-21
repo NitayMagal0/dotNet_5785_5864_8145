@@ -83,6 +83,24 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#424242"/>
         </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F8F8F8"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#E0E0E0"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="BorderBrush" Value="#1976D2"/>
+        </Style>
     </Window.Resources>
 
     <!-- Rest of the XAML remains exactly the same -->
@@ -241,14 +259,16 @@
                            FontWeight="Medium"
                            Foreground="#424242"
                            Margin="10,0,0,0"/>
-                <DataGrid AutoGenerateColumns="False" Margin="14,32,25,4">
+                <DataGrid ItemsSource="{Binding CallStatusCounts}" AutoGenerateColumns="False" 
+          Margin="14,32,25,10" 
+            IsReadOnly="True"              
+                          MouseDoubleClick="CallStatusDataGrid_MouseDoubleClick">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Call Status" Binding="{Binding Source={StaticResource CallStatusCollectionKey}}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="Amount" Binding="{Binding Column2}"
-                                            Width="*"/>
+                        <DataGridTextColumn Header="Call Status" Binding="{Binding CallStatus}" Width="*" />
+                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
+
             </Grid>
         </Border>
 

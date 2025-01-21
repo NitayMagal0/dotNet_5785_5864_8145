@@ -268,7 +268,7 @@ internal class CallImplementation : ICall
         return boCall;
     }
 
-    public IEnumerable<CallInList> GetFilteredAndSortedCalls(CallType? filterField, object? filterValue, Enum? sortField)
+    public IEnumerable<CallInList> GetFilteredAndSortedCalls(CallType? filterField, CallStatus? filterValue, Enum? sortField)
     {
         // Fetch all calls
         var calls = _dal.Call.ReadAll();
@@ -285,17 +285,6 @@ internal class CallImplementation : ICall
             Status = call.Status,
             AssignmentsCount = call.CallAssigns?.Count ?? 0
         });
-
-        // Apply filtering if filterField and filterValue are not null
-        if (filterField!=null && filterValue != null)
-        {
-            callInList = callInList.Where(call =>
-            {
-                var property = typeof(CallInList).GetProperty(filterField.ToString());
-                return property != null && property.GetValue(call)?.Equals(filterValue) == true;
-            });
-        }
-
         // Apply sorting
         if (sortField != null)
         {
@@ -310,6 +299,25 @@ internal class CallImplementation : ICall
             // Default sorting by CallId
             callInList = callInList.OrderBy(call => call.CallId);
         }
+        if (filterField!=null&&filterValue==null)
+        {
+            callInList = callInList.Where(call => call.CallType == filterField);
+        }
+        if (filterField == null && filterValue != null)
+        {
+            callInList = callInList.Where(call => call.Status == filterValue);
+        }
+        // Apply filtering if filterField and filterValue are not null
+        if (filterField!=null && filterValue != null)
+        {
+            callInList = callInList.Where(call =>
+            {
+                var property = typeof(CallInList).GetProperty(filterField.ToString());
+                return property != null && property.GetValue(call)?.Equals(filterValue) == true;
+            });
+        }
+
+        
 
         return callInList;
     }

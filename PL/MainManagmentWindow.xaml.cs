@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PL;
@@ -25,7 +27,57 @@ public partial class MainWindow : Window
 
         // Register the OnClosed event handler for the Closed event
         this.Closed += MainWindow_OnClosed;
+
+        // Register the OnLoaded event handler for the Loaded event
+        this.Loaded += MainWindow_OnLoaded;
     }
+
+    public class CallData
+    {
+        public BO.CallStatus CallStatus { get; set; }  
+        public int Amount { get; set; }
+    }
+    /// <summary>
+    /// Observable collection to store the call status counts for binding.
+    /// </summary>
+    public ObservableCollection<CallData> CallStatusCounts { get; set; } = new();
+
+    /// <summary>
+    /// Loads call status data and populates the observable collection.
+    /// </summary>
+    private void LoadCallStatusCounts()
+    {
+        // Get call counts from business logic
+        int[] counts = s_bl.Call.GetCallCountsByStatus();
+
+        // Clear existing data
+        CallStatusCounts.Clear();
+
+        // Populate the ObservableCollection with CallData objects
+        foreach (BO.CallStatus status in Enum.GetValues(typeof(BO.CallStatus)))
+        {
+            CallStatusCounts.Add(new CallData
+            {
+                CallStatus = status,
+                Amount = counts[(int)status]
+            });
+        }        
+    }
+    private void CallStatusDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is DataGrid dataGrid && dataGrid.SelectedItem is CallData selectedData)
+        {
+            // Open the ManageCalls window with the selected call status filter
+            var manageCallsWindow = new Manager.ManageCalls
+            {
+                searchFilter = selectedData.CallStatus
+            };
+
+            manageCallsWindow.Show();
+        }
+    }
+
+
 
     /// <summary>
     /// Event handler for the Loaded event.
@@ -41,6 +93,7 @@ public partial class MainWindow : Window
         // Register observers for clock and configuration updates
         s_bl.Admin.AddClockObserver(clockObserver);
         s_bl.Admin.AddConfigObserver(configObserver);
+        LoadCallStatusCounts();
     }
 
     /// <summary>

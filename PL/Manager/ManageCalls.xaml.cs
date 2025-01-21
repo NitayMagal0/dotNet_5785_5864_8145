@@ -50,8 +50,33 @@ namespace PL.Manager
         /// <summary>
         /// Gets or sets the search filter for calls.
         /// </summary>
-        public BO.CallStatus searchFilter { get; set; } = BO.CallStatus.Open;
+        public BO.CallStatus searchFilter
+        {
+            get { return (BO.CallStatus)GetValue(searchFilterProperty); }
+            set { SetValue(searchFilterProperty, value); }
+        }
 
+        /// <summary>
+        /// Identifies the searchFilter dependency property.
+        /// </summary>
+        public static readonly DependencyProperty searchFilterProperty =
+            DependencyProperty.Register("searchFilter", typeof(BO.CallStatus), typeof(ManageCalls), new PropertyMetadata(BO.CallStatus.Open, OnSearchFilterChanged));
+
+        /// <summary>
+        /// Callback method that is called when the searchFilter property changes.
+        /// </summary>
+        /// <param name="d">The dependency object on which the property changed.</param>
+        /// <param name="e">Event arguments that contain the old and new values of the property.</param>
+        private static void OnSearchFilterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ManageCalls manageCallsWindow)
+            {
+                // Query the call list based on the new search filter value.
+                manageCallsWindow.QueryCallList();
+            }
+        }
+
+        //////
         /// <summary>
         /// Event handler for SelectionChanged event of the ComboBox.
         /// </summary>
@@ -67,7 +92,7 @@ namespace PL.Manager
         {
             CallInList = (searchFilter == BO.CallStatus.Open)
                 ? s_bl?.Call.GetFilteredAndSortedCalls(null,null,null)
-                : s_bl?.Call.GetFilteredAndSortedCalls(null, searchFilter, searchFilter);
+                : s_bl?.Call.GetFilteredAndSortedCalls(null, searchFilter, null);
         }
 
         /// <summary>
