@@ -97,15 +97,16 @@ internal class CallImplementation : ICall
         }
     }
 
-    public void CancelAssignment(int requesterId, int assignmentId)
+    public void CancelAssignment(int requesterId, int callId)
     {
         try
         {
-            // Fetch the assignment from the data layer
-            var assignment = _dal.Assignment.Read(assignmentId);
+            // Fetch the assignment from the data layer using callId
+            var assignments = _dal.Assignment.ReadAll();
+            var assignment = assignments.FirstOrDefault(a => a.CallId == callId);
             if (assignment == null)
             {
-                throw new ArgumentException("Assignment not found");
+                throw new ArgumentException("Assignment not found for the given CallId");
             }
 
             // Check for cancellation permission
@@ -149,6 +150,7 @@ internal class CallImplementation : ICall
             throw new InvalidOperationException($"Failed to cancel the assignment - {ex.Message}");
         }
     }
+
 
     public void DeleteCall(int callId)
     {
@@ -322,53 +324,6 @@ internal class CallImplementation : ICall
         return callInList;
     }
 
-    public IEnumerable<CallInList> GetFilteredAndSortedCallstest(Enum? filterField, object? filterValue, Enum? sortField)
-    {
-        // Fetch all calls
-        var calls = _dal.Call.ReadAll();
-        
-        // Convert DO.Call to BO.Call using CallManager.ConvertCallToBO
-        var boCalls = calls.Select(CallManager.ConvertCallToBO);
-
-        // Convert BO.Call to BO.CallInList
-        var callInList = boCalls.Select(call => new CallInList
-        {
-            CallId = call.Id,
-            CallType = call.CallType,
-            LastVolunteer = call.CallAssigns?.LastOrDefault()?.VolunteerName,
-            Status = call.Status,
-            AssignmentsCount = call.CallAssigns?.Count ?? 0
-        });
-
-        // Apply filtering if filterField and filterValue are not null
-        if (filterField != null && filterValue != null)
-        {
-            callInList = callInList.Where(call =>
-            {
-                var property = typeof(CallInList).GetProperty(filterField.ToString());
-                return property != null && property.GetValue(call)?.Equals(filterValue) == true;
-            });
-        }
-
-        // Apply sorting
-        if (sortField != null)
-        {
-            var property = typeof(CallInList).GetProperty(sortField.ToString());
-            if (property != null)
-            {
-                callInList = callInList.OrderBy(call => property.GetValue(call));
-            }
-        }
-        else
-        {
-            // Default sorting by CallId
-            callInList = callInList.OrderBy(call => call.CallId);
-        }
-
-        return callInList;
-    }
-
-
     public IEnumerable<ClosedCallInList> GetVolunteerClosedCallsHistory(int volunteerId, CallType? callTypeFilter, Enum? sortField)
     {
         // Retrieve all assignments for the given volunteer
@@ -503,6 +458,27 @@ internal class CallImplementation : ICall
             throw new Exception($"Failed to update call with ID {call.Id}.", ex);
         }
     }
+
+    public BO.Call GetCallsForVolunteer(int volunteerId)
+    {
+        // Retrieve the assignment associated with the given volunteer
+        var assignment = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteerId &&
+                                                      a.AssignmentStatus == null)
+            .FirstOrDefault();
+
+        // If no such assignment exists, return null or throw an exception based on requirements
+        if (assignment == null)
+        {
+            return null; // Or handle with a custom exception, e.g., throw new Exception("No active call found for this volunteer.");
+        }
+
+        // Get the details of the call associated with the assignment
+        var call = _dal.Call.Read(assignment.CallId);
+
+        // Convert the DO.Call to BO.Call and return
+        return CallManager.ConvertCallToBO(call);
+    }
+
 
     #region Stage 5
     public void AddObserver(Action listObserver) =>

@@ -66,11 +66,16 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     {
         if (CurrentVolunteer != null)
         {
-            //i changed the getFilteredAndSortedCalls so this line will not work
-            //var assignments = s_bl.Call.GetFilteredAndSortedCalls(null, CurrentVolunteer.Id, null);
-            var assignments = s_bl.Call.GetFilteredAndSortedCalls(null, null, null);
+            // Assuming s_bl.Call.GetCallsForVolunteer returns a single BO.Call object
+            var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
+
+            // Initialize the collection with the single call, or clear if no call is found
+            Calls = call != null
+                ? new ObservableCollection<BO.Call> { call }
+                : new ObservableCollection<BO.Call>();
         }
     }
+
 
     private void ReloadVolunteer()
     {
@@ -135,4 +140,76 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+    // End of Treatment Button Click Event
+    private void EndTreatment_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (CurrentVolunteer == null)
+            {
+                MessageBox.Show("No volunteer is selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Logic to end treatment (you may adjust based on your requirements)
+            var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
+            if (call == null)
+            {
+                MessageBox.Show("No active treatment found for this volunteer.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            s_bl.Call.EndTreatment(call.Id); // Assuming EndTreatment marks the treatment as completed.
+            MessageBox.Show("Treatment ended successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // Reload volunteer data and calls after ending the treatment
+            ReloadVolunteer();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    // Cancel Treatment Button Click Event
+    private void CancelTreatment_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (CurrentVolunteer == null)
+            {
+                MessageBox.Show("No volunteer is selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Logic to cancel treatment (you may adjust based on your requirements)
+            var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
+            if (call == null)
+            {
+                MessageBox.Show("No active treatment found for this volunteer.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var result = MessageBox.Show(
+                "Are you sure you want to cancel this treatment?",
+                "Confirm Cancellation",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                s_bl.Call.CancelAssignment(CurrentVolunteer.Id, call.Id);
+                MessageBox.Show("Treatment canceled successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Reload volunteer data and calls after canceling the treatment
+                ReloadVolunteer();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
 }

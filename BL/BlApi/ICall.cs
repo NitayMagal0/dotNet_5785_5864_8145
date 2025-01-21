@@ -13,7 +13,8 @@ public interface ICall : IObservable
     IEnumerable<BO.ClosedCallInList> GetVolunteerClosedCallsHistory(int volunteerId, BO.CallType? callTypeFilter, Enum? sortField);
     IEnumerable<BO.OpenCallInList> GetAvailableOpenCallsForVolunteer(int volunteerId, BO.CallType? callTypeFilter, Enum? sortField);
     void MarkAssignmentAsCompleted(int volunteerId, int assignmentId);
-    void CancelAssignment(int requesterId, int assignmentId);
+    void CancelAssignment(int requesterId, int callId);
     void AssignCallToVolunteer(int volunteerId, int callId);
+    public BO.Call GetCallsForVolunteer(int volunteerId);
 }
 
