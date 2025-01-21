@@ -133,13 +133,28 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     {
         try
         {
-            MessageBox.Show("Call History logic not implemented.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (CurrentVolunteer == null)
+            {
+                MessageBox.Show("No volunteer is selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Open the CallHistory window and pass the required parameters
+            var callHistoryWindow = new CallHistory(
+                CurrentVolunteer.Id,
+                s_bl.Call.GetVolunteerClosedCallsHistory // Assuming this method matches the required Func<int, CallType?, Enum?, IEnumerable<ClosedCallInList>> signature
+            );
+
+            callHistoryWindow.Show();
         }
         catch (Exception ex)
         {
+            // Handle any errors and display a message box
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+
 
     // End of Treatment Button Click Event
     private void EndTreatment_Click(object sender, RoutedEventArgs e)
