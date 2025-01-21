@@ -367,16 +367,16 @@ internal class CallImplementation : ICall
         return closedCalls;
     }
 
-    public void MarkAssignmentAsCompleted(int volunteerId, int assignmentId)
+    public void MarkAssignmentAsCompleted(int volunteerId, int callId)
     {
         try
         {
-            // Fetch the assignment from the data layer
-
-            var assignment = _dal.Assignment.Read(assignmentId);
+            // Fetch all assignments and find the one with the given callId
+            var assignments = _dal.Assignment.ReadAll();
+            var assignment = assignments.FirstOrDefault(a => a.CallId == callId);
             if (assignment == null)
             {
-                throw new ArgumentException("Assignment not found");
+                throw new ArgumentException("Assignment not found for the given CallId");
             }
 
             // Check if the requester is the volunteer for whom the assignment is registered
@@ -412,6 +412,7 @@ internal class CallImplementation : ICall
             throw new InvalidOperationException($"Failed to complete the assignment: {ex.Message}");
         }
     }
+
     public void UpdateCall(Call call)
     {
         // Check the correctness of all values in terms of format

@@ -160,7 +160,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            s_bl.Call.EndTreatment(call.Id); // Assuming EndTreatment marks the treatment as completed.
+            s_bl.Call.MarkAssignmentAsCompleted(CurrentVolunteer.Id, call.Id); // Assuming EndTreatment marks the treatment as completed.
             MessageBox.Show("Treatment ended successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             // Reload volunteer data and calls after ending the treatment
