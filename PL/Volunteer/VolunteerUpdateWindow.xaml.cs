@@ -107,7 +107,16 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     {
         try
         {
-            s_bl.Volunteer.UpdateVolunteer(CurrentVolunteer!.Id, CurrentVolunteer!);
+            if (CurrentVolunteer != null && !CurrentVolunteer.IsActive && Calls.Count > 0)
+            {
+                MessageBox.Show("The volunteer cannot be marked as inactive while they have active calls.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            s_bl.Volunteer.UpdateVolunteer(CurrentVolunteer.Id, CurrentVolunteer);
             MessageBox.Show("Volunteer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
         }
@@ -116,6 +125,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
 
     private void SelectCall_Click(object sender, RoutedEventArgs e)
     {

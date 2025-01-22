@@ -321,22 +321,6 @@
     <AssignmentStatus xsi:nil="true" />
   </Assignment>
   <Assignment>
-    <Id>1042</Id>
-    <CallId>1042</CallId>
-    <VolunteerId>385294467</VolunteerId>
-    <AdmissionTime>2024-08-07T00:00:00</AdmissionTime>
-    <ActualEndTime xsi:nil="true" />
-    <AssignmentStatus xsi:nil="true" />
-  </Assignment>
-  <Assignment>
-    <Id>1043</Id>
-    <CallId>1043</CallId>
-    <VolunteerId>385294467</VolunteerId>
-    <AdmissionTime>2025-01-15T00:00:00</AdmissionTime>
-    <ActualEndTime xsi:nil="true" />
-    <AssignmentStatus xsi:nil="true" />
-  </Assignment>
-  <Assignment>
     <Id>1044</Id>
     <CallId>1044</CallId>
     <VolunteerId>822310066</VolunteerId>
@@ -397,6 +381,38 @@
     <CallId>1029</CallId>
     <VolunteerId>46103537</VolunteerId>
     <AdmissionTime>2024-01-30T00:00:00</AdmissionTime>
+    <ActualEndTime>2025-01-21T09:55:18</ActualEndTime>
+    <AssignmentStatus>Completed</AssignmentStatus>
+  </Assignment>
+  <Assignment>
+    <Id>1042</Id>
+    <CallId>1042</CallId>
+    <VolunteerId>385294467</VolunteerId>
+    <AdmissionTime>2024-08-07T00:00:00</AdmissionTime>
+    <ActualEndTime>2025-01-21T09:55:18</ActualEndTime>
+    <AssignmentStatus>Completed</AssignmentStatus>
+  </Assignment>
+  <Assignment>
+    <Id>1043</Id>
+    <CallId>1043</CallId>
+    <VolunteerId>385294467</VolunteerId>
+    <AdmissionTime>2025-01-15T00:00:00</AdmissionTime>
+    <ActualEndTime>2025-01-21T09:55:18</ActualEndTime>
+    <AssignmentStatus>Completed</AssignmentStatus>
+  </Assignment>
+  <Assignment>
+    <Id>1050</Id>
+    <CallId>1053</CallId>
+    <VolunteerId>385294467</VolunteerId>
+    <AdmissionTime>2025-01-21T09:55:18</AdmissionTime>
+    <ActualEndTime>2025-01-21T09:55:18</ActualEndTime>
+    <AssignmentStatus>Completed</AssignmentStatus>
+  </Assignment>
+  <Assignment>
+    <Id>1051</Id>
+    <CallId>1054</CallId>
+    <VolunteerId>385294467</VolunteerId>
+    <AdmissionTime>2025-01-21T09:55:18</AdmissionTime>
     <ActualEndTime>2025-01-21T09:55:18</ActualEndTime>
     <AssignmentStatus>Completed</AssignmentStatus>
   </Assignment>

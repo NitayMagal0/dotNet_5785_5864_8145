@@ -12,5 +12,6 @@
         <local:DistanceTypeToLabelConverter x:Key="DistanceTypeToLabelConverter" />
         <local:NullToFalseConverter x:Key="NullToFalseConverter" />
         <local:BooleanToVisibilityInverseConverter x:Key="BooleanToVisibilityInverseConverter" />
+        <local:IntToBooleanConverter x:Key="IntToBooleanConverter"/>
     </Application.Resources>
 </Application>

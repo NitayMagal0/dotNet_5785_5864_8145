@@ -543,4 +543,14 @@
 		<OpeningTime>2024-09-01T14:00:00</OpeningTime>
 		<MaxCompletionTime>2025-03-15T12:00:00+02:00</MaxCompletionTime>
 	</Call>
+	<Call>
+		<Id>1054</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting elderly homes to provide companionship and assistance to residents.</Description>
+		<FullAddress>Kibbutz Galuyot St 4, Ashdod</FullAddress>
+		<Latitude>31.801447</Latitude>
+		<Longitude>34.643497</Longitude>
+		<OpeningTime>2024-09-01T14:00:00</OpeningTime>
+		<MaxCompletionTime>2025-09-15T12:00:00+02:00</MaxCompletionTime>
+	</Call>
 </Calls>

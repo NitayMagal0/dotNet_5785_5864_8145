@@ -299,13 +299,13 @@
     <FullName>Oren Eliav</FullName>
     <MobilePhone>0522966441</MobilePhone>
     <Email>oreneliav@gmail.com</Email>
-    <Password>TGdfdDp1UksjfSkz</Password>
-    <FullAddress>Ben Gurion Blvd 44, Haifa</FullAddress>
-    <Latitude>32.81882095336914</Latitude>
-    <Longitude>34.98971176147461</Longitude>
+    <Password>T28yMjkwMzA5Ng==</Password>
+    <FullAddress>Hagefen 28 dimona</FullAddress>
+    <Latitude>31.0649184</Latitude>
+    <Longitude>35.0258622</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
-    <MaxDistanceForCall xsi:nil="true" />
+    <MaxDistanceForCall xsi:nil="true">24</MaxDistanceForCall>
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
