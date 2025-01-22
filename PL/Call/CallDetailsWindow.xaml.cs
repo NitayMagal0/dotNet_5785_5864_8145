@@ -35,7 +35,20 @@ namespace PL.Call
                 OnPropertyChanged(nameof(IsCallEditable));
             }
         }
+        private BO.CallInList? _currentCallInList;
+        public BO.CallInList? CurrentCallInList
+        {
+            get => _currentCallInList;
+            set
+            {
+                _currentCallInList = value;
+                OnPropertyChanged(nameof(CurrentCallInList));
+            }
+        }
 
+        /// <summary>
+        /// Check if the call is editable by its status.
+        /// </summary>
         public bool IsCallEditable
         {
             get => CurrentCall != null &&
@@ -52,6 +65,7 @@ namespace PL.Call
             DataContext = this;
 
             LoadCallDetails(callId);
+            LoadCallInList(callId);
             LoadCallTypes();
             LoadCallStatuses();
         }
@@ -73,6 +87,21 @@ namespace PL.Call
             }
         }
 
+        /// <summary>
+        /// Load call in list details from the business logic layer.
+        /// </summary>
+        /// <param name="callId"></param>
+        private void LoadCallInList(int callId)
+        {
+            try
+            {
+                CurrentCallInList = s_bl.Call.GetCallInListById(callId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load call summary details: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         /// <summary>
         /// Load available call types.
         /// </summary>

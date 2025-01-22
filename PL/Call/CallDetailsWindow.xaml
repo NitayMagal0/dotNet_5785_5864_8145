@@ -163,16 +163,17 @@
                 <!-- Remaining Time -->
                 <Label Grid.Row="4" Grid.Column="0" Content="Remaining Time:" Style="{StaticResource LabelStyle}"/>
                 <TextBox Grid.Row="4" Grid.Column="1" 
-                     Style="{StaticResource TextBoxStyle}"
-                     IsReadOnly="{Binding IsCallEditable, Converter={StaticResource InverseBoolConverter}}"
-                     Text="{Binding CurrentCall.RemainingTime, Mode=TwoWay}"/>
+         Style="{StaticResource TextBoxStyle}"
+         IsReadOnly="{Binding IsCallEditable, Converter={StaticResource InverseBoolConverter}}"
+         Text="{Binding CurrentCallInList.RemainingTime, Mode=TwoWay, StringFormat='hh\\:mm\\:ss'}"/>
+
 
                 <!-- Last Volunteer -->
                 <Label Grid.Row="5" Grid.Column="0" Content="Last Volunteer:" Style="{StaticResource LabelStyle}"/>
                 <TextBox Grid.Row="5" Grid.Column="1" 
                      Style="{StaticResource TextBoxStyle}"
                      IsReadOnly="{Binding IsCallEditable, Converter={StaticResource InverseBoolConverter}}"
-                     Text="{Binding CurrentCall.LastVolunteer, Mode=TwoWay}"/>
+                     Text="{Binding CurrentCallInList.LastVolunteer, Mode=TwoWay}"/>
 
                 <!-- Status -->
                 <Label Grid.Row="6" Grid.Column="0" Content="Status:" Style="{StaticResource LabelStyle}"/>

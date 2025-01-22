@@ -270,6 +270,33 @@ internal class CallImplementation : ICall
         return boCall;
     }
 
+    public CallInList GetCallInListById(int callId)
+    {
+        // Request the data layer to get details about the call
+        var doCall = _dal.Call.Read(callId);
+
+        // If the call does not exist, throw an exception
+        if (doCall == null)
+        {
+            throw new Exception($"Call with ID {callId} does not exist.");
+        }
+
+        // Convert DO.Call to BO.Call using CallManager.ConvertCallToBO
+        BO.Call boCall = CallManager.ConvertCallToBO(doCall);
+
+        // Convert BO.Call to BO.CallInList
+        var callInList = new CallInList
+        {
+            CallId = boCall.Id,
+            CallType = boCall.CallType,
+            LastVolunteer = boCall.CallAssigns?.LastOrDefault()?.VolunteerName,
+            RemainingTime = boCall.MaxCompletionTime - AdminManager.Now,
+            Status = boCall.Status,
+            AssignmentsCount = boCall.CallAssigns?.Count ?? 0
+        };
+
+        return callInList;
+    }
     public IEnumerable<CallInList> GetFilteredAndSortedCalls(CallType? filterField, CallStatus? filterValue, Enum? sortField)
     {
         // Fetch all calls
