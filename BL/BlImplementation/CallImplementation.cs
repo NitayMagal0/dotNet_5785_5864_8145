@@ -181,7 +181,7 @@ internal class CallImplementation : ICall
         catch (Exception ex)
         {
             // Catch any exceptions from the data layer and re-throw with a suitable message
-            throw new InvalidOperationException("Failed to delete the call", ex);
+            throw new InvalidOperationException(ex.Message);
         }
     }
 
