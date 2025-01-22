@@ -121,13 +121,23 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     {
         try
         {
-            MessageBox.Show("Select Call logic not implemented.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (CurrentVolunteer == null)
+            {
+                MessageBox.Show("No volunteer is selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Open the OpenCalls window and pass the volunteer ID
+            var openCallsWindow = new OpenCalls(CurrentVolunteer.Id);
+            openCallsWindow.Show();
         }
         catch (Exception ex)
         {
+            // Handle any errors and display a message box
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
 
     private void CallHistory_Click(object sender, RoutedEventArgs e)
     {
@@ -139,12 +149,8 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            // Open the CallHistory window and pass the required parameters
-            var callHistoryWindow = new CallHistory(
-                CurrentVolunteer.Id,
-                s_bl.Call.GetVolunteerClosedCallsHistory // Assuming this method matches the required Func<int, CallType?, Enum?, IEnumerable<ClosedCallInList>> signature
-            );
-
+            // Open the CallHistory window and pass only the volunteer ID
+            var callHistoryWindow = new CallHistory(CurrentVolunteer.Id);
             callHistoryWindow.Show();
         }
         catch (Exception ex)
@@ -153,6 +159,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
 
 
 

@@ -4,8 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Open Calls" Height="550" Width="850">
-    <Grid>
-      
+        Title="Open Calls" Height="550" Width="850"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Filter Dropdown -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <Label Content="Filter by Call Type:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <ComboBox x:Name="CallTypeFilter"
+                      Width="200"
+                      SelectionChanged="CallTypeFilter_SelectionChanged"
+                      VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Open Calls Grid -->
+        <DataGrid x:Name="OpenCallsGrid"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding CallType}" Header="Call Type" Width="150"/>
+                <DataGridTextColumn Binding="{Binding CallTypeDescription}" Header="Description" Width="200"/>
+                <DataGridTextColumn Binding="{Binding FullAddress}" Header="Address" Width="200"/>
+                <DataGridTextColumn Binding="{Binding OpeningTime}" Header="Opening Time" Width="150"/>
+                <DataGridTextColumn Binding="{Binding MaxCompletionTime}" Header="Max Completion Time" Width="150"/>
+                <DataGridTextColumn Binding="{Binding DistanceFromVolunteer}" Header="Distance" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -500,4 +500,47 @@
     <OpeningTime>2024-04-10T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-02-07T00:00:00+02:00</MaxCompletionTime>
   </Call>
+	<Call>
+		<Id>1050</Id>
+		<CallType>CleaningShelters</CallType>
+		<Description>Organizing community efforts to clean public spaces and parks for a healthier environment.</Description>
+		<FullAddress>HaShalom Rd 12, Tel Aviv</FullAddress>
+		<Latitude>32.071639</Latitude>
+		<Longitude>34.794046</Longitude>
+		<OpeningTime>2024-06-15T08:00:00</OpeningTime>
+		<MaxCompletionTime>2024-12-20T18:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1051</Id>
+		<CallType>HelpForFamiliesInNeed,</CallType>
+		<Description>Distributing food packages to underprivileged families and individuals in need.</Description>
+		<FullAddress>Herzl St 45, Haifa</FullAddress>
+		<Latitude>32.818411</Latitude>
+		<Longitude>34.998417</Longitude>
+		<OpeningTime>2024-05-05T09:00:00</OpeningTime>
+		<MaxCompletionTime>2024-11-30T17:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1052</Id>
+		<CallType>FoodPackagingForNeedyFamilies</CallType>
+		<Description>Hosting a blood donation drive to support hospitals and emergency services.</Description>
+		<FullAddress>Ben Yehuda St 76, Jerusalem</FullAddress>
+		<Latitude>31.768319</Latitude>
+		<Longitude>35.21371</Longitude>
+		<OpeningTime>2024-07-20T10:00:00</OpeningTime>
+		<MaxCompletionTime>2025-01-10T16:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1053</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting elderly homes to provide companionship and assistance to residents.</Description>
+		<FullAddress>Kibbutz Galuyot St 4, Ashdod</FullAddress>
+		<Latitude>31.801447</Latitude>
+		<Longitude>34.643497</Longitude>
+		<OpeningTime>2024-09-01T14:00:00</OpeningTime>
+		<MaxCompletionTime>2025-03-15T12:00:00+02:00</MaxCompletionTime>
+	</Call>
 </Calls>

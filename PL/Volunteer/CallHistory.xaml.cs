@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using BO; // Business objects namespace
@@ -8,15 +7,14 @@ namespace PL.Volunteer
 {
     public partial class CallHistory : Window
     {
+        private static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); // Access to the business logic layer
         private readonly int _volunteerId;
-        private readonly Func<int, CallType?, Enum?, IEnumerable<ClosedCallInList>> _getCallHistoryMethod;
 
-        public CallHistory(int volunteerId, Func<int, CallType?, Enum?, IEnumerable<ClosedCallInList>> getCallHistoryMethod)
+        public CallHistory(int volunteerId)
         {
             InitializeComponent();
 
             _volunteerId = volunteerId;
-            _getCallHistoryMethod = getCallHistoryMethod;
 
             // Load filter options and call history
             LoadCallTypeFilter();
@@ -27,13 +25,19 @@ namespace PL.Volunteer
         {
             // Populate the ComboBox with CallType enum values
             CallTypeFilter.ItemsSource = Enum.GetValues(typeof(CallType)).Cast<CallType>();
-            CallTypeFilter.SelectedIndex = -1; // No filter by default
+            CallTypeFilter.SelectedIndex = 0; // Default to Undefined
         }
 
         private void LoadCallHistory(CallType? selectedCallType = null)
         {
+            // If the selected call type is Undefined or not selected, set it to null
+            if (selectedCallType == null || selectedCallType == CallType.Undefined)
+            {
+                selectedCallType = null;
+            }
+
             // Fetch the data from the logic layer
-            var callHistory = _getCallHistoryMethod(_volunteerId, selectedCallType, null);
+            var callHistory = s_bl.Call.GetVolunteerClosedCallsHistory(_volunteerId, selectedCallType, null);
 
             // Bind the data to the DataGrid
             CallHistoryGrid.ItemsSource = callHistory.ToList();
@@ -49,4 +53,3 @@ namespace PL.Volunteer
         }
     }
 }
-
