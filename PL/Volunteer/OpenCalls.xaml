@@ -34,7 +34,6 @@
                 <DataGridTextColumn Binding="{Binding OpeningTime}" Header="Opening Time" Width="150"/>
                 <DataGridTextColumn Binding="{Binding MaxCompletionTime}" Header="Max Completion Time" Width="150"/>
                 <DataGridTextColumn Binding="{Binding DistanceFromVolunteer}" Header="Distance" Width="100"/>
-
                 <!-- Assign Button Column -->
                 <DataGridTemplateColumn Header="Actions" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
