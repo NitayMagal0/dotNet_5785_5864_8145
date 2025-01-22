@@ -3,10 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Volunteer"
         mc:Ignorable="d"
-        Title="CallHistory" Height="450" Width="800">
-    <Grid>
-        
+        Title="Volunteer Call History" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Filter Dropdown -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <Label Content="Filter by Call Type:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <ComboBox x:Name="CallTypeFilter"
+                      Width="200"
+                      SelectionChanged="CallTypeFilter_SelectionChanged"
+                      VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Call History Grid -->
+        <DataGrid x:Name="CallHistoryGrid"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding CallType}" Header="Call Type" Width="150"/>
+                <DataGridTextColumn Binding="{Binding FullAddress}" Header="Address" Width="200"/>
+                <DataGridTextColumn Binding="{Binding OpeningTime}" Header="Opening Time" Width="150"/>
+                <DataGridTextColumn Binding="{Binding EntryTime}" Header="Entry Time" Width="150"/>
+                <DataGridTextColumn Binding="{Binding FinishTime}" Header="Finish Time" Width="150"/>
+                <DataGridTextColumn Binding="{Binding AssignmentStatus}" Header="Status" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

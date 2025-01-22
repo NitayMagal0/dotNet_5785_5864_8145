@@ -6,64 +6,6 @@
         mc:Ignorable="d"
         Title="Open Calls" Height="550" Width="850">
     <Grid>
-        <!-- Filter Section -->
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <Label Content="Filter by:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <!-- ComboBox to select filter type -->
-            <ComboBox x:Name="FilterComboBox" 
-                      Width="150" 
-                      Margin="0,0,10,0" 
-                      SelectionChanged="FilterComboBox_SelectionChanged">
-                <ComboBoxItem Content="Call Type" />
-                <ComboBoxItem Content="Address" />
-                <!-- Add more filter types as needed -->
-            </ComboBox>
-
-            <!-- Filter TextBox that updates based on ComboBox selection -->
-            <TextBox x:Name="FilterTextBox" 
-                     Width="200" 
-                     Margin="0,0,10,0" 
-                     TextChanged="FilterTextBox_TextChanged" />
-
-            <Button Content="Clear Filter" 
-                    Width="100" 
-                    Click="ClearFilterButton_Click" />
-        </StackPanel>
-
-        <!-- DataGrid Section -->
-        <DataGrid x:Name="OpenCallsDataGrid" 
-                  AutoGenerateColumns="False" 
-                  CanUserAddRows="False" 
-                  IsReadOnly="True"
-                  HorizontalAlignment="Stretch" 
-                  VerticalAlignment="Stretch"
-                  Margin="10,50,10,10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100" />
-                <DataGridTextColumn Header="Call Type" Binding="{Binding CallType}" Width="150" />
-                <DataGridTextColumn Header="Description" Binding="{Binding CallTypeDescription}" Width="200" />
-                <DataGridTextColumn Header="Full Address" Binding="{Binding FullAddress}" Width="200" />
-
-                <!-- Opening Time Column -->
-                <DataGridTemplateColumn Header="Opening Time" Width="150">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding OpeningTime, StringFormat=dd/MM/yyyy HH:mm}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <!-- Max Completion Time Column -->
-                <DataGridTemplateColumn Header="Max Completion Time" Width="150">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding MaxCompletionTime, StringFormat=dd/MM/yyyy HH:mm}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <DataGridTextColumn Header="Distance (km)" Binding="{Binding DistanceFromVolunteer}" Width="100" />
-            </DataGrid.Columns>
-        </DataGrid>
+      
     </Grid>
 </Window>
