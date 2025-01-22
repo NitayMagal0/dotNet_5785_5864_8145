@@ -37,11 +37,31 @@ namespace PL.Volunteer
                 selectedCallType = null;
             }
 
-            // Fetch open calls from the business logic layer
-            var openCalls = s_bl.Call.GetAvailableOpenCallsForVolunteer(_volunteerId, selectedCallType, null);
+            try
+            {
+                // Retrieve the volunteer's maximum range
+                var volunteer = s_bl.Volunteer.GetVolunteerDetails(_volunteerId);
+                var maxRange = volunteer.MaxDistanceForCall; // Assume `MaximumRange` is a property in the volunteer's data
 
-            // Bind the data to the DataGrid
-            OpenCallsGrid.ItemsSource = openCalls.ToList();
+                // Define default distance type and sort field
+                var distanceType = DistanceType.AirDistance; 
+
+                // Fetch calls based on whether a maximum range is defined
+                var openCalls = maxRange.HasValue
+                    ? s_bl.Call.GetNearbyOpenCallsForVolunteer(_volunteerId, maxRange.Value, distanceType, selectedCallType, null)
+                    : s_bl.Call.GetAvailableOpenCallsForVolunteer(_volunteerId, selectedCallType, null);
+
+                // Bind the data to the DataGrid
+                OpenCallsGrid.ItemsSource = openCalls.ToList();
+            }
+            catch (Exception ex)
+            {
+                // Show error message
+                MessageBox.Show($"Failed to load open calls.\nError: {ex.Message}",
+                    "Load Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         private void CallTypeFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -305,7 +305,7 @@
     <Longitude>35.0258622</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
-    <MaxDistanceForCall xsi:nil="true">24</MaxDistanceForCall>
+    <MaxDistanceForCall xsi:nil="true">50000000</MaxDistanceForCall>
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
