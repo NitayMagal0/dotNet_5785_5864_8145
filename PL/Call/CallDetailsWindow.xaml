@@ -146,43 +146,7 @@
                          Text="{Binding CurrentCall.AssignmentsCount, Mode=TwoWay}"/>
 
                 <!-- Action Button -->
-               <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
-                        Margin="0,30,0,0"
-                        Height="45" 
-                        Width="200"
-                        Content="Save Changes"
-                        Click="SaveChanges_Click"
-                        Background="#3498DB"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontSize="16"
-                        FontWeight="SemiBold">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                CornerRadius="5"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" 
-                                                              VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#2980B9"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background" Value="#2471A3"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button> 
+               
             </Grid>
         </Grid>
     </Border>
