@@ -32,6 +32,7 @@ namespace PL.Manager
             Closed += Window_Closed;
         }
 
+
         /// <summary>
         /// Gets or sets the list of calls.
         /// </summary>
@@ -130,16 +131,29 @@ namespace PL.Manager
         {
             if (SelectedCall != null)
             {
-                new Call.CallDetailsWindow(SelectedCall.Id).Show();
+                if (SelectedCall.CallId > 0)  // Ensure ID is valid
+                {
+                    new Call.CallDetailsWindow(SelectedCall.CallId).Show();
+                }
+                else
+                {
+                    MessageBox.Show("Selected call ID is invalid.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No call selected. Please select a call.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+
 
         /// <summary>
         /// Method to handle Add Call button click.
         /// </summary>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            new Call.CallDetailsWindow().Show();
+           // new Call.CallDetailsWindow().Show();
         }
 
         /// <summary>

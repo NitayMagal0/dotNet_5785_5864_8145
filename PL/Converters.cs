@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PL;
 
@@ -33,6 +34,69 @@ public class IdToReadOnlyConverter : IValueConverter
     }
 }
 
+public class InverseBoolConverter : IValueConverter
+{
+    /// <summary>
+    /// Converts a boolean value to its inverse.
+    /// </summary>
+    /// <param name="value">The boolean value.</param>
+    /// <param name="targetType">The target type.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns>The inverse of the boolean value.</returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is bool boolValue)
+        {
+            return !boolValue;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Converts back the inverse boolean value to its original value.
+    /// </summary>
+    /// <param name="value">The boolean value.</param>
+    /// <param name="targetType">The target type.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns>The original boolean value.</returns>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is bool boolValue)
+        {
+            return !boolValue;
+        }
+        return false;
+    }
+}
+public class BoolToGrayConverter : IValueConverter
+{
+    /// <summary>
+    /// Converts a boolean value to a SolidColorBrush. Blue if true, gray if false.
+    /// </summary>
+    /// <param name="value">The boolean value.</param>
+    /// <param name="targetType">The target type.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture">The culture.</param>
+    /// <returns>A SolidColorBrush based on the boolean value.</returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is bool isEnabled && isEnabled)
+        {
+            return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2196F3")); // Blue when enabled
+        }
+        return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#B0BEC5")); // Gray when disabled
+    }
+
+    /// <summary>
+    /// ConvertBack is not implemented.
+    /// </summary>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 /// <summary>
 /// Converts a DistanceType to a label string.
 /// </summary>

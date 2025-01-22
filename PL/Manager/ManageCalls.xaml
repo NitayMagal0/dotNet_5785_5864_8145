@@ -123,7 +123,7 @@
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
                   RowDetailsVisibilityMode="VisibleWhenSelected"
-                  SelectedItem="{Binding SelectedCall}" 
+                  SelectedItem="{Binding SelectedCall, Mode=TwoWay}" 
                   MouseDoubleClick="CallList_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding CallId}" Header="CALL ID" Width="Auto"/>
