@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using BO;
 
 namespace PL.Volunteer
@@ -41,13 +44,43 @@ namespace PL.Volunteer
             OpenCallsGrid.ItemsSource = openCalls.ToList();
         }
 
-        private void CallTypeFilter_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CallTypeFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Get the selected call type from the ComboBox
             var selectedCallType = CallTypeFilter.SelectedItem as CallType?;
 
             // Reload the open calls with the selected filter
             LoadOpenCalls(selectedCallType);
+        }
+
+        private void AssignCallButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the call ID from the button's CommandParameter
+            if ((sender as Button)?.CommandParameter is int callId)
+            {
+                try
+                {
+                    // Call the BL method to assign the call
+                    s_bl.Call.AssignCallToVolunteer(_volunteerId, callId);
+
+                    // Show success message
+                    MessageBox.Show($"Call {callId} has been successfully assigned to the volunteer.",
+                        "Assignment Successful",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+
+                    // Refresh the open calls list
+                    LoadOpenCalls(CallTypeFilter.SelectedItem as CallType?);
+                }
+                catch (Exception ex)
+                {
+                    // Show error message
+                    MessageBox.Show($"Failed to assign the call.\nError: {ex.Message}",
+                        "Assignment Failed",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
