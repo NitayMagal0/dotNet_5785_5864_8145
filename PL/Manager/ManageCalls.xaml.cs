@@ -153,7 +153,7 @@ namespace PL.Manager
         /// </summary>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-           // new Call.CallDetailsWindow().Show();
+            new Call.AddCallWindow().Show();
         }
 
         /// <summary>

@@ -148,16 +148,17 @@ namespace PL.Call
         /// </summary>
         private void btnWatchCallAssignList_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentCall == null)
+            if (CurrentCall == null || CurrentCall.CallAssigns == null || CurrentCall.CallAssigns.Count == 0)
             {
-                MessageBox.Show("No call selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("No call assignments found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Open the Call Assign List window
-            // var assignListWindow = new CallAssignListWindow(CurrentCall.CallId);
-            // assignListWindow.ShowDialog();
+            // Open the CallAssignInListWindow and pass the CallAssigns list
+            var callAssignWindow = new CallAssignInListWindow(CurrentCall.Id, CurrentCall.CallAssigns);
+            callAssignWindow.ShowDialog();
         }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
