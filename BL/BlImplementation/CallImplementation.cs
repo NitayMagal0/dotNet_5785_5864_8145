@@ -10,18 +10,42 @@ internal class CallImplementation : ICall
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
-    public void MinAddCall(BO.CallType CallType, string? Description, string? FullAddress, DateTime? MaxCompletionTime)
+    public void MinAddCall(BO.CallType CallType, string Description, string FullAddress, DateTime? MaxCompletionTime)
     {
-        int nextCallId = _dal.Config.NextCallId;
-
-        DateTime OpeningTime = Helpers.AdminManager.Now;
-        if (MaxCompletionTime.HasValue && MaxCompletionTime.Value <= OpeningTime)
+        // Validation Checks
+        if (CallType == 0)
         {
-            throw new BlInvalidFormatException("Max completion time must be after the opening time");
+            throw new BlInvalidFormatException("Please select a valid Call Type.");
         }
 
-        double Latitude, Longitude = 0;
-        (Latitude, Longitude) = Helpers.Tools.GetCoordinates(FullAddress);
+        if (string.IsNullOrWhiteSpace(Description))
+        {
+            throw new BlInvalidFormatException("Please enter a valid Description.");
+        }
+
+        if (string.IsNullOrWhiteSpace(FullAddress))
+        {
+            throw new BlInvalidFormatException("Please enter a valid Full Address.");
+        }
+
+        int nextCallId = _dal.Config.NextCallId;
+        DateTime OpeningTime = Helpers.AdminManager.Now;
+
+        if (!MaxCompletionTime.HasValue || MaxCompletionTime <= OpeningTime)
+        {
+            throw new BlInvalidFormatException("Max completion time must be a valid date and after the opening time.");
+        }
+
+        double Latitude, Longitude;
+        try
+        {
+            (Latitude, Longitude) = Helpers.Tools.GetCoordinates(FullAddress);
+        }
+        catch (Exception ex)
+        {
+            throw new BlInvalidFormatException($"Invalid address: {ex.Message}");
+        }
+
         // Convert BO.Call to DO.Call
         var doCall = new DO.Call
         {
@@ -31,7 +55,7 @@ internal class CallImplementation : ICall
             FullAddress = FullAddress,
             Latitude = Latitude,
             Longitude = Longitude,
-            OpeningTime = OpeningTime,
+            OpeningTime = _dal.Config.Clock,
             MaxCompletionTime = MaxCompletionTime
         };
 
@@ -39,15 +63,15 @@ internal class CallImplementation : ICall
         {
             // Attempt to add the new call to the data layer
             _dal.Call.Create(doCall);
-            CallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+            CallManager.Observers.NotifyListUpdated();
         }
         catch (Exception ex)
         {
-            // Catch any exceptions from the data layer and re-throw with a suitable message
-            throw new InvalidOperationException("Failed to add the call", ex);
+            throw new InvalidOperationException("Failed to add the call: " + ex.Message);
         }
-
     }
+
+
 
 
     public void AddCall(Call call)
