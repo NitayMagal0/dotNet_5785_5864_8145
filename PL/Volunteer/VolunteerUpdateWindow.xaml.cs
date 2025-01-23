@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using DO;
 
 namespace PL.Volunteer;
 
@@ -66,12 +65,12 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     {
         if (CurrentVolunteer != null)
         {
-            // Assuming s_bl.Call.GetCallsForVolunteer returns a single BO.Call object
+            // Assuming this returns a single call object, not a collection.
             var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
 
-            // Initialize the collection with the single call, or clear if no call is found
+            // Handle single call or clear the collection if no call is found.
             Calls = call != null
-                ? new ObservableCollection<BO.Call> { call }
+                ? new ObservableCollection<BO.Call> { call } // Wrap single call in a collection.
                 : new ObservableCollection<BO.Call>();
         }
     }
@@ -126,7 +125,6 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
         }
     }
 
-
     private void SelectCall_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -137,17 +135,14 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            // Open the OpenCalls window and pass the volunteer ID
             var openCallsWindow = new OpenCalls(CurrentVolunteer.Id);
             openCallsWindow.Show();
         }
         catch (Exception ex)
         {
-            // Handle any errors and display a message box
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
 
     private void CallHistory_Click(object sender, RoutedEventArgs e)
     {
@@ -159,21 +154,15 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            // Open the CallHistory window and pass only the volunteer ID
             var callHistoryWindow = new CallHistory(CurrentVolunteer.Id);
             callHistoryWindow.Show();
         }
         catch (Exception ex)
         {
-            // Handle any errors and display a message box
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
-
-
-
-    // End of Treatment Button Click Event
     private void EndTreatment_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -184,7 +173,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            // Logic to end treatment (you may adjust based on your requirements)
+            // Get single call for the volunteer
             var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
             if (call == null)
             {
@@ -192,10 +181,8 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            s_bl.Call.MarkAssignmentAsCompleted(CurrentVolunteer.Id, call.Id); // Assuming EndTreatment marks the treatment as completed.
+            s_bl.Call.MarkAssignmentAsCompleted(CurrentVolunteer.Id, call.Id);
             MessageBox.Show("Treatment ended successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            // Reload volunteer data and calls after ending the treatment
             ReloadVolunteer();
         }
         catch (Exception ex)
@@ -204,7 +191,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
         }
     }
 
-    // Cancel Treatment Button Click Event
+
     private void CancelTreatment_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -215,7 +202,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            // Logic to cancel treatment (you may adjust based on your requirements)
+            // Get single call for the volunteer
             var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
             if (call == null)
             {
@@ -233,8 +220,6 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             {
                 s_bl.Call.CancelAssignment(CurrentVolunteer.Id, call.Id);
                 MessageBox.Show("Treatment canceled successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Reload volunteer data and calls after canceling the treatment
                 ReloadVolunteer();
             }
         }
