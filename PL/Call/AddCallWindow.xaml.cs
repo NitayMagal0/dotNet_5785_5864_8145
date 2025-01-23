@@ -23,5 +23,10 @@ namespace PL.Call
         {
             InitializeComponent();
         }
+
+        private void BtnAddCall_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

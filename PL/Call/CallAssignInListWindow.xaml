@@ -92,22 +92,22 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Source="../Images/Logo.png"
-                    Width="88" Height="93"
+                    Width="107" Height="112"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Margin="10"/>
+                    Margin="263,8,0,0" Grid.Column="1"/>
                 <Label Content="Call Assign List for: " 
                        FontSize="30" 
                        FontWeight="SemiBold"
                        Foreground="#424242"
-                       HorizontalAlignment="Right" 
-                       VerticalAlignment="Center" />
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center" Margin="9,0,0,0" />
                 <TextBlock Text="{Binding CallIdTxt}"    
                    FontSize="27" 
                    FontWeight="SemiBold"
                    Foreground="#424242"
                    HorizontalAlignment="Left" 
-                   VerticalAlignment="Top" Margin="373,25,0,0" Width="203" Grid.ColumnSpan="2" />
+                   VerticalAlignment="Top" Margin="278,25,0,0" Width="204" Grid.ColumnSpan="2" />
 
 
 

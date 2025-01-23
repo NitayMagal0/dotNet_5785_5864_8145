@@ -10,6 +10,46 @@ internal class CallImplementation : ICall
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
+    public void MinAddCall(BO.CallType CallType, string? Description, string? FullAddress, DateTime? MaxCompletionTime)
+    {
+        int nextCallId = _dal.Config.NextCallId;
+
+        DateTime OpeningTime = Helpers.AdminManager.Now;
+        if (MaxCompletionTime.HasValue && MaxCompletionTime.Value <= OpeningTime)
+        {
+            throw new BlInvalidFormatException("Max completion time must be after the opening time");
+        }
+
+        double Latitude, Longitude = 0;
+        (Latitude, Longitude) = Helpers.Tools.GetCoordinates(FullAddress);
+        // Convert BO.Call to DO.Call
+        var doCall = new DO.Call
+        {
+            Id = nextCallId,
+            CallType = CallManager.MapCallType(CallType),
+            Description = Description,
+            FullAddress = FullAddress,
+            Latitude = Latitude,
+            Longitude = Longitude,
+            OpeningTime = OpeningTime,
+            MaxCompletionTime = MaxCompletionTime
+        };
+
+        try
+        {
+            // Attempt to add the new call to the data layer
+            _dal.Call.Create(doCall);
+            CallManager.Observers.NotifyListUpdated(); //stage 5                                                    
+        }
+        catch (Exception ex)
+        {
+            // Catch any exceptions from the data layer and re-throw with a suitable message
+            throw new InvalidOperationException("Failed to add the call", ex);
+        }
+
+    }
+
+
     public void AddCall(Call call)
     {
         if (call == null)
@@ -84,7 +124,7 @@ internal class CallImplementation : ICall
                 ActualEndTime = null,
                 AssignmentStatus = null
             };
-
+            
             // Add the new assignment to the data layer
             _dal.Assignment.Create(newAssignment);
             AssignmentManager.Observers.NotifyListUpdated(); //stage 5                                                    

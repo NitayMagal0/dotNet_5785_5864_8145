@@ -15,7 +15,7 @@
         <!-- Converters -->
         <conv:InverseBoolConverter x:Key="InverseBoolConverter"/>
         <conv:BoolToGrayConverter x:Key="BoolToGrayConverter"/>
-        
+
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="Foreground" Value="#2C3E50"/>
             <Setter Property="FontSize" Value="14"/>
@@ -107,10 +107,15 @@
 
             <!-- Header -->
             <TextBlock Text="Call Information" 
-                   FontSize="24" 
+                   FontSize="30" 
                    FontWeight="Bold" 
                    Foreground="#2C3E50"
-                   Margin="0,0,0,20"/>
+                   Margin="0,0,486,20"/>
+            <Image Source="../Images/Logo.png"
+    Width="120" Height="68"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Top"
+    Margin="674,-8,0,0" Grid.RowSpan="2"/>
 
             <!-- Main Content -->
             <Grid Grid.Row="1">
