@@ -17,7 +17,6 @@ public interface ICall : IObservable
     void AssignCallToVolunteer(int volunteerId, int callId);
     public BO.Call GetCallsForVolunteer(int volunteerId);
     public CallInList GetCallInListById(int callId);
-    public IEnumerable<OpenCallInList> GetNearbyOpenCallsForVolunteer(int volunteerId, double range, DistanceType distanceType, CallType? callTypeFilter, Enum? sortField);
     public void MinAddCall(BO.CallType CallType, string? Description, string? FullAddress, DateTime? MaxCompletionTime);
 
 }

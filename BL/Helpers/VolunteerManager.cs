@@ -72,36 +72,50 @@ internal class VolunteerManager
     /// </summary>
     /// <param name="volunteer"></param>
     /// <returns></returns>
+    /// <summary>
+    /// Convert DO.Volunteer to BO.Volunteer
+    /// </summary>
+    /// <param name="volunteer"></param>
+    /// <returns></returns>
     internal static BO.Volunteer ConvertVolunteerToBO(DO.Volunteer volunteer)
     {
         if (volunteer == null)
             throw new BO.BlNullReferenceException("volunteer can't be null");
-        else
-            return new BO.Volunteer
-            {
-                Id = volunteer.Id,
-                FullName = volunteer.FullName,
-                MobilePhone = volunteer.MobilePhone,
-                Email = volunteer.Email,
-                Password = volunteer.Password,
-                FullAddress = volunteer.FullAddress,
-                Latitude = volunteer.Latitude,
-                Longitude = volunteer.Longitude,
-                Role = MapRole(volunteer.Role),
-                IsActive = volunteer.IsActive,
-                MaxDistanceForCall = volunteer.MaxDistanceForCall,
-                DistanceType = MapDistanceType(volunteer.DistanceType), 
-                CallInProgress = GetCallInProgress(volunteer.Id),
-                HandledCalls = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id && a.AssignmentStatus.HasValue && a.AssignmentStatus.Value == DO.AssignmentStatus.Completed).Count(),
-                CanceledCalls = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id &&
-                                                             a.AssignmentStatus.HasValue &&
-                                                             (a.AssignmentStatus.Value == DO.AssignmentStatus.CancelledByUser ||
-                                                              a.AssignmentStatus.Value == DO.AssignmentStatus.CancelledByAdmin)).Count(),
-                ExpiredCalls = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id &&
-                                                            a.AssignmentStatus.HasValue &&
-                                                            a.AssignmentStatus.Value == DO.AssignmentStatus.ExpiredCancellation).Count()
-            };
+
+        // Retrieve all assignments for the volunteer at once
+        var assignments = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id);
+
+        // Calculate handled, canceled, and expired calls in memory
+        var handledCallsCount = assignments.Count(a => a.AssignmentStatus.HasValue &&
+                                                       a.AssignmentStatus.Value == DO.AssignmentStatus.Completed);
+        var canceledCallsCount = assignments.Count(a => a.AssignmentStatus.HasValue &&
+                                                        (a.AssignmentStatus.Value == DO.AssignmentStatus.CancelledByUser ||
+                                                         a.AssignmentStatus.Value == DO.AssignmentStatus.CancelledByAdmin));
+        var expiredCallsCount = assignments.Count(a => a.AssignmentStatus.HasValue &&
+                                                       a.AssignmentStatus.Value == DO.AssignmentStatus.ExpiredCancellation);
+
+        // Convert and return the BO.Volunteer object
+        return new BO.Volunteer
+        {
+            Id = volunteer.Id,
+            FullName = volunteer.FullName,
+            MobilePhone = volunteer.MobilePhone,
+            Email = volunteer.Email,
+            Password = volunteer.Password,
+            FullAddress = volunteer.FullAddress,
+            Latitude = volunteer.Latitude,
+            Longitude = volunteer.Longitude,
+            Role = MapRole(volunteer.Role),
+            IsActive = volunteer.IsActive,
+            MaxDistanceForCall = volunteer.MaxDistanceForCall,
+            DistanceType = MapDistanceType(volunteer.DistanceType),
+            CallInProgress = GetCallInProgress(volunteer.Id),
+            HandledCalls = handledCallsCount,
+            CanceledCalls = canceledCallsCount,
+            ExpiredCalls = expiredCallsCount
+        };
     }
+
     /// <summary>
     /// Convert Enum Role from DO to BO
     /// </summary>
@@ -283,48 +297,53 @@ internal class VolunteerManager
     /// <exception cref="Exception">Thrown when the volunteer does not have a call in progress.</exception>
     internal static BO.CallInProgress GetCallInProgress(int volunteerId)
     {
-        // Retrieve the necessary volunteer details directly
+        // Retrieve the volunteer and related assignment in one go
         var volunteer = _dal.Volunteer.Read(volunteerId);
         if (volunteer == null)
             throw new Exception("Volunteer not found");
-        BO.DistanceType distanceType = MapDistanceType(volunteer.DistanceType);
-        // Retrieve the assignment for the volunteer, if any
+
         var assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
                                                    _dal.Call.Read(a.CallId).MaxCompletionTime > AdminManager.Now);
 
-        if (assignment != null)
-        {
-            try
-            {
-                return new BO.CallInProgress
-                {
-                    Id = assignment.Id,
-                    CallId = assignment.CallId,
-                    CallType = CallManager.MapCallType(_dal.Call.Read(assignment.CallId).CallType),
-                    Description = _dal.Call.Read(assignment.CallId).Description,
-                    FullAddress = _dal.Call.Read(assignment.CallId).FullAddress,
-                    OpeningTime = _dal.Call.Read(assignment.CallId).OpeningTime,
-                    MaxCompletionTime = _dal.Call.Read(assignment.CallId).MaxCompletionTime,
-                    AdmissionTime = assignment.AdmissionTime,
-                    DistanceFromVolunteer = Tools.GetResultAsync(
-                        ((double)volunteer.Latitude, (double)volunteer.Longitude),
-                        (_dal.Call.Read(assignment.CallId).Latitude, _dal.Call.Read(assignment.CallId).Longitude),
-                        distanceType
-                    ),
-                    Status = CallManager.IsCallInRiskRange(assignment.CallId)
-                        ? BO.CallStatus.OpenAtRisk
-                        : BO.CallStatus.InProgress
-                };
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error creating CallInProgress: {ex.Message}");
-            }
-        }
-
-        else
-        {
+        if (assignment == null)
             return null;
+
+        try
+        {
+            // Retrieve the call details once
+            var call = _dal.Call.Read(assignment.CallId);
+
+            // Prepare the distance type
+            BO.DistanceType distanceType = MapDistanceType(volunteer.DistanceType);
+
+            // Calculate distance
+            var distanceFromVolunteer = Tools.GetResultAsync(
+                ((double)volunteer.Latitude, (double)volunteer.Longitude),
+                (call.Latitude, call.Longitude), distanceType);
+
+            // Determine call status
+            var callStatus = CallManager.IsCallInRiskRange(call.Id)
+                ? BO.CallStatus.OpenAtRisk
+                : BO.CallStatus.InProgress;
+
+            // Return the CallInProgress object
+            return new BO.CallInProgress
+            {
+                Id = assignment.Id,
+                CallId = assignment.CallId,
+                CallType = CallManager.MapCallType(call.CallType),
+                Description = call.Description,
+                FullAddress = call.FullAddress,
+                OpeningTime = call.OpeningTime,
+                MaxCompletionTime = call.MaxCompletionTime,
+                AdmissionTime = assignment.AdmissionTime,
+                DistanceFromVolunteer = distanceFromVolunteer,
+                Status = callStatus
+            };
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error creating CallInProgress: {ex.Message}");
         }
     }
 
