@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Windows;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,31 +38,11 @@ namespace PL.Volunteer
                 selectedCallType = null;
             }
 
-            try
-            {
-                // Retrieve the volunteer's maximum range
-                var volunteer = s_bl.Volunteer.GetVolunteerDetails(_volunteerId);
-                var maxRange = volunteer.MaxDistanceForCall; // Assume `MaximumRange` is a property in the volunteer's data
+            // Fetch open calls from the business logic layer
+            var openCalls = s_bl.Call.GetAvailableOpenCallsForVolunteer(_volunteerId, selectedCallType, null);
 
-                // Define default distance type and sort field
-                var distanceType = DistanceType.AirDistance; 
-
-                // Fetch calls based on whether a maximum range is defined
-                var openCalls = maxRange.HasValue
-                    ? s_bl.Call.GetNearbyOpenCallsForVolunteer(_volunteerId, maxRange.Value, distanceType, selectedCallType, null)
-                    : s_bl.Call.GetAvailableOpenCallsForVolunteer(_volunteerId, selectedCallType, null);
-
-                // Bind the data to the DataGrid
-                OpenCallsGrid.ItemsSource = openCalls.ToList();
-            }
-            catch (Exception ex)
-            {
-                // Show error message
-                MessageBox.Show($"Failed to load open calls.\nError: {ex.Message}",
-                    "Load Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-            }
+            // Bind the data to the DataGrid
+            OpenCallsGrid.ItemsSource = openCalls.ToList();
         }
 
         private void CallTypeFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,7 +53,6 @@ namespace PL.Volunteer
             // Reload the open calls with the selected filter
             LoadOpenCalls(selectedCallType);
         }
-
         private void AssignCallButton_Click(object sender, RoutedEventArgs e)
         {
             // Get the call ID from the button's CommandParameter
@@ -82,13 +62,11 @@ namespace PL.Volunteer
                 {
                     // Call the BL method to assign the call
                     s_bl.Call.AssignCallToVolunteer(_volunteerId, callId);
-
                     // Show success message
                     MessageBox.Show($"Call {callId} has been successfully assigned to the volunteer.",
                         "Assignment Successful",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
-
                     // Refresh the open calls list
                     LoadOpenCalls(CallTypeFilter.SelectedItem as CallType?);
                 }
