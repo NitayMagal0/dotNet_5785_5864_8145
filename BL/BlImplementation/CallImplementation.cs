@@ -527,26 +527,135 @@ internal class CallImplementation : ICall
         }
     }
 
-    public BO.Call GetCallsForVolunteer(int volunteerId)
+    public IEnumerable<BO.CallInProgress> GetCallsForVolunteer(int volunteerId)
     {
-        // Retrieve the assignment associated with the given volunteer
-        var assignment = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteerId &&
-                                                      a.AssignmentStatus == null)
-            .FirstOrDefault();
-
-        // If no such assignment exists, return null or throw an exception based on requirements
-        if (assignment == null)
+        // Retrieve volunteer details
+        var volunteer = _dal.Volunteer.Read(volunteerId);
+        if (volunteer == null)
         {
-            return null; // Or handle with a custom exception, e.g., throw new Exception("No active call found for this volunteer.");
+            throw new InvalidOperationException("Volunteer not found.");
         }
 
-        // Get the details of the call associated with the assignment
-        var call = _dal.Call.Read(assignment.CallId);
+        // Fetch all active assignments for the volunteer (e.g., Assignments with Status null or specific active statuses)
+        var activeAssignments = _dal.Assignment.ReadAll(a =>
+            a.VolunteerId == volunteerId &&
+            a.AssignmentStatus == null // Adjust this condition based on what constitutes an "active" assignment
+        ).ToList();
 
-        // Convert the DO.Call to BO.Call and return
-        return CallManager.ConvertCallToBO(call);
+        // If no active assignments, return an empty list
+        if (!activeAssignments.Any())
+        {
+            return Enumerable.Empty<BO.CallInProgress>();
+        }
+
+        var callsInProgress = new List<BO.CallInProgress>();
+
+        foreach (var assignment in activeAssignments)
+        {
+            // Fetch the call associated with the assignment
+            var doCall = _dal.Call.Read(assignment.CallId);
+            if (doCall == null)
+            {
+                continue; // Skip if the call doesn't exist
+            }
+
+            // Convert DO.Call to BO.Call
+            var boCall = CallManager.ConvertCallToBO(doCall);
+
+            // Calculate distance from volunteer to call location
+            double distance = 0.0;
+            if (volunteer.Latitude.HasValue && volunteer.Longitude.HasValue &&
+                boCall.Latitude.HasValue && boCall.Longitude.HasValue)
+            {
+                distance = Tools.CalculateAirDistance(
+                    (volunteer.Latitude.Value, volunteer.Longitude.Value),
+                    (boCall.Latitude.Value, boCall.Longitude.Value)
+                );
+            }
+
+            // Determine the status of the call
+            var callStatus = CallManager.GetCallStatus(boCall.Id); // Ensure this method accurately reflects the current status
+
+            // Create a CallInProgress object
+            var callInProgress = new BO.CallInProgress
+            {
+                Id = boCall.Id,
+                CallId = boCall.Id, // Assuming CallId is the same as Id; adjust if different
+                CallType = boCall.CallType,
+                Description = boCall.Description,
+                FullAddress = boCall.FullAddress,
+                OpeningTime = boCall.OpeningTime,
+                MaxCompletionTime = boCall.MaxCompletionTime,
+                AdmissionTime = assignment.AdmissionTime,
+                DistanceFromVolunteer = distance,
+                Status = (BO.CallStatus?)callStatus // Cast if necessary
+            };
+
+            callsInProgress.Add(callInProgress);
+        }
+
+        return callsInProgress;
     }
-
+    public IEnumerable<OpenCallInList> GetNearbyOpenCallsForVolunteer(int volunteerId, double range, DistanceType distanceType, CallType? callTypeFilter, Enum? sortField)
+    {
+        // Step 1: Retrieve open calls using the existing function
+        var availableCalls = GetAvailableOpenCallsForVolunteer(volunteerId, callTypeFilter, sortField).ToList();
+        // Step 2: Retrieve volunteer details to get their location
+        var volunteer = _dal.Volunteer.Read(volunteerId);
+        if (volunteer == null)
+        {
+            throw new InvalidOperationException("Volunteer not found");
+        }
+        var volunteerLocation = (volunteer.Latitude ?? 0.0, volunteer.Longitude ?? 0.0);
+        // Step 3: Read all calls from the data layer and convert them to BO.Call
+        var allCalls = _dal.Call.ReadAll()
+            .Select(CallManager.ConvertCallToBO)
+            .ToDictionary(c => c.Id);
+        // Step 4: Filter available calls by range
+        var nearbyCalls = new List<OpenCallInList>();
+        foreach (var call in availableCalls)
+        {
+            if (!allCalls.TryGetValue(call.Id, out var boCall))
+            {
+                continue; // Skip if the call ID isn't found in the converted calls
+            }
+            var callLocation = (boCall.Latitude ?? 0.0, boCall.Longitude ?? 0.0);
+            // Calculate air distance
+            var airDistance = Tools.CalculateAirDistance(volunteerLocation, callLocation);
+            if (distanceType == DistanceType.AirDistance)
+            {
+                // For air distance, directly filter based on the range
+                if (airDistance <= range)
+                {
+                    nearbyCalls.Add(call);
+                }
+            }
+            else
+            {
+                // For driving or walking distance, only check calls within a threshold (e.g., 1.5x range)
+                if (airDistance <= range * 1.5)
+                {
+                    // Calculate real distance using the API
+                    var realDistance = Tools.GetResultAsync(volunteerLocation, callLocation, distanceType);
+                    // Add the call if the real distance is within range
+                    if (realDistance <= range)
+                    {
+                        nearbyCalls.Add(call);
+                    }
+                }
+            }
+        }
+        // Step 5: Sort the nearby calls by the specified sort field or default by call ID
+        if (sortField != null)
+        {
+            var property = typeof(OpenCallInList).GetProperty(sortField.ToString());
+            if (property != null)
+            {
+                nearbyCalls = nearbyCalls.OrderBy(c => property.GetValue(c)).ToList();
+            }
+        }
+        return nearbyCalls;
+    }
     #region Stage 5
     public void AddObserver(Action listObserver) =>
         CallManager.Observers.AddListObserver(listObserver); //stage 5

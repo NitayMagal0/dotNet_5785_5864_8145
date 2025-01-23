@@ -34,17 +34,17 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     private static void OnCurrentVolunteerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var window = d as VolunteerUpdateWindow;
-        window?.LoadCalls();
+        window?.LoadCall();
     }
 
-    private ObservableCollection<BO.Call> _calls = new();
-    public ObservableCollection<BO.Call> Calls
+    private BO.CallInProgress? _currentCall;
+    public BO.CallInProgress? CurrentCall
     {
-        get => _calls;
+        get => _currentCall;
         set
         {
-            _calls = value;
-            OnPropertyChanged(nameof(Calls));
+            _currentCall = value;
+            OnPropertyChanged(nameof(CurrentCall));
         }
     }
 
@@ -55,23 +55,21 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
 
         CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(id);
 
-        LoadCalls();
+        LoadCall();
 
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
     }
 
-    private void LoadCalls()
+    private void LoadCall()
     {
         if (CurrentVolunteer != null)
         {
-            // Assuming this returns a single call object, not a collection.
-            var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
-
-            // Handle single call or clear the collection if no call is found.
-            Calls = call != null
-                ? new ObservableCollection<BO.Call> { call } // Wrap single call in a collection.
-                : new ObservableCollection<BO.Call>();
+            CurrentCall = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id).FirstOrDefault();
+        }
+        else
+        {
+            CurrentCall = null;
         }
     }
 
@@ -82,9 +80,10 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
         {
             int id = CurrentVolunteer.Id;
             CurrentVolunteer = s_bl.Volunteer.GetVolunteerDetails(id);
-            LoadCalls();
+            LoadCall();
         }
     }
+
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -106,9 +105,9 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
     {
         try
         {
-            if (CurrentVolunteer != null && !CurrentVolunteer.IsActive && Calls.Count > 0)
+            if (CurrentVolunteer != null && !CurrentVolunteer.IsActive && CurrentCall != null)
             {
-                MessageBox.Show("The volunteer cannot be marked as inactive while they have active calls.",
+                MessageBox.Show("The volunteer cannot be marked as inactive while they have an active call.",
                     "Validation Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
@@ -173,15 +172,13 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            // Get single call for the volunteer
-            var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
-            if (call == null)
+            if (CurrentCall == null)
             {
                 MessageBox.Show("No active treatment found for this volunteer.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            s_bl.Call.MarkAssignmentAsCompleted(CurrentVolunteer.Id, call.Id);
+            s_bl.Call.MarkAssignmentAsCompleted(CurrentVolunteer.Id, CurrentCall.Id);
             MessageBox.Show("Treatment ended successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             ReloadVolunteer();
         }
@@ -190,7 +187,6 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
 
     private void CancelTreatment_Click(object sender, RoutedEventArgs e)
     {
@@ -202,9 +198,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
                 return;
             }
 
-            // Get single call for the volunteer
-            var call = s_bl.Call.GetCallsForVolunteer(CurrentVolunteer.Id);
-            if (call == null)
+            if (CurrentCall == null)
             {
                 MessageBox.Show("No active treatment found for this volunteer.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -218,7 +212,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
 
             if (result == MessageBoxResult.Yes)
             {
-                s_bl.Call.CancelAssignment(CurrentVolunteer.Id, call.Id);
+                s_bl.Call.CancelAssignment(CurrentVolunteer.Id, CurrentCall.Id);
                 MessageBox.Show("Treatment canceled successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 ReloadVolunteer();
             }
@@ -228,5 +222,4 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
 }

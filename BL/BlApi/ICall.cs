@@ -15,9 +15,9 @@ public interface ICall : IObservable
     void MarkAssignmentAsCompleted(int volunteerId, int assignmentId);
     void CancelAssignment(int requesterId, int callId);
     void AssignCallToVolunteer(int volunteerId, int callId);
-    public BO.Call GetCallsForVolunteer(int volunteerId);
+    public IEnumerable<BO.CallInProgress> GetCallsForVolunteer(int volunteerId);
     public CallInList GetCallInListById(int callId);
     public void MinAddCall(BO.CallType CallType, string? Description, string? FullAddress, DateTime? MaxCompletionTime);
-
+    public IEnumerable<OpenCallInList> GetNearbyOpenCallsForVolunteer(int volunteerId, double range, DistanceType distanceType, CallType? callTypeFilter, Enum? sortField);
 }
 

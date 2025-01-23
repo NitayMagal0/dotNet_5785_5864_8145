@@ -5,278 +5,327 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:volunteer="clr-namespace:PL.Volunteer"
         mc:Ignorable="d"
-        Title="Update Volunteer" Height="850" Width="900"
+        Title="Update Volunteer" Height="800" Width="1000"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         WindowStartupLocation="CenterScreen"
-        Background="#F5F5F5">
+        Background="#F0F2F5">
 
     <Window.Resources>
-        <!-- Existing styles -->
+        <!-- Label Style -->
         <Style x:Key="LabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Foreground" Value="#1A237E"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="Margin" Value="0,8"/>
         </Style>
 
+        <!-- Corrected TextBox Style: Moved Template Setter before Triggers -->
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+
+            <!-- Template Setter moved above Triggers -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5">
-                            <ScrollViewer x:Name="PART_ContentHost"/>
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="2"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#2196F3"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#1976D2"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
+        <!-- ComboBox Style -->
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="12,8"/>
             <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#BDC3C7"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#2196F3"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
+        <!-- CheckBox Style -->
         <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="10,0"/>
+            <Setter Property="Margin" Value="12,0"/>
+            <Setter Property="FontSize" Value="13"/>
         </Style>
 
-        <!-- Collection to Visibility Converter -->
-        <BooleanToVisibilityConverter x:Key="CollectionToVisibilityConverter" />
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1976D2"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#0D47A1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" 
+                                      ShadowDepth="2" 
+                                      Direction="270" 
+                                      Color="#20000000"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Converters -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityInverseConverter"/>
     </Window.Resources>
 
-    <Border Background="White" 
-            CornerRadius="10" 
-            Margin="20"
-            BorderBrush="#E0E0E0"
-            BorderThickness="1">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="10" 
-                              ShadowDepth="1" 
-                              Direction="270" 
-                              Color="#DDDDDD"/>
-        </Border.Effect>
-
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Header -->
-            <TextBlock Text="Volunteer Information" 
-                       FontSize="24" 
-                       FontWeight="Bold" 
-                       Foreground="#2C3E50"
-                       Margin="0,0,0,20"/>
+            <!-- Main Information Section -->
+            <Border Style="{StaticResource CardStyle}" Grid.Row="0">
+                <StackPanel>
+                    <TextBlock Text="Volunteer Information" 
+                               FontSize="28" 
+                               FontWeight="Bold" 
+                               Foreground="#1A237E"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,30"/>
 
-            <!-- Main Content -->
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
+                        <!-- ID -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="ID:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" 
+                                Style="{StaticResource TextBoxStyle}"
+                                Text="{Binding CurrentVolunteer.Id, Mode=TwoWay, NotifyOnValidationError=True}"
+                                IsReadOnly="{Binding CurrentVolunteer.Id, Converter={StaticResource IdToReadOnlyConverter}}"/>
 
-                <!-- ID -->
-                <Label Grid.Row="0" Grid.Column="0" Content="ID:" Style="{StaticResource LabelStyle}"/>
-                <TextBox Grid.Row="0" Grid.Column="1" 
-                         Style="{StaticResource TextBoxStyle}"
-                         Text="{Binding CurrentVolunteer.Id, Mode=TwoWay, NotifyOnValidationError=True}"
-                         IsReadOnly="{Binding CurrentVolunteer.Id, Converter={StaticResource IdToReadOnlyConverter}}"/>
+                        <!-- Full Name -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Full Name:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" 
+                                Style="{StaticResource TextBoxStyle}"
+                                Text="{Binding CurrentVolunteer.FullName, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
-                <!-- Full Name -->
-                <Label Grid.Row="1" Grid.Column="0" Content="Full Name:" Style="{StaticResource LabelStyle}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" 
-                         Style="{StaticResource TextBoxStyle}"
-                         Text="{Binding CurrentVolunteer.FullName, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                        <!-- Mobile Phone -->
+                        <Label Grid.Row="2" Grid.Column="0" Content="Mobile Phone:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" 
+                                Style="{StaticResource TextBoxStyle}"
+                                Text="{Binding CurrentVolunteer.MobilePhone, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
-                <!-- Mobile Phone -->
-                <Label Grid.Row="2" Grid.Column="0" Content="Mobile Phone:" Style="{StaticResource LabelStyle}"/>
-                <TextBox Grid.Row="2" Grid.Column="1" 
-                         Style="{StaticResource TextBoxStyle}"
-                         Text="{Binding CurrentVolunteer.MobilePhone, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                        <!-- Email -->
+                        <Label Grid.Row="3" Grid.Column="0" Content="Email:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" 
+                                Style="{StaticResource TextBoxStyle}"
+                                Text="{Binding CurrentVolunteer.Email, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
-                <!-- Email -->
-                <Label Grid.Row="3" Grid.Column="0" Content="Email:" Style="{StaticResource LabelStyle}"/>
-                <TextBox Grid.Row="3" Grid.Column="1" 
-                         Style="{StaticResource TextBoxStyle}"
-                         Text="{Binding CurrentVolunteer.Email, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                        <!-- Password -->
+                        <Label Grid.Row="4" Grid.Column="0" Content="Password:" Style="{StaticResource LabelStyle}"/>
+                        <PasswordBox Grid.Row="4" Grid.Column="1"
+                                     Height="40"
+                                     Padding="12,8"
+                                     VerticalContentAlignment="Center"
+                                     volunteer:PasswordBoxHelper.BoundPassword="{Binding CurrentVolunteer.Password, Mode=TwoWay}"/>
 
-                <!-- Password -->
-                <Label Grid.Row="4" Grid.Column="0" Content="Password:" Style="{StaticResource LabelStyle}"/>
-                <PasswordBox Grid.Row="4" Grid.Column="1"
-                             Height="35"
-                             Padding="10,5"
-                             VerticalContentAlignment="Center"
-                             PasswordChar="*"
-                             volunteer:PasswordBoxHelper.BoundPassword="{Binding CurrentVolunteer.Password, Mode=TwoWay}"/>
+                        <!-- Full Address -->
+                        <Label Grid.Row="5" Grid.Column="0" Content="Full Address:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" 
+                                Style="{StaticResource TextBoxStyle}"
+                                Text="{Binding CurrentVolunteer.FullAddress, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
-                <!-- Full Address -->
-                <Label Grid.Row="5" Grid.Column="0" Content="Full Address:" Style="{StaticResource LabelStyle}"/>
-                <TextBox Grid.Row="5" Grid.Column="1" 
-                         Style="{StaticResource TextBoxStyle}"
-                         Text="{Binding CurrentVolunteer.FullAddress, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                        <!-- Role -->
+                        <Label Grid.Row="6" Grid.Column="0" Content="Role:" Style="{StaticResource LabelStyle}"/>
+                        <ComboBox Grid.Row="6" Grid.Column="1"
+                                 Style="{StaticResource ComboBoxStyle}"
+                                 ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"
+                                 SelectedValue="{Binding CurrentVolunteer.Role, Mode=TwoWay}"
+                                 SelectedValuePath="."
+                                 IsEnabled="{Binding IsManager, Mode=OneWay}"/>
 
-                <!-- Role -->
-                <Label Grid.Row="6" Grid.Column="0" Content="Role:" Style="{StaticResource LabelStyle}"/>
-                <ComboBox Grid.Row="6" Grid.Column="1"
-                          Style="{StaticResource ComboBoxStyle}"
-                          ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"
-                          SelectedValue="{Binding CurrentVolunteer.Role, Mode=TwoWay}"
-                          SelectedValuePath="."
-                          IsEnabled="{Binding IsManager, Mode=OneWay}"/>
+                        <!-- Is Active -->
+                        <Label Grid.Row="7" Grid.Column="0" Content="Is Active:" Style="{StaticResource LabelStyle}"/>
+                        <CheckBox Grid.Row="7" Grid.Column="1" 
+                                 Style="{StaticResource CheckBoxStyle}"
+                                 IsChecked="{Binding CurrentVolunteer.IsActive, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
-                <!-- Is Active -->
-                <Label Grid.Row="7" Grid.Column="0" Content="Is Active:" Style="{StaticResource LabelStyle}"/>
-                <CheckBox Grid.Row="7" Grid.Column="1" 
-                          Style="{StaticResource CheckBoxStyle}"
-                          IsChecked="{Binding CurrentVolunteer.IsActive, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                        <!-- Distance Type -->
+                        <Label Grid.Row="8" Grid.Column="0" Content="Distance Type:" Style="{StaticResource LabelStyle}"/>
+                        <ComboBox Grid.Row="8" Grid.Column="1"
+                                 Style="{StaticResource ComboBoxStyle}"
+                                 ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}"
+                                 SelectedValue="{Binding CurrentVolunteer.DistanceType, Mode=TwoWay}"
+                                 SelectedValuePath="."/>
 
-                <!-- Distance Type -->
-                <Label Grid.Row="8" Grid.Column="0" Content="Distance Type:" Style="{StaticResource LabelStyle}"/>
-                <ComboBox Grid.Row="8" Grid.Column="1"
-                          Style="{StaticResource ComboBoxStyle}"
-                          ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}"
-                          SelectedValue="{Binding CurrentVolunteer.DistanceType, Mode=TwoWay}"
-                          SelectedValuePath="."/>
+                        <!-- Max Distance -->
+                        <Label Grid.Row="9" Grid.Column="0" Content="Max Distance:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Grid.Row="9" Grid.Column="1" 
+                                Style="{StaticResource TextBoxStyle}"
+                                Text="{Binding CurrentVolunteer.MaxDistanceForCall, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                    </Grid>
 
-                <!-- Max Distance For Call -->
-                <Label Grid.Row="9" Grid.Column="0" 
-                       Style="{StaticResource LabelStyle}"
-                       Content="{Binding CurrentVolunteer.DistanceType, Converter={StaticResource DistanceTypeToLabelConverter}}"/>
-                <TextBox Grid.Row="9" Grid.Column="1" 
-                         Style="{StaticResource TextBoxStyle}"
-                         Text="{Binding CurrentVolunteer.MaxDistanceForCall, Mode=TwoWay, NotifyOnValidationError=True}"
-                         IsEnabled="{Binding CurrentVolunteer.DistanceType, Converter={StaticResource NullToFalseConverter}}"/>
+                    <!-- Update Button -->
+                    <Button Content="Update Volunteer"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Width="200"
+                            Margin="0,30,0,0"
+                            HorizontalAlignment="Center"
+                            Click="btnAddUpdate_Click"/>
+                </StackPanel>
+            </Border>
 
-                <!-- Action Button -->
-                <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"
-                        Margin="0,30,0,0"
-                        Height="45" 
-                        Width="200"
-                        Content="Update"
-                        Click="btnAddUpdate_Click"
-                        Background="#3498DB"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontSize="16"
-                        FontWeight="SemiBold">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                CornerRadius="5"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" 
-                                                              VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#2980B9"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background" Value="#2471A3"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-
-                <!-- Additional Buttons for Call Actions -->
-                <Grid Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,20,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Select Call Button -->
-                    <Button Grid.Column="0" Content="Select Call" 
-                            Height="35" 
-                            Margin="5" 
-                            Background="#3498DB" 
-                            Foreground="White" 
-                            Visibility="{Binding CurrentVolunteer.IsActive, Converter={StaticResource BooleanToVisibilityInverseConverter}}"
-                            Click="SelectCall_Click"/>
-
-                    <!-- Call History Button -->
-                    <Button Grid.Column="1" Content="Call History" 
-                            Height="35" 
-                            Margin="5" 
-                            Background="#3498DB" 
-                            Foreground="White" 
+            <!-- Action Buttons Section -->
+            <Border Style="{StaticResource CardStyle}" Grid.Row="1" Margin="0,20">
+                <UniformGrid Columns="4" Rows="1" Margin="10">
+                    <Button Content="Select Call" 
+                            Style="{StaticResource ModernButtonStyle}"
+                            Margin="5"
+                            Click="SelectCall_Click"
+                            Visibility="{Binding CurrentVolunteer.IsActive, Converter={StaticResource BooleanToVisibilityInverseConverter}}"/>
+                    <Button Content="Call History" 
+                            Style="{StaticResource ModernButtonStyle}"
+                            Background="#4CAF50"
+                            Margin="5"
                             Click="CallHistory_Click"/>
-
-                    <!-- End of Treatment Button -->
-                    <Button Grid.Column="2" Content="End of Treatment" 
-                            Height="35" 
-                            Margin="5" 
-                            Background="Green" 
-                            Foreground="White" 
+                    <Button Content="End Treatment" 
+                            Style="{StaticResource ModernButtonStyle}"
+                            Background="#FF9800"
+                            Margin="5"
                             Click="EndTreatment_Click"/>
-
-                    <!-- Cancel Treatment Button -->
-                    <Button Grid.Column="4" Content="Cancel Treatment" 
-                            Height="35" 
-                            Margin="5" 
-                            Background="Red" 
-                            Foreground="White" 
+                    <Button Content="Cancel Treatment" 
+                            Style="{StaticResource ModernButtonStyle}"
+                            Background="#F44336"
+                            Margin="5"
                             Click="CancelTreatment_Click"/>
-                </Grid>
-            </Grid>
+                </UniformGrid>
+            </Border>
 
-            <!-- Calls DataGrid -->
-            <DataGrid Grid.Row="2" Margin="0,20,0,0" AutoGenerateColumns="False" 
-                      ItemsSource="{Binding Calls}" 
-                      Visibility="Visible">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Call Type" Binding="{Binding CallType}" />
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                    <DataGridTextColumn Header="Full Address" Binding="{Binding FullAddress}" />
-                    <DataGridTextColumn Header="Opening Time" Binding="{Binding OpeningTime}" />
-                    <DataGridTextColumn Header="Max Completion Time" Binding="{Binding MaxCompletionTime}" />
-                    <DataGridTextColumn Header="Admission Time" Binding="{Binding AdmissionTime}" />
-                    <DataGridTextColumn Header="Distance" Binding="{Binding DistanceFromVolunteer}" />
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <!-- Current Active Call Section -->
+            <Border Style="{StaticResource CardStyle}" Grid.Row="2">
+                <StackPanel>
+                    <TextBlock Text="Current Active Call" 
+                               FontSize="24" 
+                               FontWeight="Bold"
+                               Foreground="#1A237E"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
 
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Call Type -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Call Type:" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentCall.CallType}" 
+                                   VerticalAlignment="Center" Margin="12,8"/>
+
+                        <!-- Description -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Description:" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentCall.Description}" 
+                                   VerticalAlignment="Center" Margin="12,8" TextWrapping="Wrap"/>
+
+                        <!-- Full Address -->
+                        <Label Grid.Row="2" Grid.Column="0" Content="Full Address:" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentCall.FullAddress}" 
+                                   VerticalAlignment="Center" Margin="12,8" TextWrapping="Wrap"/>
+
+                        <!-- Max Completion Time -->
+                        <Label Grid.Row="3" Grid.Column="0" Content="Max Completion Time:" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding CurrentCall.MaxCompletionTime}" 
+                                   VerticalAlignment="Center" Margin="12,8"/>
+
+                        <!-- Distance -->
+                        <Label Grid.Row="4" Grid.Column="0" Content="Distance:" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentCall.DistanceFromVolunteer}" 
+                                   VerticalAlignment="Center" Margin="12,8"/>
+
+                        <!-- Admission Time -->
+                        <Label Grid.Row="5" Grid.Column="0" Content="Admission Time:" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding CurrentCall.AdmissionTime}" 
+                                   VerticalAlignment="Center" Margin="12,8"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
         </Grid>
-    </Border>
+    </ScrollViewer>
 </Window>

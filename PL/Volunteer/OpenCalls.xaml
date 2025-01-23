@@ -5,52 +5,183 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Open Calls" Height="550" Width="850"
-        WindowStartupLocation="CenterScreen">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F2F5">
 
-        <!-- Filter Dropdown -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
-            <Label Content="Filter by Call Type:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <ComboBox x:Name="CallTypeFilter"
-                      Width="200"
-                      SelectionChanged="CallTypeFilter_SelectionChanged"
-                      VerticalAlignment="Center"/>
-        </StackPanel>
+    <Window.Resources>
+        <!-- ComboBox Style -->
+        <Style x:Key="FilterComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#2196F3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- Open Calls Grid -->
-        <DataGrid x:Name="OpenCallsGrid"
-                  Grid.Row="1"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding CallType}" Header="Call Type" Width="150"/>
-                <DataGridTextColumn Binding="{Binding CallTypeDescription}" Header="Description" Width="200"/>
-                <DataGridTextColumn Binding="{Binding FullAddress}" Header="Address" Width="200"/>
-                <DataGridTextColumn Binding="{Binding OpeningTime}" Header="Opening Time" Width="150"/>
-                <DataGridTextColumn Binding="{Binding MaxCompletionTime}" Header="Max Completion Time" Width="150"/>
-                <DataGridTextColumn Binding="{Binding DistanceFromVolunteer}" Header="Distance" Width="100"/>
-                <!-- Assign Button Column -->
-                <DataGridTemplateColumn Header="Actions" Width="120">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Assign"
-                                    CommandParameter="{Binding Id}" 
-                                    Click="AssignCallButton_Click"
-                                    Width="100" 
-                                    Height="30" 
-                                    Background="#2196F3" 
-                                    Foreground="White" 
-                                    BorderBrush="Transparent" 
-                                    HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+        <!-- Label Style -->
+        <Style x:Key="FilterLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="#1A237E"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- DataGrid Style -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F5F5F5"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#E0E0E0"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+        </Style>
+
+        <!-- DataGrid Column Header Style -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#1A237E"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,12"/>
+            <Setter Property="BorderBrush" Value="#0D47A1"/>
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        </Style>
+
+        <!-- DataGrid Cell Style -->
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Assign Button Style -->
+        <Style x:Key="AssignButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1976D2"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#0D47A1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Border Margin="20" Background="White" CornerRadius="12">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" 
+                            ShadowDepth="2" 
+                            Direction="270" 
+                            Color="#20000000"/>
+        </Border.Effect>
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <TextBlock Text="Available Calls"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#1A237E"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+            <!-- Filter Section -->
+            <Border Grid.Row="1" 
+                    Background="#F8F9FA" 
+                    CornerRadius="8" 
+                    Padding="15" 
+                    Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Filter by Call Type:" 
+                           Style="{StaticResource FilterLabelStyle}"/>
+                    <ComboBox x:Name="CallTypeFilter"
+                              Width="250"
+                              Margin="10,0,0,0"
+                              Style="{StaticResource FilterComboBoxStyle}"
+                              SelectionChanged="CallTypeFilter_SelectionChanged"/>
+                </StackPanel>
+            </Border>
+
+            <!-- DataGrid -->
+            <DataGrid x:Name="OpenCallsGrid"
+                      Grid.Row="2"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      RowHeaderWidth="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding CallType}" 
+                                      Header="Call Type" 
+                                      Width="150"/>
+                    <DataGridTextColumn Binding="{Binding CallTypeDescription}" 
+                                      Header="Description" 
+                                      Width="*"/>
+                    <DataGridTextColumn Binding="{Binding FullAddress}" 
+                                      Header="Address" 
+                                      Width="200"/>
+                    <DataGridTextColumn Binding="{Binding OpeningTime}" 
+                                      Header="Opening Time" 
+                                      Width="150"/>
+                    <DataGridTextColumn Binding="{Binding MaxCompletionTime}" 
+                                      Header="Max Completion Time" 
+                                      Width="150"/>
+                    <DataGridTextColumn Binding="{Binding DistanceFromVolunteer}" 
+                                      Header="Distance" 
+                                      Width="100"/>
+                    <DataGridTemplateColumn Header="Actions" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Assign"
+                                        Style="{StaticResource AssignButtonStyle}"
+                                        CommandParameter="{Binding Id}" 
+                                        Click="AssignCallButton_Click"
+                                        Width="90" 
+                                        Height="32" 
+                                        Margin="3"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
 </Window>
