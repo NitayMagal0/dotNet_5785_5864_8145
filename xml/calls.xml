@@ -500,6 +500,7 @@
     <OpeningTime>2024-04-19T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
   </Call>
+<<<<<<< HEAD
 	<Call>
 		<Id>1050</Id>
 		<CallType>HospitalVisitsForMoraleBoost</CallType>
@@ -629,4 +630,96 @@
 		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
 		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
 	</Call>
+=======
+  <Call>
+    <Id>1050</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Bialik St 18, Netanya</FullAddress>
+    <Latitude>32.32685852050781</Latitude>
+    <Longitude>34.864376068115234</Longitude>
+    <OpeningTime>2024-04-19T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1051</Id>
+    <CallType>HospitalVisitsForMoraleBoost</CallType>
+    <Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+    <FullAddress>Bialik St 18, Netanya</FullAddress>
+    <Latitude>32.32685852050781</Latitude>
+    <Longitude>34.864376068115234</Longitude>
+    <OpeningTime>2024-04-19T00:00:00</OpeningTime>
+    <MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1051</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>Test</Description>
+    <FullAddress>Ben Yehuda St 30, Jerusalem</FullAddress>
+    <Latitude>31.7815538</Latitude>
+    <Longitude>35.2179868</Longitude>
+    <OpeningTime>2025-01-23T20:10:14</OpeningTime>
+    <MaxCompletionTime>2025-01-30T14:30:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1053</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>TEST2</Description>
+    <FullAddress>f</FullAddress>
+    <Latitude>-34.5983219</Latitude>
+    <Longitude>-58.3929655</Longitude>
+    <OpeningTime>2025-01-23T20:10:14</OpeningTime>
+    <MaxCompletionTime />
+  </Call>
+  <Call>
+    <Id>1055</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>ttt</Description>
+    <FullAddress>f</FullAddress>
+    <Latitude>-34.5983219</Latitude>
+    <Longitude>-58.3929655</Longitude>
+    <OpeningTime>2025-01-23T20:10:14</OpeningTime>
+    <MaxCompletionTime />
+  </Call>
+  <Call>
+    <Id>1057</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>ddd</Description>
+    <FullAddress>fff</FullAddress>
+    <Latitude>45.597821</Latitude>
+    <Longitude>-122.5010705</Longitude>
+    <OpeningTime>2025-01-23T20:10:14</OpeningTime>
+    <MaxCompletionTime />
+  </Call>
+  <Call>
+    <Id>1059</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>ccc</Description>
+    <FullAddress>V</FullAddress>
+    <Latitude>60.4372195</Latitude>
+    <Longitude>22.2444128</Longitude>
+    <OpeningTime>2025-01-23T20:10:14</OpeningTime>
+    <MaxCompletionTime />
+  </Call>
+  <Call>
+    <Id>1063</Id>
+    <CallType>HelpForFamiliesInNeed</CallType>
+    <Description>ccc</Description>
+    <FullAddress>c</FullAddress>
+    <Latitude>4.686267</Latitude>
+    <Longitude>11.9414512</Longitude>
+    <OpeningTime>2025-01-23T20:10:14</OpeningTime>
+    <MaxCompletionTime>2025-01-30T14:30:00</MaxCompletionTime>
+  </Call>
+  <Call>
+    <Id>1067</Id>
+    <CallType>CleaningShelters</CallType>
+    <Description>sacdf</Description>
+    <FullAddress>sadd</FullAddress>
+    <Latitude>-42.3730663</Latitude>
+    <Longitude>172.7111721</Longitude>
+    <OpeningTime>2025-01-23T20:10:14</OpeningTime>
+    <MaxCompletionTime>2025-01-30T14:30:00</MaxCompletionTime>
+  </Call>
+>>>>>>> 55fe96607409121eae21955dd03f2ddae10016c4
 </Calls>

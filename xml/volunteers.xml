@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Volunteer>
     <Id>630136703</Id>
@@ -87,12 +87,12 @@
   <Volunteer>
     <Id>509105169</Id>
     <FullName>Rivka Avraham</FullName>
-    <MobilePhone>0528838254</MobilePhone>
+    <MobilePhone>0528838854</MobilePhone>
     <Email>rivkaavraham@gmail.com</Email>
     <Password>UkQ3XzwsLmlXZGxhenM=</Password>
-    <FullAddress>Ibn Gabirol St 58, Tel Aviv</FullAddress>
-    <Latitude>32.07890319824219</Latitude>
-    <Longitude>34.78156661987305</Longitude>
+    <FullAddress>c</FullAddress>
+    <Latitude>4.686267</Latitude>
+    <Longitude>11.9414512</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
     <MaxDistanceForCall xsi:nil="true" />
@@ -193,8 +193,13 @@
     <Longitude>35.2207888</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
+<<<<<<< HEAD
     <DistanceType>AirDistance</DistanceType>
     <MaxDistanceForCall>30</MaxDistanceForCall>
+=======
+    <MaxDistanceForCall>5000000</MaxDistanceForCall>
+    <DistanceType>AirDistance</DistanceType>
+>>>>>>> 55fe96607409121eae21955dd03f2ddae10016c4
   </Volunteer>
   <Volunteer>
     <Id>180741795</Id>

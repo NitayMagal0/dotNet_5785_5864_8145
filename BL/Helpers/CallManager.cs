@@ -172,13 +172,24 @@ internal class CallManager
 
         }
     }
-
+    internal static BO.CallStatus getCallStatus(DateTime MaxCompletionTime)
+    {
+        if(MaxCompletionTime<AdminManager.Now)
+        {
+            return BO.CallStatus.Expired;
+        }
+        else if ((MaxCompletionTime - AdminManager.Now) <= _dal.Config.RiskRange)
+        {
+            return BO.CallStatus.OpenAtRisk;
+        }
+        return BO.CallStatus.Open;
+    }
     internal static bool IsCallInRiskRange(int callId)
     {
        TimeSpan riskRange = _dal.Config.RiskRange;
         var call = _dal.Call.Read(callId);
         var maxCompletionTime = call.MaxCompletionTime;
-        if (maxCompletionTime.HasValue && (maxCompletionTime.Value - AdminManager.Now).TotalDays <= riskRange.TotalDays)
+        if (maxCompletionTime.HasValue && (maxCompletionTime.Value - AdminManager.Now) <= riskRange)
              return true;
         
         return false;
