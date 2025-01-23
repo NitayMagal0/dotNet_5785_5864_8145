@@ -194,7 +194,7 @@
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
     <DistanceType>AirDistance</DistanceType>
-    <MaxDistanceForCall>5000000</MaxDistanceForCall>
+    <MaxDistanceForCall>30</MaxDistanceForCall>
   </Volunteer>
   <Volunteer>
     <Id>180741795</Id>

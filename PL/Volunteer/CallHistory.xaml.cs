@@ -13,7 +13,6 @@ namespace PL.Volunteer
         public CallHistory(int volunteerId)
         {
             InitializeComponent();
-
             _volunteerId = volunteerId;
 
             // Load filter options and call history

@@ -13,5 +13,6 @@
         <local:NullToFalseConverter x:Key="NullToFalseConverter" />
         <local:BooleanToVisibilityInverseConverter x:Key="BooleanToVisibilityInverseConverter" />
         <local:IntToBooleanConverter x:Key="IntToBooleanConverter"/>
+        <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </Application.Resources>
 </Application>

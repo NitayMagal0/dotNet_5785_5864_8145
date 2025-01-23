@@ -5,6 +5,7 @@ using BlApi;
 using BO;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 internal class CallImplementation : ICall
 {
@@ -656,6 +657,7 @@ internal class CallImplementation : ICall
         }
         return nearbyCalls;
     }
+   
     #region Stage 5
     public void AddObserver(Action listObserver) =>
         CallManager.Observers.AddListObserver(listObserver); //stage 5

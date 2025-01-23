@@ -520,4 +520,113 @@
 		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
 		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
 	</Call>
+	<Call>
+		<Id>1052</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Hadassah Ein Kerem Hospital, Jerusalem</FullAddress>
+		<Latitude>31.7654</Latitude>
+		<Longitude>35.1443</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1053</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Shaare Zedek Medical Center, Jerusalem</FullAddress>
+		<Latitude>31.7755</Latitude>
+		<Longitude>35.1926</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1054</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Bikur Cholim Hospital, Jerusalem</FullAddress>
+		<Latitude>31.7838</Latitude>
+		<Longitude>35.2196</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1055</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Kaplan Medical Center, Rehovot</FullAddress>
+		<Latitude>31.8961</Latitude>
+		<Longitude>34.8189</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1056</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Assaf Harofeh Medical Center, Tzrifin</FullAddress>
+		<Latitude>31.9635</Latitude>
+		<Longitude>34.8404</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1057</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Wolfson Medical Center, Holon</FullAddress>
+		<Latitude>32.0114</Latitude>
+		<Longitude>34.7722</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1058</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Sourasky Medical Center (Ichilov), Tel Aviv</FullAddress>
+		<Latitude>32.0807</Latitude>
+		<Longitude>34.7804</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1059</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Meir Medical Center, Kfar Saba</FullAddress>
+		<Latitude>32.1822</Latitude>
+		<Longitude>34.9066</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1060</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Laniado Hospital, Netanya</FullAddress>
+		<Latitude>32.3215</Latitude>
+		<Longitude>34.8532</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+
+	<Call>
+		<Id>1061</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Hillel Yaffe Medical Center, Hadera</FullAddress>
+		<Latitude>32.4411</Latitude>
+		<Longitude>34.9179</Longitude>
+		<OpeningTime>2024-04-19T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-02-17T00:00:00+02:00</MaxCompletionTime>
+	</Call>
 </Calls>

@@ -119,34 +119,6 @@ internal static class Tools
         return EarthRadiusKm * c; // Returns distance in kilometers
     }
 
-    internal static async Task<double> GetTravelTimeAsync((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination, string profile)
-    {
-        using var httpClient = new HttpClient();
-
-        var requestUri = $"{ApiEndpoint}{profile}?api_key={_apiKey}&start={start.Longitude},{start.Latitude}&end={destination.Longitude},{destination.Latitude}";
-
-        try
-        {
-            var response = await httpClient.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var jsonDoc = JsonDocument.Parse(jsonResponse);
-
-            var durationInSeconds = jsonDoc.RootElement
-                .GetProperty("features")[0]
-                .GetProperty("properties")
-                .GetProperty("segments")[0]
-                .GetProperty("duration").GetDouble();
-
-            return Math.Round(durationInSeconds / 60, 2); // Returns duration in minutes
-        }
-        catch (Exception)
-        {
-            return -1; // Return -1 on error
-        }
-    }
-
     public static double GetResultAsync((double Latitude, double Longitude) start, (double Latitude, double Longitude) destination, DistanceType calculationType)
     {
         switch (calculationType)
@@ -155,16 +127,125 @@ internal static class Tools
                 return CalculateAirDistance(start, destination);
 
             case DistanceType.WalkingDistance:
-                return  GetTravelTimeAsync(start, destination, "foot-walking").Result;
+                return GetTravelTimeAsync(start, destination, "walking").Result;
 
             case DistanceType.DrivingDistance:
-                return GetTravelTimeAsync(start, destination, "driving-car").Result;
+                return GetTravelTimeAsync(start, destination, "driving").Result;
 
             default:
                 throw new ArgumentException("Invalid calculation type");
         }
     }
 
+    private static readonly HttpClient httpClient = new HttpClient();
+
+    /// <summary>
+    /// Calculates the travel time in minutes between two geographical points using Google Distance Matrix API.
+    /// </summary>
+    /// <param name="start">Tuple containing Latitude and Longitude of the origin.</param>
+    /// <param name="destination">Tuple containing Latitude and Longitude of the destination.</param>
+    /// <param name="mode">Mode of travel (e.g., driving, walking).</param>
+    /// <returns>Travel time in minutes.</returns>
+    public static async Task<double> GetTravelTimeAsync(
+        (double Latitude, double Longitude) start,
+        (double Latitude, double Longitude) destination,
+        string mode)
+    {
+        // Retrieve the API key from environment variables or secure configuration
+        string apiKey = "AIzaSyBbYYTu1YEzHaBoHu7-e4fZd-OT8V6PScg";
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            throw new InvalidOperationException("Google Maps API key is not set in the environment variables.");
+        }
+
+        // Construct the origins and destinations parameters
+        string origins = $"{start.Latitude},{start.Longitude}";
+        string destinations = $"{destination.Latitude},{destination.Longitude}";
+
+        // Properly encode URL parameters
+        string url = $"https://maps.googleapis.com/maps/api/distancematrix/json" +
+                     $"?origins={Uri.EscapeDataString(origins)}" +
+                     $"&destinations={Uri.EscapeDataString(destinations)}" +
+                     $"&mode={Uri.EscapeDataString(mode)}" +
+                     $"&key={Uri.EscapeDataString(apiKey)}";
+
+        try
+        {
+            using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30))) // 30-second timeout
+            {
+                Console.WriteLine($"Sending request to URL: {url}");
+
+                // Send the GET request with cancellation token and ConfigureAwait(false)
+                HttpResponseMessage response = await httpClient.GetAsync(url, cts.Token).ConfigureAwait(false);
+                Console.WriteLine("Received response from Google API.");
+
+                // Ensure the HTTP response is successful
+                response.EnsureSuccessStatusCode();
+
+                // Read and parse the JSON response
+                string jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                using (JsonDocument document = JsonDocument.Parse(jsonResponse))
+                {
+                    JsonElement root = document.RootElement;
+
+                    // Check the overall status of the API response
+                    string status = root.GetProperty("status").GetString();
+                    if (!string.Equals(status, "OK", StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new Exception($"API returned status: {status}");
+                    }
+
+                    // Navigate through JSON to get duration in seconds
+                    JsonElement rows = root.GetProperty("rows");
+                    if (rows.GetArrayLength() == 0)
+                    {
+                        throw new Exception("No rows found in the API response.");
+                    }
+
+                    JsonElement elements = rows[0].GetProperty("elements");
+                    if (elements.GetArrayLength() == 0)
+                    {
+                        throw new Exception("No elements found in the API response.");
+                    }
+
+                    JsonElement element = elements[0];
+                    string elementStatus = element.GetProperty("status").GetString();
+                    if (!string.Equals(elementStatus, "OK", StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new Exception($"Element returned status: {elementStatus}");
+                    }
+
+                    JsonElement duration = element.GetProperty("duration");
+                    if (!duration.TryGetProperty("value", out JsonElement durationValue))
+                    {
+                        throw new Exception("Duration value not found in the API response.");
+                    }
+
+                    int durationSeconds = durationValue.GetInt32();
+                    double durationMinutes = durationSeconds / 60.0;
+
+                    Console.WriteLine($"Travel time: {durationMinutes} minutes.");
+                    return durationMinutes;
+                }
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            throw new TimeoutException("The request to the Google Distance Matrix API timed out.");
+        }
+        catch (HttpRequestException httpEx)
+        {
+            throw new Exception($"HTTP error occurred: {httpEx.Message}", httpEx);
+        }
+        catch (JsonException jsonEx)
+        {
+            throw new Exception($"Error parsing JSON response: {jsonEx.Message}", jsonEx);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error calculating travel time: {ex.Message}", ex);
+        }
+    }
 }
 
 

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:volunteer="clr-namespace:PL.Volunteer"
+        xmlns:pl="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Update Volunteer" Height="800" Width="1000"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -62,6 +63,7 @@
             <Setter Property="BorderBrush" Value="#E0E0E0"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="BorderBrush" Value="#2196F3"/>
@@ -127,14 +129,22 @@
         <!-- Converters -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityInverseConverter"/>
+        <!-- Assuming you have a NullToVisibilityConverter defined somewhere -->
+        <pl:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <!-- Assuming RolesCollectionKey and DistanceTypeCollectionKey are defined elsewhere -->
     </Window.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <!-- Main Information Section -->
                 <RowDefinition Height="Auto"/>
+                <!-- Action Buttons Section -->
                 <RowDefinition Height="Auto"/>
+                <!-- Current Active Call Section -->
+                <RowDefinition Height="Auto"/>
+                <!-- Map Section -->
             </Grid.RowDefinitions>
 
             <!-- Main Information Section -->
@@ -168,27 +178,27 @@
                         <!-- ID -->
                         <Label Grid.Row="0" Grid.Column="0" Content="ID:" Style="{StaticResource LabelStyle}"/>
                         <TextBox Grid.Row="0" Grid.Column="1" 
-                                Style="{StaticResource TextBoxStyle}"
-                                Text="{Binding CurrentVolunteer.Id, Mode=TwoWay, NotifyOnValidationError=True}"
-                                IsReadOnly="{Binding CurrentVolunteer.Id, Converter={StaticResource IdToReadOnlyConverter}}"/>
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding CurrentVolunteer.Id, Mode=TwoWay, NotifyOnValidationError=True}"
+                                 IsReadOnly="{Binding CurrentVolunteer.Id, Converter={StaticResource IdToReadOnlyConverter}}"/>
 
                         <!-- Full Name -->
                         <Label Grid.Row="1" Grid.Column="0" Content="Full Name:" Style="{StaticResource LabelStyle}"/>
                         <TextBox Grid.Row="1" Grid.Column="1" 
-                                Style="{StaticResource TextBoxStyle}"
-                                Text="{Binding CurrentVolunteer.FullName, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding CurrentVolunteer.FullName, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
                         <!-- Mobile Phone -->
                         <Label Grid.Row="2" Grid.Column="0" Content="Mobile Phone:" Style="{StaticResource LabelStyle}"/>
                         <TextBox Grid.Row="2" Grid.Column="1" 
-                                Style="{StaticResource TextBoxStyle}"
-                                Text="{Binding CurrentVolunteer.MobilePhone, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding CurrentVolunteer.MobilePhone, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
                         <!-- Email -->
                         <Label Grid.Row="3" Grid.Column="0" Content="Email:" Style="{StaticResource LabelStyle}"/>
                         <TextBox Grid.Row="3" Grid.Column="1" 
-                                Style="{StaticResource TextBoxStyle}"
-                                Text="{Binding CurrentVolunteer.Email, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding CurrentVolunteer.Email, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
                         <!-- Password -->
                         <Label Grid.Row="4" Grid.Column="0" Content="Password:" Style="{StaticResource LabelStyle}"/>
@@ -201,37 +211,37 @@
                         <!-- Full Address -->
                         <Label Grid.Row="5" Grid.Column="0" Content="Full Address:" Style="{StaticResource LabelStyle}"/>
                         <TextBox Grid.Row="5" Grid.Column="1" 
-                                Style="{StaticResource TextBoxStyle}"
-                                Text="{Binding CurrentVolunteer.FullAddress, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding CurrentVolunteer.FullAddress, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
                         <!-- Role -->
                         <Label Grid.Row="6" Grid.Column="0" Content="Role:" Style="{StaticResource LabelStyle}"/>
                         <ComboBox Grid.Row="6" Grid.Column="1"
-                                 Style="{StaticResource ComboBoxStyle}"
-                                 ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"
-                                 SelectedValue="{Binding CurrentVolunteer.Role, Mode=TwoWay}"
-                                 SelectedValuePath="."
-                                 IsEnabled="{Binding IsManager, Mode=OneWay}"/>
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding Source={StaticResource RolesCollectionKey}}"
+                                  SelectedValue="{Binding CurrentVolunteer.Role, Mode=TwoWay}"
+                                  SelectedValuePath="."
+                                  IsEnabled="{Binding IsManager, Mode=OneWay}"/>
 
                         <!-- Is Active -->
                         <Label Grid.Row="7" Grid.Column="0" Content="Is Active:" Style="{StaticResource LabelStyle}"/>
                         <CheckBox Grid.Row="7" Grid.Column="1" 
-                                 Style="{StaticResource CheckBoxStyle}"
-                                 IsChecked="{Binding CurrentVolunteer.IsActive, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                                  Style="{StaticResource CheckBoxStyle}"
+                                  IsChecked="{Binding CurrentVolunteer.IsActive, Mode=TwoWay, NotifyOnValidationError=True}"/>
 
                         <!-- Distance Type -->
                         <Label Grid.Row="8" Grid.Column="0" Content="Distance Type:" Style="{StaticResource LabelStyle}"/>
                         <ComboBox Grid.Row="8" Grid.Column="1"
-                                 Style="{StaticResource ComboBoxStyle}"
-                                 ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}"
-                                 SelectedValue="{Binding CurrentVolunteer.DistanceType, Mode=TwoWay}"
-                                 SelectedValuePath="."/>
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}"
+                                  SelectedValue="{Binding CurrentVolunteer.DistanceType, Mode=TwoWay}"
+                                  SelectedValuePath="."/>
 
                         <!-- Max Distance -->
                         <Label Grid.Row="9" Grid.Column="0" Content="Max Distance:" Style="{StaticResource LabelStyle}"/>
                         <TextBox Grid.Row="9" Grid.Column="1" 
-                                Style="{StaticResource TextBoxStyle}"
-                                Text="{Binding CurrentVolunteer.MaxDistanceForCall, Mode=TwoWay, NotifyOnValidationError=True}"/>
+                                 Style="{StaticResource TextBoxStyle}"
+                                 Text="{Binding CurrentVolunteer.MaxDistanceForCall, Mode=TwoWay, NotifyOnValidationError=True}"/>
                     </Grid>
 
                     <!-- Update Button -->
@@ -251,7 +261,7 @@
                             Style="{StaticResource ModernButtonStyle}"
                             Margin="5"
                             Click="SelectCall_Click"
-                            Visibility="{Binding CurrentVolunteer.IsActive, Converter={StaticResource BooleanToVisibilityInverseConverter}}"/>
+                            Visibility="{Binding CanSelectCall, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <Button Content="Call History" 
                             Style="{StaticResource ModernButtonStyle}"
                             Background="#4CAF50"

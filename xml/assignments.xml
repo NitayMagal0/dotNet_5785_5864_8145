@@ -408,4 +408,28 @@
     <ActualEndTime>2025-01-23T20:10:14</ActualEndTime>
     <AssignmentStatus>Completed</AssignmentStatus>
   </Assignment>
+  <Assignment>
+    <Id>1051</Id>
+    <CallId>1052</CallId>
+    <VolunteerId>107825408</VolunteerId>
+    <AdmissionTime>2025-01-23T20:10:14</AdmissionTime>
+    <ActualEndTime>2025-01-23T20:10:14</ActualEndTime>
+    <AssignmentStatus>Completed</AssignmentStatus>
+  </Assignment>
+  <Assignment>
+    <Id>1052</Id>
+    <CallId>1053</CallId>
+    <VolunteerId>107825408</VolunteerId>
+    <AdmissionTime>2025-01-23T20:10:14</AdmissionTime>
+    <ActualEndTime>2025-01-23T20:10:14</ActualEndTime>
+    <AssignmentStatus>Completed</AssignmentStatus>
+  </Assignment>
+  <Assignment>
+    <Id>1053</Id>
+    <CallId>1054</CallId>
+    <VolunteerId>107825408</VolunteerId>
+    <AdmissionTime>2025-01-23T20:10:14</AdmissionTime>
+    <ActualEndTime>2025-01-23T20:10:14</ActualEndTime>
+    <AssignmentStatus>CancelledByUser</AssignmentStatus>
+  </Assignment>
 </ArrayOfAssignment>

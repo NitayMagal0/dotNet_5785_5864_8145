@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PL.Volunteer;
 
@@ -13,6 +15,7 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
+    public bool CanSelectCall => CurrentCall == null;
     protected void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -131,6 +134,14 @@ public partial class VolunteerUpdateWindow : Window, INotifyPropertyChanged
             if (CurrentVolunteer == null)
             {
                 MessageBox.Show("No volunteer is selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Add check for existing call
+            if (CurrentCall != null)
+            {
+                MessageBox.Show("This volunteer already has an active call in treatment.",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
