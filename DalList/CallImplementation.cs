@@ -2,6 +2,8 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 /// <summary>
 /// The implementation of the interface ICall
 /// </summary>
@@ -11,6 +13,8 @@ internal class CallImplementation : ICall
     /// This method creates a new item and updates the database
     /// </summary>
     /// <param name="item">The new item</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Create(Call item)
     {
         Call newCall = item with { Id = Config.NextCallId };
@@ -20,6 +24,8 @@ internal class CallImplementation : ICall
     /// This function performs the deletion operation if the item exists otherwise throws an error
     /// </summary>
     /// <param name="id">The Id of the item to be deleted</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         Call? call = Read(id);
@@ -35,6 +41,8 @@ internal class CallImplementation : ICall
     // <summary>
     /// This function deletes the entire buffer by running the remove function on each of the items
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void DeleteAll()
     {
         DataSource.Calls.Clear();
@@ -49,6 +57,8 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="id">The ID number of the item you want to read</param>
     /// <returns>the requested item or Null</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Call? Read(int id)
     {
         return DataSource.Calls.FirstOrDefault(x => x.Id == id);
@@ -56,6 +66,8 @@ internal class CallImplementation : ICall
     /// <summary>
     /// Returns a copy of the original list
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Call> ReadAll(Func<Call, bool>? filter = null)
     {
         return filter == null ? DataSource.Calls : DataSource.Calls.Where(filter);
@@ -64,6 +76,8 @@ internal class CallImplementation : ICall
     /// This function is responsible for updating the database if the item to be updated exists, if it does not exist it will throw an error
     /// </summary>
     /// <param name="item">The item you want to update</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(Call item)
     {
         Call? unupdatedCall = Read(item.Id);
@@ -83,6 +97,8 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="filter">The filter to apply to the items</param>
     /// <returns>the requested item or Null</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Call? Read(Func<Call, bool> filter)
     {
         return DataSource.Calls.FirstOrDefault(filter);

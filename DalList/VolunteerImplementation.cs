@@ -2,6 +2,7 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 internal class VolunteerImplementation : IVolunteer
 {
@@ -12,6 +13,8 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">
     /// Thrown if a volunteer with the same ID already exists in the data source.
     /// </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Create(Volunteer item)
     {
         if (Read(item.Id) is not null)
@@ -26,6 +29,8 @@ internal class VolunteerImplementation : IVolunteer
     /// </summary>
     /// <param name="id">The ID of the volunteer to delete</param>
     /// <exception cref="Exception">Thrown if no volunteer with the specified ID is found.</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         Volunteer? volunteer = Read(id);
@@ -43,6 +48,8 @@ internal class VolunteerImplementation : IVolunteer
     /// <summary>
     /// Deletes all the volunteers
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void DeleteAll()
     {
         DataSource.Volunteers.Clear();
@@ -59,6 +66,8 @@ internal class VolunteerImplementation : IVolunteer
     /// </summary>
     /// <param name="id">The ID of the volunteer to retrieve.</param>
     /// <returns>The volunteer with the specified ID or null if the volunteer doesn't exist</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Volunteer? Read(int id)
     {
         return DataSource.Volunteers.FirstOrDefault(x => x.Id == id);
@@ -69,6 +78,8 @@ internal class VolunteerImplementation : IVolunteer
     /// Retrieves all volunteers from the data source.
     /// </summary>
     /// <returns>A list of all <see cref="Volunteer"/> objects.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Volunteer> ReadAll(Func<Volunteer, bool>? filter = null)
     {
         return filter == null ? DataSource.Volunteers : DataSource.Volunteers.Where(filter);
@@ -79,6 +90,8 @@ internal class VolunteerImplementation : IVolunteer
     /// Updates the details of an existing volunteer by first deleting the current record and then creating a new record with the updated details.
     /// </summary>
     /// <param name="item">object containing the updated details of the volunteer</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(Volunteer item)
     {
         Volunteer? unupdatedVolunteer = Read(item.Id);
@@ -98,6 +111,8 @@ internal class VolunteerImplementation : IVolunteer
     /// </summary>
     /// <param name="filter">The filter to apply to find the volunteer.</param>
     /// <returns>The volunteer that matches the filter or null if no volunteer matches.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Volunteer? Read(Func<Volunteer, bool> filter)
     {
         return DataSource.Volunteers.FirstOrDefault(filter);

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using DalApi;
 using DO;
@@ -13,6 +14,7 @@ internal class assignmentImplementation : IAssignment
     /// Creates a new assignment and saves it in the XML file.
     /// </summary>
     /// <param name="item">The assignment to create.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Assignment item)
     {
         XElement assignmentsRootElem = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
@@ -28,6 +30,7 @@ internal class assignmentImplementation : IAssignment
     /// Deletes an assignment by ID from the XML file.
     /// </summary>
     /// <param name="id">The ID of the assignment to delete.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<Assignment> assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
@@ -43,6 +46,7 @@ internal class assignmentImplementation : IAssignment
     /// <summary>
     /// Deletes all assignments from the XML file.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         XMLTools.SaveListToXMLSerializer(new List<Assignment>(), Config.s_assignments_xml);
@@ -53,6 +57,8 @@ internal class assignmentImplementation : IAssignment
     /// </summary>
     /// <param name="id">The ID of the assignment to read.</param>
     /// <returns>The assignment with the specified ID.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Assignment Read(int id)
     {
         XElement assignmentsRootElem = XMLTools.LoadListFromXMLElement(Config.s_assignments_xml);
@@ -69,6 +75,8 @@ internal class assignmentImplementation : IAssignment
     /// </summary>
     /// <param name="filter">The filter function to apply.</param>
     /// <returns>The assignment that matches the filter, or null if none match.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Assignment? Read(Func<Assignment, bool> filter)
     {
         List<Assignment> assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
@@ -80,6 +88,8 @@ internal class assignmentImplementation : IAssignment
     /// </summary>
     /// <param name="filter">Optional filter function.</param>
     /// <returns>All assignments matching the filter, or all assignments if no filter is provided.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Assignment> ReadAll(Func<Assignment, bool>? filter = null)
     {
         List<Assignment> assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
@@ -90,6 +100,8 @@ internal class assignmentImplementation : IAssignment
     /// Updates an existing assignment in the XML file.
     /// </summary>
     /// <param name="item">The updated assignment.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(Assignment item)
     {
         List<Assignment> assignments = XMLTools.LoadListFromXMLSerializer<Assignment>(Config.s_assignments_xml);
@@ -102,6 +114,7 @@ internal class assignmentImplementation : IAssignment
         assignments.Add(item);
         XMLTools.SaveListToXMLSerializer(assignments, Config.s_assignments_xml);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     private XElement createAssignmentElement(Assignment item)
     {
@@ -114,10 +127,11 @@ internal class assignmentImplementation : IAssignment
             new XElement("CallId", item.CallId),
             new XElement("VolunteerId", item.VolunteerId),
             new XElement("AdmissionTime", item.AdmissionTime)
-            //new XElement("ActualEndTime", item.ActualEndTime),
-            //new XElement("AssignmentStatus", item.AssignmentStatus)
+        //new XElement("ActualEndTime", item.ActualEndTime),
+        //new XElement("AssignmentStatus", item.AssignmentStatus)
         );
     }
+
     private Assignment getAssignmnet(XElement a)
     {
         return new Assignment

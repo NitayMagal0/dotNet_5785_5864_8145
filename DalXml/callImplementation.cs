@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.CompilerServices;
+
 namespace Dal;
 
 using System;
@@ -9,12 +11,13 @@ using DO;
 
 internal class callImplementation : ICall
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Call item)   //need to use config to increase the id of call
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
-    /*    // Check if the call already exists
-        if (callsRootElem.Elements().Any(c => (int?)c.Element("Id") == item.Id))
-            throw new DalEntityAlreadyExistsException($"Call with ID={item.Id} already exists");*/
+        /*    // Check if the call already exists
+            if (callsRootElem.Elements().Any(c => (int?)c.Element("Id") == item.Id))
+                throw new DalEntityAlreadyExistsException($"Call with ID={item.Id} already exists");*/
         // Add the new call
         callsRootElem.Add(createCallElement(item));
 
@@ -22,6 +25,7 @@ internal class callImplementation : ICall
         XMLTools.SaveListToXMLElement(callsRootElem, Config.s_calls_xml);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
@@ -35,12 +39,14 @@ internal class callImplementation : ICall
         XMLTools.SaveListToXMLElement(callsRootElem, Config.s_calls_xml);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         // Overwrite the XML file with an empty root element
         XMLTools.SaveListToXMLElement(new XElement("Calls"), Config.s_calls_xml);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Call Read(int id)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
@@ -52,12 +58,14 @@ internal class callImplementation : ICall
             : getCall(callElem);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Call? Read(Func<Call, bool> filter)
     {
         IEnumerable<Call> calls = ReadAll();
         return calls.FirstOrDefault(filter);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Call> ReadAll(Func<Call, bool>? filter = null)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
@@ -67,6 +75,7 @@ internal class callImplementation : ICall
         return filter == null ? calls : calls.Where(filter);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Call item)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
@@ -80,8 +89,6 @@ internal class callImplementation : ICall
 
         existingCallElement.Remove();
 
-        
-       
         callsRootElem.Add(
             new XElement("Call",
                 new XElement("Id", item.Id),
@@ -117,7 +124,6 @@ internal class callImplementation : ICall
 
     private Call getCall(XElement c)
     {
-
         return new Call
         {
             Id = c.ToIntNullable("Id") ?? throw new FormatException("Can't convert Id"),

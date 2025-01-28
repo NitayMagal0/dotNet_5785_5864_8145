@@ -53,39 +53,22 @@ internal class AdminImplementation : IAdmin
     /// <summary>
     /// Initializes the database 
     /// </summary>
-    public void InitializeDB()
+    public void InitializeDB() //stage 4
     {
-        try
-        {
-            DalTest.Initialization.Do();
-            AdminManager.UpdateClock(AdminManager.Now);
-            AdminManager.RiskRange = AdminManager.RiskRange;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred while Initializing the database: {ex.Message}");
-        }
-
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.InitializeDB(); //stage 7
     }
+
 
     /// <summary>
     /// Resets the database
     /// </summary>
-    public void ResetDB()
+    public void ResetDB() //stage 4
     {
-        try
-        {
-            // Reset the database
-            _dal.ResetDB();
-            // Update the clock
-            AdminManager.UpdateClock(AdminManager.Now);
-            AdminManager.RiskRange = AdminManager.RiskRange;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred while resetting the database: {ex.Message}");
-        }
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.ResetDB(); //stage 7
     }
+
 
     /// <summary>
     /// Retrieves the maximum range for a call.

@@ -500,4 +500,24 @@
     <OpeningTime>2024-06-18T00:00:00</OpeningTime>
     <MaxCompletionTime>2025-03-11T00:00:00+02:00</MaxCompletionTime>
   </Call>
+	<Call>
+		<Id>1050</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Bialik St 18, Netanya</FullAddress>
+		<Latitude>32.32685852050781</Latitude>
+		<Longitude>34.864376068115234</Longitude>
+		<OpeningTime>2024-06-18T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-03-11T00:00:00+02:00</MaxCompletionTime>
+	</Call>
+	<Call>
+		<Id>1051</Id>
+		<CallType>HospitalVisitsForMoraleBoost</CallType>
+		<Description>Visiting hospitals to support and uplift the spirits of patients and healthcare workers.</Description>
+		<FullAddress>Bialik St 18, Netanya</FullAddress>
+		<Latitude>32.32685852050781</Latitude>
+		<Longitude>34.864376068115234</Longitude>
+		<OpeningTime>2024-06-18T00:00:00</OpeningTime>
+		<MaxCompletionTime>2025-03-11T00:00:00+02:00</MaxCompletionTime>
+	</Call>
 </Calls>

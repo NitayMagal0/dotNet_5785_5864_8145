@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Volunteer>
     <Id>972221634</Id>
@@ -75,14 +75,14 @@
     <FullName>Lior Katz</FullName>
     <MobilePhone>0542560800</MobilePhone>
     <Email>liorkatz@gmail.com</Email>
-    <Password>YzhMaUVpSUdkQFU1</Password>
+    <Password>T28yMjkwMzA5Ng==</Password>
     <FullAddress>Ben Yehuda St 102, Tel Aviv</FullAddress>
-    <Latitude>32.08261489868164</Latitude>
-    <Longitude>34.7714958190918</Longitude>
+    <Latitude>32.0847432</Latitude>
+    <Longitude>34.7723089</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
-    <MaxDistanceForCall xsi:nil="true" />
     <DistanceType>AirDistance</DistanceType>
+    <MaxDistanceForCall>500000000</MaxDistanceForCall>
   </Volunteer>
   <Volunteer>
     <Id>356257097</Id>
@@ -282,16 +282,15 @@
   </Volunteer>
   <Volunteer>
     <Id>40337347</Id>
-    <FullName>Ronen Neuman</FullName>
+    <FullName>Ronen Neumandtjdrykjdtykdtyjkdtyj</FullName>
     <MobilePhone>0540698431</MobilePhone>
     <Email>ronenneuman@gmail.com</Email>
     <Password>MWNqZUQ2Wjk+SGhTOl8s</Password>
     <FullAddress>HaNassi Blvd 100, Haifa</FullAddress>
-    <Latitude>32.808067321777344</Latitude>
-    <Longitude>34.98585891723633</Longitude>
+    <Latitude>32.814272</Latitude>
+    <Longitude>34.979595</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
-    <MaxDistanceForCall xsi:nil="true" />
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
@@ -350,32 +349,32 @@
     <MaxDistanceForCall xsi:nil="true" />
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
-	<Volunteer>
-		<Id>1</Id>
-		<FullName>Noa Cohen</FullName>
-		<MobilePhone>0527153232</MobilePhone>
-		<Email>noacohen@gmail.com</Email>
-		<Password>MQ==</Password>
-		<FullAddress>Dizengoff St 99, Tel Aviv</FullAddress>
-		<Latitude>32.07941818237305</Latitude>
-		<Longitude>34.773719787597656</Longitude>
-		<Role>Volunteer</Role>
-		<IsActive>true</IsActive>
-		<MaxDistanceForCall xsi:nil="true" />
-		<DistanceType>AirDistance</DistanceType>
-	</Volunteer>
-	<Volunteer>
-		<Id>2</Id>
-		<FullName>Yossi Ben David</FullName>
-		<MobilePhone>0525281770</MobilePhone>
-		<Email>yossiben-david@gmail.com</Email>
-		<Password>Mg==</Password>
-		<FullAddress>Allenby St 47, Tel Aviv</FullAddress>
-		<Latitude>32.070308685302734</Latitude>
-		<Longitude>34.77039337158203</Longitude>
-		<Role>Manager</Role>
-		<IsActive>true</IsActive>
-		<MaxDistanceForCall xsi:nil="true" />
-		<DistanceType>AirDistance</DistanceType>
-	</Volunteer>
+  <Volunteer>
+    <Id>1</Id>
+    <FullName>Noa Cohen</FullName>
+    <MobilePhone>0527153232</MobilePhone>
+    <Email>noacohen@gmail.com</Email>
+    <Password>MQ==</Password>
+    <FullAddress>Dizengoff St 99, Tel Aviv</FullAddress>
+    <Latitude>32.07941818237305</Latitude>
+    <Longitude>34.773719787597656</Longitude>
+    <Role>Volunteer</Role>
+    <IsActive>true</IsActive>
+    <MaxDistanceForCall xsi:nil="true" />
+    <DistanceType>AirDistance</DistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>2</Id>
+    <FullName>Yossi Ben David</FullName>
+    <MobilePhone>0525281770</MobilePhone>
+    <Email>yossiben-david@gmail.com</Email>
+    <Password>Mg==</Password>
+    <FullAddress>Allenby St 47, Tel Aviv</FullAddress>
+    <Latitude>32.070308685302734</Latitude>
+    <Longitude>34.77039337158203</Longitude>
+    <Role>Manager</Role>
+    <IsActive>true</IsActive>
+    <MaxDistanceForCall xsi:nil="true" />
+    <DistanceType>AirDistance</DistanceType>
+  </Volunteer>
 </ArrayOfVolunteer>
