@@ -12,7 +12,7 @@
         Background="Transparent"
         AllowsTransparency="True"
         MouseDown="Window_MouseDown">
-
+        
     <Border CornerRadius="12">
         <Border.Background>
             <ImageBrush ImageSource="/Images/background.jpg"
