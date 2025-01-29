@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using BlApi;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,6 +12,60 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
+    public int Interval
+    {
+        get { return (int)GetValue(IntervalProperty); }
+        set { SetValue(IntervalProperty, value); }
+    }
+
+    public static readonly DependencyProperty IntervalProperty =
+        DependencyProperty.Register("Interval", typeof(int), typeof(MainWindow));
+
+    public bool IsSimulatorRunning
+    {
+        get { return (bool)GetValue(IsSimulatorRunningProperty); }
+        set { SetValue(IsSimulatorRunningProperty, value); }
+    }
+
+    public static readonly DependencyProperty IsSimulatorRunningProperty =
+        DependencyProperty.Register("IsSimulatorRunning", typeof(bool), typeof(MainWindow));
+
+    private void StartStopSimulator_Click(object sender, RoutedEventArgs e)
+    {
+        if (!IsSimulatorRunning)
+        {
+            // Validate Interval
+            if (Interval <= 0)
+            {
+                MessageBox.Show("Please enter a valid clock rate (positive integer).", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                // Start the simulator
+                s_bl.Admin.StartSimulator(Interval); //stage 7
+                IsSimulatorRunning = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to start simulator: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        else
+        {
+            try
+            {
+                // Stop the simulator
+                s_bl.Admin.StopSimulator(); //stage 7
+                IsSimulatorRunning = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to stop simulator: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    }
     /// <summary>
     /// Static instance of the business logic interface.
     /// </summary>
@@ -97,14 +152,18 @@ public partial class MainWindow : Window
         LoadCallStatusCounts();
     }
 
-    /// <summary>
-    /// Event handler for the Closed event.
-    /// </summary>
     private void MainWindow_OnClosed(object sender, EventArgs e)
     {
         // Remove observers for clock and configuration updates
         s_bl.Admin.RemoveClockObserver(clockObserver);
         s_bl.Admin.RemoveConfigObserver(configObserver);
+
+        // Stop the simulator if it's running
+        if (IsSimulatorRunning)
+        {
+            s_bl.Admin.StopSimulator(); //stage 7
+            IsSimulatorRunning = false;
+        }
     }
 
     private volatile DispatcherOperation? _observerOperationClock = null; //stage 7
@@ -323,4 +382,5 @@ public partial class MainWindow : Window
             }
         }
     }
+
 }

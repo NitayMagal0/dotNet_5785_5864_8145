@@ -14,5 +14,7 @@
         <local:BooleanToVisibilityInverseConverter x:Key="BooleanToVisibilityInverseConverter" />
         <local:IntToBooleanConverter x:Key="IntToBooleanConverter"/>
         <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <local:SimulatorButtonContentConverter x:Key="SimulatorButtonContentConverter"/>
     </Application.Resources>
 </Application>

@@ -149,11 +149,11 @@
                     <StackPanel Orientation="Vertical" 
                         Margin="0,20,0,0" 
                         HorizontalAlignment="Center">
-                        <Button Content="Add One Minute" Width="200" Margin="0,5" Click="btnAddOneMinute_Click"/>
-                        <Button Content="Add One Hour" Width="200" Margin="0,5" Click="btnAddOneHour_Click"/>
-                        <Button Content="Add One Day" Width="200" Margin="0,5" Click="btnAddOneDay_Click"/>
-                        <Button Content="Add One Month" Width="200" Margin="0,5" Click="btnAddOneMonth_Click"/>
-                        <Button Content="Add One Year" Width="200" Margin="0,5" Click="btnAddOneYear_Click"/>
+                        <Button Content="Add One Minute" Width="200" Margin="0,5" Click="btnAddOneMinute_Click" IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
+                        <Button Content="Add One Hour" Width="200" Margin="0,5" Click="btnAddOneHour_Click" IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
+                        <Button Content="Add One Day" Width="200" Margin="0,5" Click="btnAddOneDay_Click" IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
+                        <Button Content="Add One Month" Width="200" Margin="0,5" Click="btnAddOneMonth_Click" IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
+                        <Button Content="Add One Year" Width="200" Margin="0,5" Click="btnAddOneYear_Click" IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -215,13 +215,15 @@
                         Width="150"
                         Margin="0,5"
                         Background="#F44336"
-                        Click="btnResetDB_Click"/>
+                        Click="btnResetDB_Click"
+                        IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
 
                 <Button Content="Init DB" 
                         Width="150"
                         Margin="0,5"
                         Background="#4CAF50"
-                        Click="btnInitializeDB_Click"/>
+                        Click="btnInitializeDB_Click"
+                        IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
             </StackPanel>
         </Border>
 
@@ -234,12 +236,27 @@
                 Padding="20"
                 Margin="10,20,0,0"
                 Height="230">
+            <StackPanel>
+                <TextBlock Text="Simulator Controls" 
+                           FontSize="20" 
+                           FontWeight="Medium" 
+                           Margin="0,0,0,20"
+                           Foreground="#424242"/>
 
-            <TextBlock Text="Simulator Controls" 
-            FontSize="20" 
-            FontWeight="Medium" 
-            Margin="0,0,0,20"
-            Foreground="#424242"/>
+                <!-- Clock Rate Input -->
+                <StackPanel Orientation="Horizontal" Margin="0,10">
+                    <Label Content="Clock Rate (minutes):" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Width="80"
+                             Margin="10,0"
+                             IsEnabled="{Binding IsSimulatorRunning, Converter={StaticResource InverseBoolConverter}}"/>
+                </StackPanel>
+
+                <!-- Start/Stop Simulator Button -->
+                <Button Content="{Binding IsSimulatorRunning, Converter={StaticResource SimulatorButtonContentConverter}}"
+                        Width="150"
+                        Click="StartStopSimulator_Click"/>
+            </StackPanel>
         </Border>
 
         <!-- Calls Amounts -->

@@ -217,3 +217,23 @@ public class NullToVisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+public class SimulatorButtonContentConverter : IValueConverter
+{
+    /// <summary>
+    /// Converts the IsSimulatorRunning flag to button content.
+    /// Returns "Stop Simulator" if true, "Start Simulator" if false.
+    /// </summary>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is bool isRunning)
+            return isRunning ? "Stop Simulator" : "Start Simulator";
+        return "Start Simulator";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        // Not needed for one-way binding
+        throw new NotImplementedException();
+    }
+}

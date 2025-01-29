@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfAssignment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Assignment>
     <Id>1000</Id>
@@ -405,11 +405,15 @@
     <CallId>1050</CallId>
     <VolunteerId>31407372</VolunteerId>
     <AdmissionTime>2025-01-23T23:37:35</AdmissionTime>
+    <ActualEndTime xsi:nil="true" />
+    <AssignmentStatus xsi:nil="true" />
   </Assignment>
   <Assignment>
     <Id>1051</Id>
     <CallId>1051</CallId>
     <VolunteerId>1</VolunteerId>
     <AdmissionTime>2025-01-23T23:37:35</AdmissionTime>
+    <ActualEndTime>2025-01-23T23:37:35</ActualEndTime>
+    <AssignmentStatus>Completed</AssignmentStatus>
   </Assignment>
 </ArrayOfAssignment>
