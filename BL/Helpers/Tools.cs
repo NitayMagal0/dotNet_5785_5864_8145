@@ -90,6 +90,49 @@ internal static class Tools
         }
     }
 
+    /// <summary>
+    /// Takes an address and returns coordinates (latitude and longitude) asynchronously.
+    /// </summary>
+    /// <param name="address">The address to search for.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains coordinates (Latitude, Longitude).</returns>
+    public static async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(string address)
+    {
+        if (string.IsNullOrWhiteSpace(address))
+            throw new ArgumentException("Address cannot be null or empty.", nameof(address));
+
+        using (HttpClient client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("User-Agent", "GeocodingApp/1.0");
+            string url = $"{BaseUrl}?q={Uri.EscapeDataString(address)}&format=xml";
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.GetAsync(url).ConfigureAwait(false);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception("Error sending request to the API.", ex);
+            }
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Error: Unable to get data from API. Status code: {response.StatusCode}");
+
+            string xml = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            XDocument xmlData = XDocument.Parse(xml);
+
+            var firstResult = xmlData.Descendants("place").FirstOrDefault();
+            if (firstResult == null)
+                throw new Exception("No results found for the given address.");
+
+            double latitude = double.Parse(firstResult.Attribute("lat").Value);
+            double longitude = double.Parse(firstResult.Attribute("lon").Value);
+
+            return (latitude, longitude);
+        }
+    }
+
+
 
     public static double CalculateAirDistance((double Latitude, double Longitude)? start, (double Latitude, double Longitude)? destination)
     {

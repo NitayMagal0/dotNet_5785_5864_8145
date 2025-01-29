@@ -13,10 +13,15 @@ internal class CallManager
     internal static BO.CallStatus GetCallStatus(int callId)
     {
         // Fetch the call and its related data
-        var call = _dal.Call.Read(callId);
-        var assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
-        var systemClock = AdminManager.Now;
-
+        DO.Call call;
+        IEnumerable<Assignment> assignments;
+        DateTime systemClock;
+        lock (AdminManager.BlMutex)
+        {
+             call = _dal.Call.Read(callId);
+             assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
+             systemClock = AdminManager.Now;
+        }
         if (call == null)
         {
             throw new ArgumentException("Invalid call ID");
@@ -108,32 +113,40 @@ internal class CallManager
     public static List<BO.CallAssignInList> AssignsCall(int callId)
     {
         // Retrieve the list of assignments for the call
-        var assignments = _dal.Assignment.ReadAll(a => a.CallId == callId)?.ToList() ?? new List<Assignment>();
+        IEnumerable<Assignment> assignments;
+        lock (AdminManager.BlMutex)
+             assignments = _dal.Assignment.ReadAll(a => a.CallId == callId)?.ToList() ?? new List<Assignment>();
         //var assignments = _dal.Assignment.ReadAll(a => a.CallId == callId).ToList();
         if (!assignments.Any())
             new List<BO.CallAssignInList>();
 
-        //List<BO.CallAssignInList> callAssigns = new List<BO.CallAssignInList>();
-        var callAssigns = assignments.Select(a => new BO.CallAssignInList
+        List<BO.CallAssignInList> callAssigns;  
+        lock (AdminManager.BlMutex)
         {
-            VolunteerId = a.VolunteerId,
-            VolunteerName = _dal.Volunteer.Read(a.VolunteerId)?.FullName,
-            EntryTime = a.AdmissionTime,
-            FinishTime = a.ActualEndTime,
-            AssignmentStatus = a.AssignmentStatus==null ? null : AssignmentManager.MapAssignmentStatus(a.AssignmentStatus)
-        }).ToList();
-
+             callAssigns = assignments.Select(a => new BO.CallAssignInList
+            {
+                VolunteerId = a.VolunteerId,
+                VolunteerName = _dal.Volunteer.Read(a.VolunteerId)?.FullName,
+                EntryTime = a.AdmissionTime,
+                FinishTime = a.ActualEndTime,
+                AssignmentStatus = a.AssignmentStatus == null ? null : AssignmentManager.MapAssignmentStatus(a.AssignmentStatus)
+            }).ToList();
+        }
         return callAssigns;
     }
  
 
     internal static void PeriodicCallsUpdates(DateTime oldClock, DateTime newClock)
     {
-        var calls = _dal.Call.ReadAll().Where(c => c.MaxCompletionTime.HasValue && c.MaxCompletionTime.Value < newClock);
+        IEnumerable<DO.Call> calls;
+        lock (AdminManager.BlMutex)
+             calls = _dal.Call.ReadAll().Where(c => c.MaxCompletionTime.HasValue && c.MaxCompletionTime.Value < newClock);
 
         foreach (var call in calls)
         {
-            var assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == call.Id).ToList();
+            IEnumerable<Assignment> assignments;
+            lock (AdminManager.BlMutex)
+                 assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == call.Id).ToList();
 
             if (!assignments.Any())
             {
@@ -146,7 +159,8 @@ internal class CallManager
                     ActualEndTime = newClock,
                     AssignmentStatus = DO.AssignmentStatus.ExpiredCancellation
                 };
-                _dal.Assignment.Create(newAssignment);
+                lock (AdminManager.BlMutex)
+                    _dal.Assignment.Create(newAssignment);
                 AssignmentManager.Observers.NotifyListUpdated(); //stage 5                                                    
             }
             else
@@ -164,7 +178,8 @@ internal class CallManager
                         ActualEndTime = newClock,
                         AssignmentStatus = DO.AssignmentStatus.ExpiredCancellation
                     };
-                    _dal.Assignment.Update(newAssignment);
+                    lock (AdminManager.BlMutex)
+                        _dal.Assignment.Update(newAssignment);
                     AssignmentManager.Observers.NotifyItemUpdated(newAssignment.Id);  //stage 5
                     AssignmentManager.Observers.NotifyListUpdated();  //stage 5
                 }
@@ -174,20 +189,28 @@ internal class CallManager
     }
     internal static BO.CallStatus getCallStatus(DateTime MaxCompletionTime)
     {
-        if(MaxCompletionTime<AdminManager.Now)
+        lock (AdminManager.BlMutex)
         {
-            return BO.CallStatus.Expired;
-        }
-        else if ((MaxCompletionTime - AdminManager.Now) <= _dal.Config.RiskRange)
-        {
-            return BO.CallStatus.OpenAtRisk;
+            if (MaxCompletionTime < AdminManager.Now)
+            {
+                return BO.CallStatus.Expired;
+            }
+            else if ((MaxCompletionTime - AdminManager.Now) <= _dal.Config.RiskRange)
+            {
+                return BO.CallStatus.OpenAtRisk;
+            }
         }
         return BO.CallStatus.Open;
     }
     internal static bool IsCallInRiskRange(int callId)
     {
-       TimeSpan riskRange = _dal.Config.RiskRange;
-        var call = _dal.Call.Read(callId);
+        TimeSpan riskRange;
+        DO.Call call;
+        lock (AdminManager.BlMutex)
+        {
+            riskRange = _dal.Config.RiskRange;
+            call = _dal.Call.Read(callId);
+        }
         var maxCompletionTime = call.MaxCompletionTime;
         if (maxCompletionTime.HasValue && (maxCompletionTime.Value - AdminManager.Now) <= riskRange)
              return true;

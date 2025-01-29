@@ -13,6 +13,8 @@ internal class CallImplementation : ICall
     //
     public void MinAddCall(BO.CallType CallType, string Description, string FullAddress, DateTime? MaxCompletionTime)
     {
+        // Check if the simulator is running
+        AdminManager.ThrowOnSimulatorIsRunning();
         // Validation Checks
         if (CallType == 0)
         {
@@ -28,8 +30,9 @@ internal class CallImplementation : ICall
         {
             throw new BlInvalidFormatException("Please enter a valid Full Address.");
         }
-
-        int nextCallId = _dal.Config.NextCallId;
+        int nextCallId;
+        lock (AdminManager.BlMutex)
+            nextCallId = _dal.Config.NextCallId;
         DateTime OpeningTime = Helpers.AdminManager.Now;
 
         if (!MaxCompletionTime.HasValue || MaxCompletionTime <= OpeningTime)
@@ -46,6 +49,9 @@ internal class CallImplementation : ICall
         {
             throw new BlInvalidFormatException($"Invalid address: {ex.Message}");
         }
+        DateTime newOpeningTime;
+        lock (AdminManager.BlMutex) 
+             newOpeningTime = _dal.Config.Clock;
 
         // Convert BO.Call to DO.Call
         var doCall = new DO.Call
@@ -56,14 +62,15 @@ internal class CallImplementation : ICall
             FullAddress = FullAddress,
             Latitude = Latitude,
             Longitude = Longitude,
-            OpeningTime = _dal.Config.Clock,
+            OpeningTime = newOpeningTime,
             MaxCompletionTime = MaxCompletionTime
         };
 
         try
         {
             // Attempt to add the new call to the data layer
-            _dal.Call.Create(doCall);
+            lock (AdminManager.BlMutex)
+                _dal.Call.Create(doCall);
             CallManager.Observers.NotifyListUpdated();
         }
         catch (Exception ex)
@@ -77,6 +84,8 @@ internal class CallImplementation : ICall
 
     public void AddCall(Call call)
     {
+        // Check if the simulator is running
+        AdminManager.ThrowOnSimulatorIsRunning();
         if (call == null)
         {
             throw new BlNullReferenceException("Call cannot be null");
@@ -105,7 +114,8 @@ internal class CallImplementation : ICall
         try
         {
             // Attempt to add the new call to the data layer
-            _dal.Call.Create(doCall);
+            lock (AdminManager.BlMutex)
+                _dal.Call.Create(doCall);
             CallManager.Observers.NotifyListUpdated(); //stage 5                                                    
         }
         catch (Exception ex)
@@ -120,7 +130,9 @@ internal class CallImplementation : ICall
         try
         {
             // Fetch the call from the data layer
-            var call = _dal.Call.Read(callId);
+            DO.Call call;
+            lock (AdminManager.BlMutex)
+                call = _dal.Call.Read(callId);
             if (call == null)
             {
                 throw new ArgumentException("Call not found");
@@ -134,7 +146,9 @@ internal class CallImplementation : ICall
             }
 
             // Check if the call is already being handled
-            var assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
+            IEnumerable<DO.Assignment> assignments;
+            lock (AdminManager.BlMutex)
+                 assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
             if (assignments.Any(a => a.ActualEndTime == null))
             {
                 throw new InvalidOperationException("The call is already being handled by another volunteer");
@@ -149,9 +163,10 @@ internal class CallImplementation : ICall
                 ActualEndTime = null,
                 AssignmentStatus = null
             };
-            
+
             // Add the new assignment to the data layer
-            _dal.Assignment.Create(newAssignment);
+            lock (AdminManager.BlMutex)
+                _dal.Assignment.Create(newAssignment);
             AssignmentManager.Observers.NotifyListUpdated(); //stage 5                                                    
 
         }
@@ -167,7 +182,9 @@ internal class CallImplementation : ICall
         try
         {
             // Fetch the assignment from the data layer using callId
-            var assignments = _dal.Assignment.ReadAll();
+            IEnumerable<DO.Assignment> assignments;
+            lock (AdminManager.BlMutex)
+                 assignments = _dal.Assignment.ReadAll();
             var assignment = assignments.FirstOrDefault(a => a.CallId == callId);
             if (assignment == null)
             {
@@ -175,7 +192,9 @@ internal class CallImplementation : ICall
             }
 
             // Check for cancellation permission
-            var requester = _dal.Volunteer.Read(requesterId);
+            DO.Volunteer requester;
+            lock (AdminManager.BlMutex)
+                 requester = _dal.Volunteer.Read(requesterId);
             if (requester == null)
             {
                 throw new UnauthorizedAccessException("Requester not found");
@@ -205,7 +224,8 @@ internal class CallImplementation : ICall
                 AssignmentStatus = isVolunteer ? DO.AssignmentStatus.CancelledByUser : DO.AssignmentStatus.CancelledByAdmin
             };
             // Attempt to update the assignment in the data layer
-            _dal.Assignment.Update(newAssignment);
+            lock (AdminManager.BlMutex)
+                _dal.Assignment.Update(newAssignment);
             AssignmentManager.Observers.NotifyItemUpdated(newAssignment.Id);  //stage 5
             AssignmentManager.Observers.NotifyListUpdated();  //stage 5
         }
@@ -222,7 +242,9 @@ internal class CallImplementation : ICall
         try
         {
             // Fetch the call from the data layer
-            var doCall = _dal.Call.Read(callId);
+            DO.Call doCall;
+            lock (AdminManager.BlMutex)
+                 doCall = _dal.Call.Read(callId);
 
             if (doCall == null)
             {
@@ -233,7 +255,9 @@ internal class CallImplementation : ICall
             var boCall = CallManager.ConvertCallToBO(doCall);
 
             // Check if the call is in the open status and has never been assigned
-            var assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
+            IEnumerable<DO.Assignment> assignments;
+            lock (AdminManager.BlMutex)
+                 assignments = _dal.Assignment.ReadAll().Where(a => a.CallId == callId);
             if ((boCall.Status != BO.CallStatus.Open && boCall.Status != BO.CallStatus.OpenAtRisk) || assignments.Any())
             {
                 throw new InvalidOperationException("Call cannot be deleted. It is either not open or has been assigned.");
@@ -251,16 +275,20 @@ internal class CallImplementation : ICall
     }
 
     public IEnumerable<OpenCallInList> GetAvailableOpenCallsForVolunteer(int volunteerId, CallType? callTypeFilter, Enum? sortField)
-    { 
+    {
         // Retrieve volunteer details to get their location
-        var volunteer = _dal.Volunteer.Read(volunteerId);
+        DO.Volunteer volunteer;
+        lock (AdminManager.BlMutex)
+             volunteer = _dal.Volunteer.Read(volunteerId);
         if (volunteer == null)
         {
             throw new InvalidOperationException("Volunteer not found");
         }
 
         // Retrieve all calls and convert them to BO.Call
-        var allCalls = _dal.Call.ReadAll().Select(CallManager.ConvertCallToBO).ToList();
+        List<BO.Call> allCalls;
+        lock (AdminManager.BlMutex)
+             allCalls = _dal.Call.ReadAll().Select(CallManager.ConvertCallToBO).ToList();
 
         // Filter calls by status
         var openCalls = allCalls.Where(c => c.Status == BO.CallStatus.Open || c.Status == BO.CallStatus.OpenAtRisk).ToList();
@@ -299,7 +327,9 @@ internal class CallImplementation : ICall
     public int[] GetCallCountsByStatus()
     {
         // Fetch all calls
-        var calls = _dal.Call.ReadAll();
+        IEnumerable<DO.Call> calls;
+        lock (AdminManager.BlMutex)
+             calls = _dal.Call.ReadAll();
 
         // Group calls by their status and count them
         var callCounts = calls
@@ -322,7 +352,9 @@ internal class CallImplementation : ICall
     public Call GetCallDetails(int callId)
     {
         // Request the data layer to get details about the call
-        var doCall = _dal.Call.Read(callId);
+        DO.Call doCall;
+        lock (AdminManager.BlMutex)
+             doCall = _dal.Call.Read(callId);
 
         // If the call does not exist, throw an exception
         if (doCall == null)
@@ -338,7 +370,9 @@ internal class CallImplementation : ICall
     public CallInList GetCallInListById(int callId)
     {
         // Request the data layer to get details about the call
-        var doCall = _dal.Call.Read(callId);
+        DO.Call doCall;
+        lock (AdminManager.BlMutex)
+             doCall = _dal.Call.Read(callId);
 
         // If the call does not exist, throw an exception
         if (doCall == null)
@@ -365,7 +399,9 @@ internal class CallImplementation : ICall
     public IEnumerable<CallInList> GetFilteredAndSortedCalls(CallType? filterField, CallStatus? filterValue, Enum? sortField)
     {
         // Fetch all calls
-        var calls = _dal.Call.ReadAll();
+        IEnumerable<DO.Call> calls;
+        lock (AdminManager.BlMutex)
+             calls = _dal.Call.ReadAll();
         
         // Convert DO.Call to BO.Call using CallManager.ConvertCallToBO
         var boCalls = calls.Select(CallManager.ConvertCallToBO);
@@ -419,14 +455,19 @@ internal class CallImplementation : ICall
     public IEnumerable<ClosedCallInList> GetVolunteerClosedCallsHistory(int volunteerId, CallType? callTypeFilter, Enum? sortField)
     {
         // Retrieve all assignments for the given volunteer
-        var assignments = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteerId &&
+        IEnumerable<DO.Assignment> assignments;
+        lock (AdminManager.BlMutex)
+        {
+             assignments = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteerId &&
                                                        (a.AssignmentStatus == DO.AssignmentStatus.Completed ||
                                                         a.AssignmentStatus == DO.AssignmentStatus.CancelledByUser ||
                                                         a.AssignmentStatus == DO.AssignmentStatus.CancelledByAdmin ||
                                                         a.AssignmentStatus == DO.AssignmentStatus.ExpiredCancellation)).ToList();
-
+        }
         // Retrieve all calls related to the assignments
-        var calls = assignments.Select(a => _dal.Call.Read(a.CallId)).ToList();
+        IEnumerable<DO.Call> calls;
+        lock (AdminManager.BlMutex)
+             calls = assignments.Select(a => _dal.Call.Read(a.CallId)).ToList();
 
         // Filter calls by call type if a filter is provided
         if (callTypeFilter.HasValue)
@@ -464,7 +505,9 @@ internal class CallImplementation : ICall
         try
         {
             // Fetch all assignments and find the one with the given callId
-            var assignments = _dal.Assignment.ReadAll();
+            IEnumerable<DO.Assignment> assignments;
+            lock (AdminManager.BlMutex)
+                 assignments = _dal.Assignment.ReadAll();
             var assignment = assignments.FirstOrDefault(a => a.CallId == callId);
             if (assignment == null)
             {
@@ -494,7 +537,8 @@ internal class CallImplementation : ICall
                 AssignmentStatus = DO.AssignmentStatus.Completed
             };
             // Attempt to update the assignment in the data layer
-            _dal.Assignment.Update(newAssignment);
+            lock (AdminManager.BlMutex)
+                _dal.Assignment.Update(newAssignment);
             AssignmentManager.Observers.NotifyItemUpdated(newAssignment.Id);  //stage 5
             AssignmentManager.Observers.NotifyListUpdated();  //stage 5
         }
@@ -507,6 +551,8 @@ internal class CallImplementation : ICall
 
     public void UpdateCall(Call call)
     {
+        // Check if the simulator is running
+        AdminManager.ThrowOnSimulatorIsRunning();
         // Check the correctness of all values in terms of format
         if (call.MaxCompletionTime <= call.OpeningTime)
         {
@@ -541,7 +587,8 @@ internal class CallImplementation : ICall
         try
         {
             // Attempt to update the call in the data layer
-            _dal.Call.Update(doCall);
+            lock (AdminManager.BlMutex)
+                _dal.Call.Update(doCall);
             CallManager.Observers.NotifyItemUpdated(doCall.Id);  //stage 5
             CallManager.Observers.NotifyListUpdated();  //stage 5
         }
@@ -554,18 +601,27 @@ internal class CallImplementation : ICall
 
     public IEnumerable<BO.CallInProgress> GetCallsForVolunteer(int volunteerId)
     {
+        DO.Volunteer volunteer;
         // Retrieve volunteer details
-        var volunteer = _dal.Volunteer.Read(volunteerId);
+        lock (AdminManager.BlMutex)
+                volunteer = _dal.Volunteer.Read(volunteerId);
+       
+
         if (volunteer == null)
         {
             throw new InvalidOperationException("Volunteer not found.");
         }
 
         // Fetch all active assignments for the volunteer (e.g., Assignments with Status null or specific active statuses)
-        var activeAssignments = _dal.Assignment.ReadAll(a =>
+        IEnumerable<DO.Assignment> activeAssignments;
+        lock (AdminManager.BlMutex)
+        {
+            activeAssignments = _dal.Assignment.ReadAll(a =>
             a.VolunteerId == volunteerId &&
             a.AssignmentStatus == null // Adjust this condition based on what constitutes an "active" assignment
         ).ToList();
+
+        }
 
         // If no active assignments, return an empty list
         if (!activeAssignments.Any())
@@ -578,7 +634,10 @@ internal class CallImplementation : ICall
         foreach (var assignment in activeAssignments)
         {
             // Fetch the call associated with the assignment
-            var doCall = _dal.Call.Read(assignment.CallId);
+            DO.Call doCall;
+            lock (AdminManager.BlMutex)
+                doCall = _dal.Call.Read(assignment.CallId);
+
             if (doCall == null)
             {
                 continue; // Skip if the call doesn't exist
@@ -626,16 +685,22 @@ internal class CallImplementation : ICall
         // Step 1: Retrieve open calls using the existing function
         var availableCalls = GetAvailableOpenCallsForVolunteer(volunteerId, callTypeFilter, sortField).ToList();
         // Step 2: Retrieve volunteer details to get their location
-        var volunteer = _dal.Volunteer.Read(volunteerId);
+        DO.Volunteer volunteer;
+        lock (AdminManager.BlMutex)
+              volunteer = _dal.Volunteer.Read(volunteerId);
         if (volunteer == null)
         {
             throw new InvalidOperationException("Volunteer not found");
         }
         var volunteerLocation = (volunteer.Latitude ?? 0.0, volunteer.Longitude ?? 0.0);
         // Step 3: Read all calls from the data layer and convert them to BO.Call
-        var allCalls = _dal.Call.ReadAll()
+        Dictionary<int, BO.Call> allCalls;
+        lock (AdminManager.BlMutex)
+        {
+            allCalls = _dal.Call.ReadAll()
             .Select(CallManager.ConvertCallToBO)
             .ToDictionary(c => c.Id);
+        }
         // Step 4: Filter available calls by range
         var nearbyCalls = new List<OpenCallInList>();
         foreach (var call in availableCalls)

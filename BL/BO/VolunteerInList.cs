@@ -1,6 +1,8 @@
-﻿namespace BO;
+﻿using System.ComponentModel;
 
-public class VolunteerInList
+namespace BO;
+
+public class VolunteerInList 
 {
     public int Id { get; init; }
     public string? FullName { get; set; }
@@ -10,6 +12,16 @@ public class VolunteerInList
     public int ExpiredCalls { get; set; }
     public int? CurrentCallId { get; set; }
     public CallType CallType { get; set; }
+
+    //------------------------------------------------ I added this so we could change the datagrid in VolunteerListWindow to show if the coordinates are missing
+    // Add Nullable Latitude and Longitude properties
+    public double? Latitude { get; set; }
+    public double? Longitude { get; set; }
+
+    // Property to check if coordinates are missing
+    public bool IsMissingCoordinates => Latitude == null || Longitude == null;
+    //------------------------------------------------
+
 
     public override string ToString()
     {

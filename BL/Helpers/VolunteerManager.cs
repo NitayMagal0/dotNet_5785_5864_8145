@@ -1,5 +1,8 @@
-﻿using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using System.Text.RegularExpressions;
+using BlImplementation;
+using DalApi;
 
 namespace Helpers;
 
@@ -8,8 +11,115 @@ internal class VolunteerManager
     private static readonly DalApi.IDal _dal = DalApi.Factory.Get;
     internal static ObserverManager Observers = new(); //stage 5 
 
+    private static readonly Random s_rand = new();
+    private static int s_simulatorCounter = 0;
 
 
+    internal static void SimulateVolunteerActivities()
+    {
+        var callManager = new BlImplementation.CallImplementation(); // we need this to use callimplementation functions
+        Thread.CurrentThread.Name = $"Simulator{++s_simulatorCounter}";
+
+        // Retrieve all active volunteers
+        List<DO.Volunteer> activeVolunteers;
+        lock (AdminManager.BlMutex)
+        {
+            activeVolunteers = _dal.Volunteer.ReadAll(v => v.IsActive).ToList();
+        }
+
+        foreach (var volunteer in activeVolunteers)
+        {
+            // Volunteer has a call in progress
+            var currentCall = VolunteerManager.GetCurrentCallInProgress(volunteer.Id);
+
+            // if the volunteer doesnt have a call in progress - 
+            // 20% chance to assign a new call to the volunteer
+            if (currentCall==null)
+            {
+                // Volunteer does not have a call in progress
+                // 20% chance to assign a new call
+                if (s_rand.Next(1, 101) <= 20)
+                {
+                    // Retrieve open calls, Converted to list so we can use the count function in selectCall
+                    var openCalls = callManager.GetAvailableOpenCallsForVolunteer(volunteer.Id,null,null).ToList();
+
+                    if (openCalls.Any())
+                    {
+                        // Randomly select a call for the volunteer
+                        var selectedCall = openCalls[s_rand.Next(openCalls.Count())];
+                        callManager.AssignCallToVolunteer(volunteer.Id, selectedCall.Id);
+                    }
+                }
+            }
+            // If the volunteer has a call in progress - 
+            // If enough time has passed since the start of the treatment - close the call
+
+            else
+            {
+                // Calculate the time since the call was opened
+                TimeSpan timeSinceStart = AdminManager.Now - currentCall.OpeningTime;
+
+
+                // Calculate the air distance between the volunteer and the call
+                double airDistance = Helpers.Tools.CalculateAirDistance(
+                 (volunteer.Latitude ?? 0.0, volunteer.Longitude ?? 0.0), // Starting point
+                 (currentCall.Latitude ?? 0.0, currentCall.Longitude ?? 0.0) // Destination point
+);
+
+                // Calculate the estimated treatment time based on the air distance between the volunteer and the call location.
+                // - The base treatment time is derived from the air distance (in kilometers), assuming 2 minutes of treatment/travel time per kilometer: TimeSpan.FromMinutes(airDistance * 2).
+                // - A random additional time (between 5 and 14 minutes) is added to simulate variability in treatment or travel time: TimeSpan.FromMinutes(s_rand.Next(5, 15)).
+                // - The total estimated treatment time is the sum of the base time and the random additional time.
+                // For example, if the airDistance is 10 km and the random number is 7, the estimated treatment time will be: (10 * 2) + 7 = 27 minutes.
+                TimeSpan estimatedTreatmentTime = TimeSpan.FromMinutes(airDistance * 2) + TimeSpan.FromMinutes(s_rand.Next(5, 15));
+
+                if (timeSinceStart >= estimatedTreatmentTime)
+                    {
+                    // Mark the call as completed
+                    
+                    callManager.MarkAssignmentAsCompleted(volunteer.Id, currentCall.Id);
+
+                    }
+                    else
+                    {
+                        // 10% chance to cancel the current call
+                        if (s_rand.Next(1, 101) <= 10)
+                        {
+                            callManager.CancelAssignment(volunteer.Id, currentCall.Id);
+                        }
+                    }
+
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks if a volunteer has a call in progress.
+    /// </summary>
+    /// <param name="volunteerId"></param>
+    /// <returns></returns>
+    internal static bool DoesVolunteerHaveCallInProgress(int volunteerId)
+        {
+        DO.Assignment assignment;
+        lock (AdminManager.BlMutex)
+            assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
+                                                  _dal.Call.Read(a.CallId).MaxCompletionTime > AdminManager.Now);
+        return assignment != null;
+    }
+
+    internal static BO.Call GetCurrentCallInProgress(int volunteerId)
+    {
+        DO.Assignment assignment;
+        lock (AdminManager.BlMutex)
+            assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
+                                                  _dal.Call.Read(a.CallId).MaxCompletionTime > AdminManager.Now);
+        if (assignment == null)
+            return null;
+        DO.Call call;
+        lock (AdminManager.BlMutex)
+            call = _dal.Call.Read(assignment.CallId);
+        return CallManager.ConvertCallToBO(call);
+    }
     /// <summary>
     /// Convert BO.Volunteer to DO.Volunteer
     /// </summary>
@@ -83,7 +193,9 @@ internal class VolunteerManager
             throw new BO.BlNullReferenceException("volunteer can't be null");
 
         // Retrieve all assignments for the volunteer at once
-        var assignments = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id);
+        IEnumerable<DO.Assignment> assignments;
+        lock (AdminManager.BlMutex)
+             assignments = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteer.Id);
 
         // Calculate handled, canceled, and expired calls in memory
         var handledCallsCount = assignments.Count(a => a.AssignmentStatus.HasValue &&
@@ -157,7 +269,9 @@ internal class VolunteerManager
     /// <exception cref="Exception">Thrown when the volunteer does not exist.</exception>
     internal BO.Volunteer GetVolunteerDetails(int id)
     {
-        var volunteer = _dal.Volunteer.Read(id);
+        DO.Volunteer volunteer;
+        lock (AdminManager.BlMutex)
+             volunteer = _dal.Volunteer.Read(id);
         if (volunteer == null)
             throw new Exception("Volunteer doesn't exist");//Retrive without the call in progress
         return ConvertVolunteerToBO(volunteer);
@@ -298,11 +412,16 @@ internal class VolunteerManager
     internal static BO.CallInProgress GetCallInProgress(int volunteerId)
     {
         // Retrieve the volunteer and related assignment in one go
-        var volunteer = _dal.Volunteer.Read(volunteerId);
+        DO.Volunteer volunteer;
+        lock (AdminManager.BlMutex)
+             volunteer = _dal.Volunteer.Read(volunteerId);
         if (volunteer == null)
             throw new Exception("Volunteer not found");
 
-        var assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
+        // Retrieve the assignment for the volunteer
+        DO.Assignment assignment;
+        lock (AdminManager.BlMutex)
+             assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
                                                    _dal.Call.Read(a.CallId).MaxCompletionTime > AdminManager.Now);
 
         if (assignment == null)
@@ -311,7 +430,9 @@ internal class VolunteerManager
         try
         {
             // Retrieve the call details once
-            var call = _dal.Call.Read(assignment.CallId);
+            DO.Call call;
+            lock (AdminManager.BlMutex)
+                 call = _dal.Call.Read(assignment.CallId);
 
             // Prepare the distance type
             BO.DistanceType distanceType = MapDistanceType(volunteer.DistanceType);

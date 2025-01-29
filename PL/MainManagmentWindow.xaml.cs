@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PL;
 
@@ -106,22 +107,34 @@ public partial class MainWindow : Window
         s_bl.Admin.RemoveConfigObserver(configObserver);
     }
 
+    private volatile DispatcherOperation? _observerOperationClock = null; //stage 7
     /// <summary>
     /// Observer for clock updates.
     /// </summary>
     private void clockObserver()
     {
-        // Update the CurrentTime dependency property
-        CurrentTime = s_bl.Admin.GetClock();
+        if (_observerOperationClock is null || _observerOperationClock.Status == DispatcherOperationStatus.Completed)
+            _observerOperationClock = Dispatcher.BeginInvoke(() =>
+            {
+                // Update the CurrentTime dependency property
+                CurrentTime = s_bl.Admin.GetClock();
+            });
+
+       
     }
 
+    private volatile DispatcherOperation? _observerOperationConfig = null; //stage 7
     /// <summary>
     /// Observer for configuration updates.
     /// </summary>
     private void configObserver()
     {
-        // Update the MaxRange dependency property
-        MaxRange = s_bl.Admin.GetMaxRange();
+        if (_observerOperationConfig is null || _observerOperationConfig.Status == DispatcherOperationStatus.Completed)
+            _observerOperationConfig = Dispatcher.BeginInvoke(() =>
+            {
+                // Update the MaxRange dependency property
+                MaxRange = s_bl.Admin.GetMaxRange();
+            });
     }
 
     /// <summary>

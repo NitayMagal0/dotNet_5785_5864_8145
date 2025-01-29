@@ -13,6 +13,9 @@ internal class AdminImplementation : IAdmin
     /// <exception cref="ArgumentOutOfRangeException">Thrown when an unsupported time unit is provided.</exception>
     public void ForwardClock(BO.TimeUnit unit)
     {
+        // Check if the simulator is running
+        AdminManager.ThrowOnSimulatorIsRunning();
+
         switch (unit)
         {
             case BO.TimeUnit.second:
@@ -55,6 +58,7 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void InitializeDB() //stage 4
     {
+        // Check if the simulator is running
         AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.InitializeDB(); //stage 7
     }
@@ -65,10 +69,29 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     public void ResetDB() //stage 4
     {
+        // Check if the simulator is running
         AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
         AdminManager.ResetDB(); //stage 7
     }
-
+    /// <summary>
+    /// Starts the simulator with the specified interval.
+    /// </summary>
+    /// <param name="interval">The interval in milliseconds at which the simulator should run.</param>
+    public void StartSimulator(int interval)  //stage 7
+    {
+        // Check if the simulator is running
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        // Start the simulator with the given interval
+        AdminManager.Start(interval); //stage 7
+    }
+    /// <summary>
+    /// Stops the simulator.
+    /// </summary>
+    public void StopSimulator()
+    {
+        // Stop the simulator
+        AdminManager.Stop(); //stage 7
+    }
 
     /// <summary>
     /// Retrieves the maximum range for a call.
@@ -81,7 +104,13 @@ internal class AdminImplementation : IAdmin
     /// </summary>
     /// <param name="maxRange">The new maximum time range for a call.</param>
 
-    public void SetMaxRange(TimeSpan maxRange) => AdminManager.RiskRange = maxRange;
+    public void SetMaxRange(TimeSpan maxRange)
+    {
+        // Check if the simulator is running
+        AdminManager.ThrowOnSimulatorIsRunning();
+
+        AdminManager.RiskRange = maxRange;
+    }
 
 
     #region Stage 5

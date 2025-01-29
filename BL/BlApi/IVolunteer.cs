@@ -14,6 +14,7 @@ public interface IVolunteer : IObservable
     void AddVolunteer(BO.Volunteer vol);
     int GetIdByName(string name);
     public string GetNameById(int id);
+    Task UpdateCoordinatesForVolunteerAddressAsync(DO.Volunteer doVolunteer);
 
 }
 

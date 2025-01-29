@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PL.Volunteer;
 
@@ -69,12 +70,18 @@ public partial class VolunteerListWindow : Window
             : s_bl?.Volunteer.GetVolunteersByCallType(searchFilter);
     }
 
+    private volatile DispatcherOperation? _observerOperation = null; //stage 7
+
     /// <summary>
     /// Observer method to update the volunteer list.
     /// </summary>
     private void volunteerListObserver()
     {
-        queryVolunteerList();
+        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+            _observerOperation = Dispatcher.BeginInvoke(() =>
+            {
+                queryVolunteerList();
+            });
     }
 
     /// <summary>

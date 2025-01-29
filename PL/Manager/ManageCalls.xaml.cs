@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 
 namespace PL.Manager
@@ -96,12 +97,20 @@ namespace PL.Manager
                 : s_bl?.Call.GetFilteredAndSortedCalls(null, searchFilter, null);
         }
 
+
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
         /// <summary>
-        /// Observer method to update the call list.
+        /// 
+        /// method to update the call list.
         /// </summary>
         private void CallListObserver()
-        {
-            QueryCallList();
+        { 
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    QueryCallList();
+                });
+
         }
 
         /// <summary>

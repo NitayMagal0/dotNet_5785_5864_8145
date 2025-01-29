@@ -20,11 +20,15 @@ internal class AssignmentManager
 
     internal static void PeriodicAssignmentsUpdates(DateTime oldClock, DateTime newClock)
     {
-        var assignments = _dal.Assignment.ReadAll().Where(a => a.ActualEndTime.HasValue && a.ActualEndTime.Value < newClock);
+        IEnumerable<Assignment> assignments;
+        lock (AdminManager.BlMutex)
+             assignments = _dal.Assignment.ReadAll().Where(a => a.ActualEndTime.HasValue && a.ActualEndTime.Value < newClock);
 
         foreach (var assignment in assignments)
         {
-            var call = _dal.Call.Read(assignment.CallId);
+            DO.Call call;
+            lock (AdminManager.BlMutex)
+                 call = _dal.Call.Read(assignment.CallId);
 
             if (call == null)
             {
@@ -44,7 +48,8 @@ internal class AssignmentManager
                     ActualEndTime = newClock,
                     AssignmentStatus = DO.AssignmentStatus.ExpiredCancellation
                 };
-                _dal.Assignment.Update(updatedAssignment);
+                lock (AdminManager.BlMutex)
+                    _dal.Assignment.Update(updatedAssignment);
                 AssignmentManager.Observers.NotifyItemUpdated(updatedAssignment.Id);  //stage 5
                 AssignmentManager.Observers.NotifyListUpdated();  //stage 5
                 CallManager.PeriodicCallsUpdates(oldClock, newClock);

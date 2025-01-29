@@ -219,6 +219,7 @@
                         FontFamily="Montserrat"
                         Cursor="Hand"                           
                         Margin="0,50,0,0"
+                        IsDefault="True"
                         Click="btnLogin_Click">
                         <Button.Style>
                             <Style TargetType="Button">

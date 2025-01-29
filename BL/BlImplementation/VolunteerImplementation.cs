@@ -3,9 +3,11 @@ using Helpers;
 using BlApi;
 using BO;
 using DO;
+using DalApi;
+using System;
+using DalApi;
 
-//need to fix the exeptions and getvolunteerdetails
-internal class VolunteerImplementation : IVolunteer
+internal class VolunteerImplementation : BlApi.IVolunteer
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
@@ -17,43 +19,57 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">Thrown when the volunteer cannot be added.</exception>
     public void AddVolunteer(BO.Volunteer volunteerToAdd)
     {
-        //check if the volunteer is valid
-        try
-        {
-            VolunteerManager.IsValidVolunteer(volunteerToAdd);
-        }
-        catch (Exception ex)
-        {
+        // 🔹 Check if the simulator is running before proceeding
+        AdminManager.ThrowOnSimulatorIsRunning();
 
-            throw new Exception(ex.Message);
+        // 🔹 Validate the volunteer details to ensure they meet all criteria
+        if (!VolunteerManager.IsValidVolunteer(volunteerToAdd))
+        {
+            throw new Exception("Invalid volunteer details.");
         }
-        // Encode the password before adding the volunteer
+
+        // 🔹 Encode the password before saving the volunteer to the database
+        // This ensures security by storing an encoded version instead of plain text.
         volunteerToAdd.Password = VolunteerManager.EncodePassword(volunteerToAdd.Password);
-        // Convert the BO to DO and add the volunteer
-        var volunteer = VolunteerManager.ConvertVolunteerToDO(volunteerToAdd);
+
+        // 🔹 Convert the Business Object (BO) volunteer to a Data Object (DO)
+        // Note: We initially **do not compute** the coordinates in this step.
+        var doVolunteer = VolunteerManager.ConvertVolunteerToDO(volunteerToAdd);
+
+        // 🔹 Set initial Latitude & Longitude to `null`
+        // This allows us to store the volunteer immediately without waiting for coordinate calculations.
+        doVolunteer = doVolunteer with { Latitude = null, Longitude = null };
 
         try
         {
-            var coordinates = Tools.GetCoordinates(volunteer.FullAddress);
-            var updatedVolunteer = volunteer with
-            {
-                Latitude = coordinates.Item1,
-                Longitude = coordinates.Item2
-            };
+            // 🔹 Lock to ensure thread safety when interacting with the DAL
+            // This prevents race conditions when multiple threads try to modify data.
+            lock (AdminManager.BlMutex)
+                _dal.Volunteer.Create(doVolunteer);
 
-            _dal.Volunteer.Create(updatedVolunteer);
-            VolunteerManager.Observers.NotifyListUpdated(); //stage 5
+            // 🔹 Notify observers that a new volunteer was added
+            // This ensures the UI and other components are updated in response to the change.
+            VolunteerManager.Observers.NotifyListUpdated();
+
+            // 🔹 Compute the coordinates asynchronously (without blocking the main process)
+            // We call `UpdateCoordinatesForVolunteerAddressAsync`, but **do not wait for it** (`_ =` ignores the return value).
+            // This allows the volunteer to be added immediately, while the coordinates update in the background.
+            _ = UpdateCoordinatesForVolunteerAddressAsync(doVolunteer);
         }
         catch (Exception ex)
         {
-            throw new BlInvalidOperationException(ex.Message);
+            // 🔹 Catch any errors that occur while adding the volunteer
+            // If the DAL throws an exception, we wrap it in a higher-level exception to provide better error handling.
+            throw new BlInvalidOperationException($"Failed to add volunteer: {ex.Message}");
         }
     }
 
 
+
     public string GetNameById(int id)
     {
-        return VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id)).FullName;
+        lock (AdminManager.BlMutex)
+            return VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id)).FullName;
     }
     /// <summary>
     /// Deletes a volunteer from the system.
@@ -63,13 +79,16 @@ internal class VolunteerImplementation : IVolunteer
     public void DeleteVolunteer(int id)
     {
         //need to check if he has a call in progress of if he never had a call
-        var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
+        BO.Volunteer volunteer = null;
+        lock (AdminManager.BlMutex)
+             volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
         //Check if the volunteer has a call in progress (might not be working cause when we convert to BO im not sure whats happening to CallInProgress)
         if (volunteer.CallInProgress == null)
         {//the document says to check if he either has a call in progress or never had a call so i think its enough to check if he has a call in progress
             try
             {
-                _dal.Volunteer.Delete(id);
+                lock (AdminManager.BlMutex)
+                    _dal.Volunteer.Delete(id);
                 VolunteerManager.Observers.NotifyListUpdated();  //stage 5  	
             }
             catch (Exception ex)
@@ -94,10 +113,11 @@ internal class VolunteerImplementation : IVolunteer
     {
         try
         {
-            //var dovolunteer = _dal.Volunteer.Read(id);
-            //Console.WriteLine("Name "+dovolunteer.FullName);
+
             // Step 1: Retrieve the volunteer details from the DAL
-            var volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
+            BO.Volunteer volunteer = null;
+            lock (AdminManager.BlMutex)
+                 volunteer = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(id));
             // Step 2: Retrieve the call in progress for the volunteer
             try
             {
@@ -143,11 +163,14 @@ internal class VolunteerImplementation : IVolunteer
         try
         {
             // Retrieve and convert all volunteers from the DAL
-            var volunteers = _dal.Volunteer.ReadAll()
-                .Select(VolunteerManager.ConvertVolunteerToBO)
-                .Where(v => !isActive.HasValue || v.IsActive == isActive)
-                .ToList();
-
+            IEnumerable<BO.Volunteer> volunteers = null;
+            lock (AdminManager.BlMutex)
+            {
+                volunteers = _dal.Volunteer.ReadAll()
+               .Select(VolunteerManager.ConvertVolunteerToBO)
+               .Where(v => !isActive.HasValue || v.IsActive == isActive)
+               .ToList();
+            }
             // Map to VolunteerInList objects
             var volunteersInList = volunteers.Select(v => new BO.VolunteerInList
             {
@@ -158,7 +181,9 @@ internal class VolunteerImplementation : IVolunteer
                 CanceledCalls = v.CanceledCalls,
                 ExpiredCalls = v.ExpiredCalls,
                 CurrentCallId = VolunteerManager.GetCallInProgress(v.Id)?.CallId,
-                CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined
+                CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined,
+                Latitude = v.Latitude,  
+                Longitude = v.Longitude
             });
 
             // Apply sorting
@@ -198,10 +223,13 @@ internal class VolunteerImplementation : IVolunteer
         try
         {
             // Retrieve and convert all volunteers from the DAL
-            var volunteers = _dal.Volunteer.ReadAll()
-                .Select(VolunteerManager.ConvertVolunteerToBO)
-                .ToList();
-
+            IEnumerable<BO.Volunteer> volunteers = null;
+            lock (AdminManager.BlMutex)
+            {
+                volunteers = _dal.Volunteer.ReadAll()
+               .Select(VolunteerManager.ConvertVolunteerToBO)
+               .ToList();
+            }
             // Map to VolunteerInList objects and filter by the specified call type
             var volunteersInList = volunteers.Select(v => new BO.VolunteerInList
                 {
@@ -212,8 +240,10 @@ internal class VolunteerImplementation : IVolunteer
                     CanceledCalls = v.CanceledCalls,
                     ExpiredCalls = v.ExpiredCalls,
                     CurrentCallId = VolunteerManager.GetCallInProgress(v.Id)?.CallId,
-                    CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined
-                })
+                    CallType = v.CallInProgress?.CallType ?? BO.CallType.Undefined,
+                      Latitude = v.Latitude,
+                 Longitude = v.Longitude
+            })
                 .Where(v => v.CallType == callType)
                 .OrderBy(v => v.Id);
 
@@ -239,8 +269,12 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">If there is no volunteer with this name of if the password is incorrect</exception>
     public BO.Role SignIn(int id, string password)
     {
-        var volunteers = _dal.Volunteer.ReadAll().ToList();
-        var volunteer = volunteers.FirstOrDefault(v => v.Id == id);
+        IEnumerable<DO.Volunteer> volunteers = null;
+        lock (AdminManager.BlMutex)
+             volunteers = _dal.Volunteer.ReadAll().ToList();
+        DO.Volunteer volunteer = null;
+        lock (AdminManager.BlMutex)
+             volunteer = volunteers.FirstOrDefault(v => v.Id == id);
         if (volunteer == null)
             throw new Exception("Volunteer doesn't exist");
         if (VolunteerManager.DecodePassword(volunteer.Password) != password)
@@ -256,45 +290,96 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="Exception">Thrown when the volunteer cannot be updated.</exception>
     public void UpdateVolunteer(int requesterId, BO.Volunteer updatedVolunteer)
     {
-        var requester = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(requesterId));
+        // Ensure the simulator is not running before making changes
+        AdminManager.ThrowOnSimulatorIsRunning();
+
+        // Retrieve the requester's details (admin or volunteer trying to update their own info)
+        BO.Volunteer requester;
+        lock (AdminManager.BlMutex)
+            requester = VolunteerManager.ConvertVolunteerToBO(_dal.Volunteer.Read(requesterId));
+
         if (requester == null)
-        {
             throw new UnauthorizedAccessException("Requester not found");
-        }
+
         bool isAdmin = requester.Role == BO.Role.Manager;
         bool isVolunteer = updatedVolunteer.Id == requesterId;
-        //Check if the requester is an Admin/the volunteer himself
+
+        // Ensure that only an admin or the volunteer themselves can perform the update
         if (!isAdmin && !isVolunteer)
-        {
-            throw new UnauthorizedAccessException("The requester is not authorized to cancel this assignment");
-        }
+            throw new UnauthorizedAccessException("The requester is not authorized to update this volunteer");
 
-        //Check if the requester is an Admin and the role of the volunteer is different
+        // Prevent non-admin volunteers from changing their role
         if (!isAdmin && requester.Role != updatedVolunteer.Role)
-            throw new Exception("Non Admin volunteer can't change his role");
+            throw new Exception("Non-admin volunteers cannot change their role");
 
-        //Check if the updated volunteer is valid
+        // Validate volunteer details before proceeding with the update
         if (!VolunteerManager.IsValidVolunteer(updatedVolunteer))
             throw new Exception("Invalid volunteer details");
 
-        updatedVolunteer.Latitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item1;
-        updatedVolunteer.Longitude = Tools.GetCoordinates(updatedVolunteer.FullAddress).Item2;
-        // Encode the password before updating the volunteer
+        // Encode password before storing it in the database
         updatedVolunteer.Password = VolunteerManager.EncodePassword(updatedVolunteer.Password);
 
+        // Convert BO.Volunteer to DO.Volunteer (without computing coordinates)
+        DO.Volunteer doVolunteer = VolunteerManager.ConvertVolunteerToDO(updatedVolunteer);
+
+        // Ensure that latitude and longitude are set to null initially
+        // This prevents outdated or incorrect coordinates from being used before recalculating
+        doVolunteer = doVolunteer with { Latitude = null, Longitude = null };
 
         try
         {
-            _dal.Volunteer.Update(VolunteerManager.ConvertVolunteerToDO(updatedVolunteer));
-            VolunteerManager.Observers.NotifyItemUpdated(updatedVolunteer.Id);  //stage 5
-            VolunteerManager.Observers.NotifyListUpdated();  //stage 5
+            // First update: Save the volunteer in the database **without coordinates**
+            lock (AdminManager.BlMutex)
+                _dal.Volunteer.Update(doVolunteer);
+
+            // Notify observers that the volunteer list has been updated (UI or other components)
+            VolunteerManager.Observers.NotifyItemUpdated(updatedVolunteer.Id);
+            VolunteerManager.Observers.NotifyListUpdated();
         }
         catch (Exception ex)
         {
             throw new Exception("Couldn't update the volunteer", ex);
         }
 
+        // Second update (async): Compute and update coordinates in the background
+        // `_ =` means we **fire-and-forget** this task without waiting for it
+        _ = UpdateCoordinatesForVolunteerAddressAsync(doVolunteer);
     }
+
+    /// <summary>
+    /// Asynchronously retrieves and updates the volunteer's coordinates after the initial update.
+    /// This ensures that the database is updated as soon as the coordinates are available.
+    /// </summary>
+    /// <param name="doVolunteer">The volunteer entity that needs coordinates.</param>
+    public async Task UpdateCoordinatesForVolunteerAddressAsync(DO.Volunteer doVolunteer)
+    {
+        if (!string.IsNullOrWhiteSpace(doVolunteer.FullAddress))
+        {
+            try
+            {
+                // Asynchronously fetch the coordinates based on the given address
+                (double calcLatitude, double calcLongitude) = await Tools.GetCoordinatesAsync(doVolunteer.FullAddress);
+
+                // Update the volunteer with the newly calculated coordinates
+                // Using `with` ensures immutability for the record type
+                doVolunteer = doVolunteer with { Latitude = calcLatitude, Longitude = calcLongitude };
+
+                // Save the updated volunteer (with coordinates) to the database
+                lock (AdminManager.BlMutex)
+                    _dal.Volunteer.Update(doVolunteer);
+
+                // Notify observers that the volunteer data has changed again
+                VolunteerManager.Observers.NotifyItemUpdated(doVolunteer.Id);
+                VolunteerManager.Observers.NotifyListUpdated();
+            }
+            catch (Exception ex)
+            {
+                // Log the error but do not interrupt the main update process
+                Console.WriteLine($"Failed to update coordinates for volunteer {doVolunteer.Id}: {ex.Message}");
+            }
+        }
+    }
+
 
 
     #region Stage 5

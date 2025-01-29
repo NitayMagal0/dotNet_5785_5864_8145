@@ -35,7 +35,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
         <Style x:Key="DeleteButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#FF5252"/>
             <Setter Property="Foreground" Value="White"/>
@@ -127,6 +126,16 @@
                   RowDetailsVisibilityMode="VisibleWhenSelected"
                   SelectedItem="{Binding SelectedVolunteer}" 
                   MouseDoubleClick="VolunteerList_MouseDoubleClick">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <!-- If IsMissingCoordinates is True, change the background to LightCoral (Red) -->
+                        <DataTrigger Binding="{Binding IsMissingCoordinates}" Value="True">
+                            <Setter Property="Background" Value="LightCoral"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="ID" Width="Auto"/>
                 <DataGridTextColumn Binding="{Binding FullName}" Header="FULL NAME" Width="Auto"/>

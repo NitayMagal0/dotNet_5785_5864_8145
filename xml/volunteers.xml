@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Volunteer>
     <Id>972221634</Id>
@@ -81,8 +81,8 @@
     <Longitude>34.7723089</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
-    <DistanceType>AirDistance</DistanceType>
     <MaxDistanceForCall>500000000</MaxDistanceForCall>
+    <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>
     <Id>356257097</Id>
@@ -291,6 +291,7 @@
     <Longitude>34.979595</Longitude>
     <Role>Volunteer</Role>
     <IsActive>true</IsActive>
+    <MaxDistanceForCall xsi:nil="true" />
     <DistanceType>AirDistance</DistanceType>
   </Volunteer>
   <Volunteer>

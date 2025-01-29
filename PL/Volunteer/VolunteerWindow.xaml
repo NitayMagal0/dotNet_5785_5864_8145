@@ -177,6 +177,7 @@
                         Margin="0,30,0,0"
                         Height="45" 
                         Width="200"
+                        IsDefault="True"
                         Content="{Binding ButtonText}"
                         Click="btnAddUpdate_Click"
                         Background="#3498DB"

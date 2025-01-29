@@ -165,7 +165,7 @@ internal static class AdminManager //stage 4
         {
             s_dal.ResetDB();
             AdminManager.UpdateClock(AdminManager.Now); //stage 5 - needed since we want the label on Pl to be updated
-            AdminManager.MaxRange = AdminManager.MaxRange; // stage 5 - needed to update PL 
+            //AdminManager.MaxRange = AdminManager.MaxRange; // stage 5 - needed to update PL 
         }
     }
 
@@ -175,7 +175,7 @@ internal static class AdminManager //stage 4
         {
             DalTest.Initialization.Do();
             AdminManager.UpdateClock(AdminManager.Now);  //stage 5 - needed since we want the label on Pl to be updated
-            AdminManager.MaxRange = AdminManager.MaxRange; // stage 5 - needed for update the PL 
+            //AdminManager.MaxRange = AdminManager.MaxRange; // stage 5 - needed for update the PL 
         }
     }
 
@@ -187,6 +187,9 @@ internal static class AdminManager //stage 4
     /// <param name="newClock">updated clock value</param>
     internal static void UpdateClock(DateTime newClock) //stage 4-7
     {
+        // Check if the simulator is running
+        AdminManager.ThrowOnSimulatorIsRunning();
+
         var oldClock = s_dal.Config.Clock; //stage 4
         s_dal.Config.Clock = newClock; //stage 4
 
@@ -276,8 +279,10 @@ internal static class AdminManager //stage 4
             if (_simulateTask is null || _simulateTask.IsCompleted) //stage 7
                 _simulateTask = Task.Run(() =>
                 {
-                    VolunteerManager.SimulateCourseRegistrationAndGrade();
-                    CallManager.SimulateCallHandling();
+
+                    //I DONT THINK WE NEED THESE
+                   // VolunteerManager.SimulateCourseRegistrationAndGrade();
+                  //  CallManager.SimulateCallHandling();
                     VolunteerManager.SimulateVolunteerActivities();
                 });
 
