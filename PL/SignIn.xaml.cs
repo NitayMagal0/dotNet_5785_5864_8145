@@ -16,7 +16,7 @@ namespace PL
         /// Identifies the ButtonText dependency property.
         /// </summary>
         public static readonly DependencyProperty ButtonTextProperty =
-            DependencyProperty.Register("ButtonText", typeof(string), typeof(SignIn), new PropertyMetadata("Sign In"));
+            DependencyProperty.Register("ButtonText", typeof(string), typeof(SignIn), new PropertyMetadata("Log In"));
 
         /// <summary>
         /// Gets or sets the text for the button.

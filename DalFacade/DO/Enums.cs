@@ -35,7 +35,7 @@ public enum CallType
 
 
 /// <summary>
-/// Enum to define the status of the assignment.
+/// Enum to define the status of the how the assignment was treated.
 /// </summary>
 public enum AssignmentStatus
 {

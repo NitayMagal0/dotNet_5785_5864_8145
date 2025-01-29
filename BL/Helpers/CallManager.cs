@@ -84,6 +84,35 @@ internal class CallManager
             CallAssigns = AssignsCall(call.Id)
         };
     }
+
+    /// <summary>
+    /// Retrieves the call in progress for a volunteer by their ID.
+    /// </summary>
+    /// <param name="volunteerId"></param>
+    /// <returns></returns>
+    internal static BO.Call GetCurrentCallInProgress(int volunteerId)
+    {
+        // Retrieve all assignments for the volunteer
+        IEnumerable<DO.Assignment> assignments;
+        lock (AdminManager.BlMutex)
+            assignments = _dal.Assignment.ReadAll(a => a.VolunteerId == volunteerId &&
+                                                      _dal.Call.Read(a.CallId).MaxCompletionTime > AdminManager.Now);
+        // If the volunteer has no assignments, return null
+        if (assignments == null)
+            return null;
+
+        //Make sure the current call is not completed
+        var currentAssignment = assignments.FirstOrDefault(a => CallManager.GetCallStatus(a.CallId) != BO.CallStatus.Completed);
+
+        // If the volunteer has no current open assignments, return null
+        if (currentAssignment == null)
+            return null;
+
+        DO.Call call;
+        lock (AdminManager.BlMutex)
+            call = _dal.Call.Read(currentAssignment.CallId);
+        return CallManager.ConvertCallToBO(call);
+    }
     public static BO.CallType MapCallType(DO.CallType callType)
     {
         return callType switch

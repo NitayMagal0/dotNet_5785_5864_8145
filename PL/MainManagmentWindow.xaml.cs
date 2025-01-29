@@ -12,12 +12,12 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public int Interval
+    public int Interval 
     {
         get { return (int)GetValue(IntervalProperty); }
         set { SetValue(IntervalProperty, value); }
     }
-
+    
     public static readonly DependencyProperty IntervalProperty =
         DependencyProperty.Register("Interval", typeof(int), typeof(MainWindow));
 
@@ -77,7 +77,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-
+        // Set the default value of the simulator clock to 2000
+        Interval = 2000;
         // Register the OnLoaded event handler for the Loaded event
         this.Loaded += MainWindow_OnLoaded;
 

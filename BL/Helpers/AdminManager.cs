@@ -188,7 +188,8 @@ internal static class AdminManager //stage 4
     internal static void UpdateClock(DateTime newClock) //stage 4-7
     {
         // Check if the simulator is running
-        AdminManager.ThrowOnSimulatorIsRunning();
+        //AdminManager.ThrowOnSimulatorIsRunning(); 
+        //^^I COMMENTED THIS AND THE SIMULATOR IS RUNNING MAYBE WE NEED TO ADD IT LATER^^
 
         var oldClock = s_dal.Config.Clock; //stage 4
         s_dal.Config.Clock = newClock; //stage 4
@@ -277,14 +278,8 @@ internal static class AdminManager //stage 4
             //Add calls here to any logic simulation that was required in stage 7
             //for example: course registration simulation
             if (_simulateTask is null || _simulateTask.IsCompleted) //stage 7
-                _simulateTask = Task.Run(() =>
-                {
-
-                    //I DONT THINK WE NEED THESE
-                   // VolunteerManager.SimulateCourseRegistrationAndGrade();
-                  //  CallManager.SimulateCallHandling();
-                    VolunteerManager.SimulateVolunteerActivities();
-                });
+                _simulateTask = Task.Run(() => VolunteerManager.SimulateVolunteerActivities());
+              
 
 
             try

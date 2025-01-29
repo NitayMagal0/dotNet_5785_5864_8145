@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using BlImplementation;
@@ -30,7 +31,7 @@ internal class VolunteerManager
         foreach (var volunteer in activeVolunteers)
         {
             // Volunteer has a call in progress
-            var currentCall = VolunteerManager.GetCurrentCallInProgress(volunteer.Id);
+            var currentCall = CallManager.GetCurrentCallInProgress(volunteer.Id);
 
             // if the volunteer doesnt have a call in progress - 
             // 20% chance to assign a new call to the volunteer
@@ -51,14 +52,13 @@ internal class VolunteerManager
                     }
                 }
             }
+
             // If the volunteer has a call in progress - 
             // If enough time has passed since the start of the treatment - close the call
-
             else
             {
                 // Calculate the time since the call was opened
                 TimeSpan timeSinceStart = AdminManager.Now - currentCall.OpeningTime;
-
 
                 // Calculate the air distance between the volunteer and the call
                 double airDistance = Helpers.Tools.CalculateAirDistance(
@@ -67,11 +67,11 @@ internal class VolunteerManager
 );
 
                 // Calculate the estimated treatment time based on the air distance between the volunteer and the call location.
-                // - The base treatment time is derived from the air distance (in kilometers), assuming 2 minutes of treatment/travel time per kilometer: TimeSpan.FromMinutes(airDistance * 2).
+                // - The base treatment time is derived from the air distance (in kilometers), assuming 5 minutes of treatment/travel time per kilometer: TimeSpan.FromMinutes(airDistance * 5).
                 // - A random additional time (between 5 and 14 minutes) is added to simulate variability in treatment or travel time: TimeSpan.FromMinutes(s_rand.Next(5, 15)).
                 // - The total estimated treatment time is the sum of the base time and the random additional time.
-                // For example, if the airDistance is 10 km and the random number is 7, the estimated treatment time will be: (10 * 2) + 7 = 27 minutes.
-                TimeSpan estimatedTreatmentTime = TimeSpan.FromMinutes(airDistance * 2) + TimeSpan.FromMinutes(s_rand.Next(5, 15));
+                // For example, if the airDistance is 10 km and the random number is 7, the estimated treatment time will be: (10 * 5) + 7 = 27 minutes.
+                TimeSpan estimatedTreatmentTime = TimeSpan.FromMinutes(airDistance * 5) + TimeSpan.FromMinutes(s_rand.Next(5, 15));
 
                 if (timeSinceStart >= estimatedTreatmentTime)
                     {
@@ -107,19 +107,7 @@ internal class VolunteerManager
         return assignment != null;
     }
 
-    internal static BO.Call GetCurrentCallInProgress(int volunteerId)
-    {
-        DO.Assignment assignment;
-        lock (AdminManager.BlMutex)
-            assignment = _dal.Assignment.Read(a => a.VolunteerId == volunteerId &&
-                                                  _dal.Call.Read(a.CallId).MaxCompletionTime > AdminManager.Now);
-        if (assignment == null)
-            return null;
-        DO.Call call;
-        lock (AdminManager.BlMutex)
-            call = _dal.Call.Read(assignment.CallId);
-        return CallManager.ConvertCallToBO(call);
-    }
+    
     /// <summary>
     /// Convert BO.Volunteer to DO.Volunteer
     /// </summary>
