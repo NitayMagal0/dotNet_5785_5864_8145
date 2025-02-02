@@ -1,16 +1,22 @@
 ﻿using Helpers;
-
 namespace BlImplementation;
 using BlApi;
 using BO;
 using System;
 using System.Collections.Generic;
-using System.Text;
-
+/// <summary>
+/// Implementation of the ICall interface for managing Call entities in the BL (Business Logic) layer.
+/// </summary>
 internal class CallImplementation : ICall
 {
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
-    //
+    /// <summary>
+    /// Adds a minimal call with the specified details.
+    /// </summary>
+    /// <param name="CallType">The type of the call.</param>
+    /// <param name="Description">The description of the call.</param>
+    /// <param name="FullAddress">The full address of the call.</param>
+    /// <param name="MaxCompletionTime">The maximum completion time for the call.</param>
     public void MinAddCall(BO.CallType CallType, string Description, string FullAddress, DateTime? MaxCompletionTime)
     {
         // Check if the simulator is running
@@ -80,8 +86,10 @@ internal class CallImplementation : ICall
     }
 
 
-
-
+    /// <summary>
+    /// Adds a new call.
+    /// </summary>
+    /// <param name="call">The call entity to add.</param>
     public void AddCall(Call call)
     {
         // Check if the simulator is running
@@ -124,7 +132,11 @@ internal class CallImplementation : ICall
             throw new InvalidOperationException("Failed to add the call", ex);
         }
     }
-
+    /// <summary>
+    /// Assigns a call to a volunteer.
+    /// </summary>
+    /// <param name="volunteerId">The ID of the volunteer.</param>
+    /// <param name="callId">The ID of the call.</param>
     public void AssignCallToVolunteer(int volunteerId, int callId)
     {
         try
@@ -176,7 +188,11 @@ internal class CallImplementation : ICall
             throw new InvalidOperationException($"Failed to assign the call to the volunteer {ex.Message}");
         }
     }
-
+    /// <summary>
+    /// Cancels an assignment.
+    /// </summary>
+    /// <param name="requesterId">The ID of the requester.</param>
+    /// <param name="callId">The ID of the call.</param>
     public void CancelAssignment(int requesterId, int callId)
     {
         try
@@ -235,8 +251,10 @@ internal class CallImplementation : ICall
             throw new InvalidOperationException($"Failed to cancel the assignment - {ex.Message}");
         }
     }
-
-
+    /// <summary>
+    /// Deletes a call by its ID.
+    /// </summary>
+    /// <param name="callId">The ID of the call to delete.</param>
     public void DeleteCall(int callId)
     {
         try
@@ -273,7 +291,13 @@ internal class CallImplementation : ICall
             throw new InvalidOperationException(ex.Message);
         }
     }
-
+    /// <summary>
+    /// Gets the available open calls for a specific volunteer.
+    /// </summary>
+    /// <param name="volunteerId">The ID of the volunteer.</param>
+    /// <param name="callTypeFilter">The call type filter.</param>
+    /// <param name="sortField">The field to sort by.</param>
+    /// <returns>An enumerable collection of open calls.</returns>
     public IEnumerable<OpenCallInList> GetAvailableOpenCallsForVolunteer(int volunteerId, CallType? callTypeFilter, Enum? sortField)
     {
         // Retrieve volunteer details to get their location
@@ -323,7 +347,10 @@ internal class CallImplementation : ICall
 
         return openCallInLists;
     }
-
+    /// <summary>
+    /// Gets the count of calls by their status.
+    /// </summary>
+    /// <returns>An array of integers representing the count of calls for each status.</returns>
     public int[] GetCallCountsByStatus()
     {
         // Fetch all calls
@@ -348,7 +375,11 @@ internal class CallImplementation : ICall
 
         return statusCounts;
     }
-
+    /// <summary>
+    /// Gets the details of a specific call by its ID.
+    /// </summary>
+    /// <param name="callId">The ID of the call.</param>
+    /// <returns>The details of the call.</returns>
     public Call GetCallDetails(int callId)
     {
         // Request the data layer to get details about the call
@@ -366,13 +397,17 @@ internal class CallImplementation : ICall
         BO.Call boCall = CallManager.ConvertCallToBO(doCall);
         return boCall;
     }
-
+    /// <summary>
+    /// Gets a call in list by its ID.
+    /// </summary>
+    /// <param name="callId">The ID of the call.</param>
+    /// <returns>The call in list.</returns>
     public CallInList GetCallInListById(int callId)
     {
         // Request the data layer to get details about the call
         DO.Call doCall;
         lock (AdminManager.BlMutex)
-             doCall = _dal.Call.Read(callId);
+            doCall = _dal.Call.Read(callId);
 
         // If the call does not exist, throw an exception
         if (doCall == null)
@@ -396,6 +431,14 @@ internal class CallImplementation : ICall
 
         return callInList;
     }
+
+    /// <summary>
+    /// Gets a filtered and sorted list of calls.
+    /// </summary>
+    /// <param name="filterField">The field to filter by.</param>
+    /// <param name="filterValue">The value to filter by.</param>
+    /// <param name="sortField">The field to sort by.</param>
+    /// <returns>An enumerable collection of filtered and sorted calls.</returns>
     public IEnumerable<CallInList> GetFilteredAndSortedCalls(CallType? filterField, CallStatus? filterValue, Enum? sortField)
     {
         // Fetch all calls
@@ -451,7 +494,13 @@ internal class CallImplementation : ICall
 
         return callInList;
     }
-
+    /// <summary>
+    /// Gets the history of closed calls for a specific volunteer.
+    /// </summary>
+    /// <param name="volunteerId">The ID of the volunteer.</param>
+    /// <param name="callTypeFilter">The call type filter.</param>
+    /// <param name="sortField">The field to sort by.</param>
+    /// <returns>An enumerable collection of closed calls.</returns>
     public IEnumerable<ClosedCallInList> GetVolunteerClosedCallsHistory(int volunteerId, CallType? callTypeFilter, Enum? sortField)
     {
         // Retrieve all assignments for the given volunteer
@@ -499,7 +548,11 @@ internal class CallImplementation : ICall
 
         return closedCalls;
     }
-
+    /// <summary>
+    /// Marks an assignment as completed.
+    /// </summary>
+    /// <param name="volunteerId">The ID of the volunteer.</param>
+    /// <param name="callId">The ID of the call.</param>
     public void MarkAssignmentAsCompleted(int volunteerId, int callId)
     {
         try
@@ -548,7 +601,10 @@ internal class CallImplementation : ICall
             throw new InvalidOperationException($"Failed to complete the assignment: {ex.Message}");
         }
     }
-
+    /// <summary>
+    /// Updates an existing call.
+    /// </summary>
+    /// <param name="call">The call entity with updated values.</param>
     public void UpdateCall(Call call)
     {
         // Check if the simulator is running
@@ -598,7 +654,11 @@ internal class CallImplementation : ICall
             throw new Exception($"Failed to update call with ID {call.Id}.", ex);
         }
     }
-
+    /// <summary>
+    /// Gets the calls in progress for a specific volunteer.
+    /// </summary>
+    /// <param name="volunteerId">The ID of the volunteer.</param>
+    /// <returns>An enumerable collection of calls in progress.</returns>
     public IEnumerable<BO.CallInProgress> GetCallsForVolunteer(int volunteerId)
     {
         DO.Volunteer volunteer;
@@ -680,6 +740,16 @@ internal class CallImplementation : ICall
 
         return callsInProgress;
     }
+    /// <summary>
+    /// Gets the nearby open calls for a volunteer within a specified range.
+    /// </summary>
+    /// <param name="volunteerId">The ID of the volunteer.</param>
+    /// <param name="range">The range to search within.</param>
+    /// <param name="distanceType">The type of distance calculation.</param>
+    /// <param name="callTypeFilter">The call type filter.</param>
+    /// <param name="sortField">The field to sort by.</param>
+    /// <returns>An enumerable collection of nearby open calls.</returns>
+
     public IEnumerable<OpenCallInList> GetNearbyOpenCallsForVolunteer(int volunteerId, double range, DistanceType distanceType, CallType? callTypeFilter, Enum? sortField)
     {
         // Step 1: Retrieve open calls using the existing function
