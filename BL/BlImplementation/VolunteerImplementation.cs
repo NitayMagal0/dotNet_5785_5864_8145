@@ -124,9 +124,9 @@ internal class VolunteerImplementation : BlApi.IVolunteer
                 volunteer.CallInProgress = VolunteerManager.GetCallInProgress(id);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new Exception($"ERROR: {ex.Message}");
 
             }
             // Decode the password before returning the volunteer
@@ -135,10 +135,8 @@ internal class VolunteerImplementation : BlApi.IVolunteer
             return volunteer;
         }
         catch (Exception ex)
-        {
-            // Print the error message to the output pane
-            Console.WriteLine($"ERROR: {ex.Message}");
-            throw new Exception($"ERROR: ", ex);
+        {;
+            throw new Exception($"ERROR: {ex.Message}");
         }
     }
     /// <summary>
