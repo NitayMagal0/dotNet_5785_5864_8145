@@ -320,9 +320,9 @@ internal class VolunteerImplementation : BlApi.IVolunteer
         // Convert BO.Volunteer to DO.Volunteer (without computing coordinates)
         DO.Volunteer doVolunteer = VolunteerManager.ConvertVolunteerToDO(updatedVolunteer);
 
-        // Ensure that latitude and longitude are set to null initially
-        // This prevents outdated or incorrect coordinates from being used before recalculating
-        doVolunteer = doVolunteer with { Latitude = null, Longitude = null };
+        //// Ensure that latitude and longitude are set to null initially
+        //// This prevents outdated or incorrect coordinates from being used before recalculating
+        //doVolunteer = doVolunteer with { Latitude = null, Longitude = null };
 
         try
         {
