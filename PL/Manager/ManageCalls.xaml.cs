@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,7 +12,7 @@ namespace PL.Manager
     /// <summary>
     /// Interaction logic for ManageCallsWindow.xaml
     /// </summary>
-    public partial class ManageCalls : Window
+    public partial class ManageCalls : Window, INotifyPropertyChanged
     {
         /// <summary>
         /// Static instance of the business logic interface.
@@ -22,7 +23,12 @@ namespace PL.Manager
         /// Gets or sets the selected call.
         /// </summary>
         public BO.CallInList? SelectedCall { get; set; }
+        public event PropertyChangedEventHandler? PropertyChanged;
 
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         /// <summary>
         /// Initializes a new instance of the ManageCallsWindow class.
         /// </summary>

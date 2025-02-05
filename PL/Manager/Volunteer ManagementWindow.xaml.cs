@@ -1,14 +1,15 @@
-﻿using System.Windows;
+﻿using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace PL.Volunteer;
 
 /// <summary>
 /// Interaction logic for VolunteerListWindow.xaml
 /// </summary>
-public partial class VolunteerListWindow : Window
+public partial class VolunteerListWindow : Window, INotifyCollectionChanged, INotifyPropertyChanged
 {
     /// <summary>
     /// Static instance of the business logic interface.
@@ -20,6 +21,19 @@ public partial class VolunteerListWindow : Window
     /// </summary>
     public BO.VolunteerInList? SelectedVolunteer { get; set; }
 
+    public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+    protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+    {
+        CollectionChanged?.Invoke(this, e);
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
     /// <summary>
     /// Initializes a new instance of the VolunteerListWindow class.
     /// </summary>
@@ -70,18 +84,12 @@ public partial class VolunteerListWindow : Window
             : s_bl?.Volunteer.GetVolunteersByCallType(searchFilter);
     }
 
-    private volatile DispatcherOperation? _observerOperation = null; //stage 7
-
     /// <summary>
     /// Observer method to update the volunteer list.
     /// </summary>
     private void volunteerListObserver()
     {
-        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
-            _observerOperation = Dispatcher.BeginInvoke(() =>
-            {
-                queryVolunteerList();
-            });
+        queryVolunteerList();
     }
 
     /// <summary>
@@ -167,4 +175,3 @@ public partial class VolunteerListWindow : Window
     }
 
 }
-

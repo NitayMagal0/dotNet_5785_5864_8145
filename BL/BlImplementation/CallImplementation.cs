@@ -455,6 +455,8 @@ internal class CallImplementation : ICall
             CallId = call.Id,
             CallType = call.CallType,
             LastVolunteer = call.CallAssigns?.LastOrDefault()?.VolunteerName,
+            RemainingTime = call.MaxCompletionTime - AdminManager.Now,
+            TotalTime = AdminManager.Now - call.OpeningTime,
             Status = call.Status,
             AssignmentsCount = call.CallAssigns?.Count ?? 0
         });

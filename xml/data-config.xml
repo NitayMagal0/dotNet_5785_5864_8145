@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-  <NextCallId>1052</NextCallId>
-  <NextAssignmentId>1051</NextAssignmentId>
+  <NextCallId>1050</NextCallId>
+  <NextAssignmentId>1050</NextAssignmentId>
   <NextCallId>1069</NextCallId>
   <NextAssignmentId>1051</NextAssignmentId>
-  <Clock>13/05/2025 04:08:56</Clock>
-  <RiskRange>12:00:00</RiskRange>
+  <Clock>05/02/2025 6:05:08</Clock>
+  <RiskRange>00:00:00</RiskRange>
 </config>
