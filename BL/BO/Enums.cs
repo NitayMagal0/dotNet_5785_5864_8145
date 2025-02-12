@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using System.ComponentModel;
+
+namespace BO;
 
 /// <summary>
 /// Enum to define the status of the assignment.
@@ -24,18 +26,35 @@ public enum CallStatus
     InProgressAtRisk
 }
 
-/// <summary>
-/// enum for the call type
-/// </summary>
+///// <summary>
+///// enum for the call type
+///// </summary>
+//public enum CallType
+//{
+//    Undefined,
+//    CleaningShelters,
+//    HelpForFamiliesInNeed,
+//    FoodPackagingForNeedyFamilies,
+//    HospitalVisitsForMoraleBoost
+//}
+
 public enum CallType
 {
+    [Description("Undefined")]
     Undefined,
+
+    [Description("Cleaning Shelters")]
     CleaningShelters,
+
+    [Description("Help For Families In Need")]
     HelpForFamiliesInNeed,
+
+    [Description("Food Packaging For Needy Families")]
     FoodPackagingForNeedyFamilies,
+
+    [Description("Hospital Visits For Morale Boost")]
     HospitalVisitsForMoraleBoost
 }
-
 
 /// <summary>
 /// enum for the roles in the system

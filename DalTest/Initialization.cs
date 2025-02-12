@@ -296,8 +296,32 @@ public static class Initialization
          35.2217262f, 35.2189366f, 35.220514f, 35.2184101f, 34.9858606f,
          34.9897136f, 34.9979308f, 34.99322f, 35.0150586f };
 
+        s_dal.Volunteer!.Create(new Volunteer(
+               325935864,
+               "Yossi Cohen",
+               "0532825215",
+               "yossicohen@gmail.com",
+               "WWMhMjM0NTY=",
+               "Herzl 23, Tel Aviv",
+               32.0608944f,
+               34.7705256f,
+               Role.Volunteer,
+               true
+            ));
 
-        
+        s_dal.Volunteer!.Create(new Volunteer(
+               215348145,
+               "Moshe Cohen",
+               "0532825215",
+               "moshecohen@gmail.com",
+               "TWMhMjM0NTY=",
+               "Herzl 23, Tel Aviv",
+               32.0608944f,
+               34.7705256f,
+               Role.Manager,
+               true
+            ));
+
         for (int i = 0; i < VolunteerNames.Length; i++)
         {
             int id;
@@ -325,6 +349,7 @@ public static class Initialization
                true
             ));
         }
+
     }
 
 

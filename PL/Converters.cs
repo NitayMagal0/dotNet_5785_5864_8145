@@ -237,3 +237,5 @@ public class SimulatorButtonContentConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+
